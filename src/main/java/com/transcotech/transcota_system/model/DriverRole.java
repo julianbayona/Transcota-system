@@ -11,5 +11,11 @@ public class DriverRole extends Role{
         trips = new ArrayList<TripRegister>();
     }
 
+    public List<TripRegister> getTrips() {
+        return trips;
+    }
 
+    public void setTrips(List<TripRegister> trips) {
+        this.trips = trips;
+    }
 }
