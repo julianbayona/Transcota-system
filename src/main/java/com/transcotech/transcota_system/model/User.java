@@ -4,7 +4,7 @@ public class User extends Person{
 
     private Role roles;
 
-    public User(Role role, Integer id, String name, String email){
+    public User(Role role, Long id, String name, String email){
         this.roles = role;
         super.setId(id);
         super.setName(name);

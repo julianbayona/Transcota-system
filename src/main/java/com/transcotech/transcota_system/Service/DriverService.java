@@ -20,12 +20,12 @@ public class DriverService implements DriverServiceInterface{
     }
 
     @Override
-    public User searchId(Integer id){
+    public User searchId(Long id){
         return driverRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void deleteUser(Integer id){
+    public void deleteUser(Long id){
         this.driverRepository.deleteById(id);
     }
 
