@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.transcotech.transcota_system.Service.DriverService;
 
 @Controller
-@RequestMapping("api/drivers")
+@RequestMapping("/api/drivers")
 public class DriverController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class DriverController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteDriver(@PathVariable long id){
+    public String deleteDriver(@PathVariable int id){
         driverService.deleteUser(id);
         return "";
     }
