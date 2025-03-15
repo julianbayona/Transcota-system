@@ -21,5 +21,9 @@ public class DriverService implements DriverServiceInterface{
     public User searchId(Long id){
         return driverRepository.findById(id).orElse(null);
     }
+
+    public void deleteUser(long id){
+        this.driverRepository.deleteById(id);
+    }
     
 }
