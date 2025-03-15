@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Transporte</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="nav-buttons">
+            <a th:href="@{/}" class="nav-btn nav-btn-danger">
+                <i class="fa-solid fa-right-from-bracket icon"></i> 
+                <b>Cerrar Sesión</b>
+            </a>
+            <a th:href="@{/index}" class="nav-btn nav-btn-primary">
+                <i class="fa-solid fa-house icon"></i>  
+                <b>Inicio</b>
+            </a>
+        </div>
+        <details open>
+            <summary><b>Gestión de Conductores</b></summary>
+            <a th:href="@{/drivers/select}">
+                <div class="nav-item"><span>Ver Conductores</span></div>
+            </a>
+            <a th:href="@{/drivers/assigned}">
+                <div class="nav-item"><span>Vehiculos Asignados</span></div>
+            </a>
+            <a th:href="@{/drivers/register}">
+                <div class="nav-item"><span>Registrar Conductor</span></div>
+            </a>
+            <a th:href="@{/drivers/update}">
+                <div class="nav-item"><span>Actualizar Conductor</span></div>
+            </a>
+            <a th:href="@{/drivers/delete}">
+                <div class="nav-item active"><span>Eliminar Conductor</span></div>
+            </a>
+        </details>
+        <details>
+            <summary><b>Gestión de Vehículos</b></summary>
+            <a th:href="@{/vehicles/select}">
+                <div class="nav-item"><span>Ver Vehículos</span></div>
+            </a>
+            <a th:href="@{/vehicles/register}">
+                <div class="nav-item"><span>Registrar Vehículo</span></div>
+            </a>
+            <a th:href="@{/vehicles/update}">
+                <div class="nav-item"><span>Actualizar Vehículo</span></div>
+            </a>
+            <a th:href="@{/vehicles/delete}">
+                <div class="nav-item"><span>Eliminar Vehículo</span></div>
+            </a>
+        </details>            
+        <details>
+            <summary><b>Gestión de Viajes</b></summary>
+            <a th:href="@{/trips/select}">
+                <div class="nav-item"><span>Ver Viajes</span></div>
+            </a>
+            <a th:href="@{/trips/register}">
+                <div class="nav-item"><span>Registrar Viaje</span></div>
+            </a>
+            <a th:href="@{/trips/update}">
+                <div class="nav-item"><span>Actualizar Viaje</span></div>
+            </a>
+            <a th:href="@{/trips/delete}">
+                <div class="nav-item"><span>Eliminar Viaje</span></div>
+            </a>
+        </details>
+    </div>
+    <div class="container">
+        <div class="content-container">
+            <div class="main-content">
+                <div class="tab-content">
+                    <h2 id="main-title">Eliminar Conductor</h2>
+                    <form id="form-type">
+                        <div class="search-container">
+                            <div class="form-group" style="flex: 1; margin-bottom: 20px;">
+                                <label for="conductor-id">ID:</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="text" id="conductor-id" class="form-control" placeholder="Ingrese el ID">
+                                    <button type="button" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                        <i class="fa-solid fa-magnifying-glass icon"></i>
+                                        Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
+                            <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Conductor</h4>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label><strong>Documento:</strong> <span id="info-documento">-</span></label>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label><strong>Nombres:</strong> <span id="info-nombres">-</span></label>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label><strong>Apellidos:</strong> <span id="info-apellidos">-</span></label>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label><strong>Teléfono:</strong> <span id="info-telefono">-</span></label>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
+                                    <label><strong>Fecha de Nacimiento:</strong> <span id="info-fecha-nacimiento">-</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="btn-container">
+                            <button type="button" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Conductor</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
