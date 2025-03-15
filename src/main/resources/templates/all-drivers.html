@@ -1,17 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="org.thymleaf.com">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lista de Vehículos</title>
 </head>
-<body>  
-
-    <ul>
-        <li th:each="vehicle : ${vehicles}" th:text="${vehicle}"></li>
-    </ul>
-    
-
-    
+<body>
+<ul>
+    <li th:each="driver : ${drivers}" th:text="${driver}"></li>
+</ul>
 </body>
 </html>
