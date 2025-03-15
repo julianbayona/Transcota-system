@@ -3,7 +3,7 @@ package com.transcotech.transcota_system.model;
 import jakarta.persistence.*;
 
 @Entity
-@DiscriminatorValue("user")
+@PrimaryKeyJoinColumn(name = "personId")
 public class User extends Person {
 
     @OneToOne
@@ -12,7 +12,7 @@ public class User extends Person {
 
     public User(Role role, Long id, String name, String email) {
         this.role = role;
-        super.setId(id);
+        super.setPersonId(id);
         super.setName(name);
         super.setEmail(email);
     }

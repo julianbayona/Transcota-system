@@ -1,12 +1,18 @@
 package com.transcotech.transcota_system.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@PrimaryKeyJoinColumn(name="roleId")
 public class AdminRole extends Role{
 
+    @OneToMany
     private List<Vehicle> managedVehicles;
+    @OneToMany
     private List<TripRegister> managedTrips;
+    @OneToMany
     private List<User> managedDrivers;
 
     public AdminRole(){

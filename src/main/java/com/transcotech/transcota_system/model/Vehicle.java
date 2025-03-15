@@ -1,16 +1,23 @@
 package com.transcotech.transcota_system.model;
+import jakarta.persistence.*;
 
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Vehicle {
 
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long vehicleId;
+    @Column(nullable = false, unique = true)
     private String plate;
 
-    public long getId() {
-        return id;
+    public long getVehicleId() {
+        return vehicleId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setVehicleId(long vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public String getPlate() {

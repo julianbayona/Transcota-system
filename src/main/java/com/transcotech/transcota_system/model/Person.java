@@ -5,13 +5,12 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "person")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "person_type", discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long personId;
 
     @Column(name = "name")
     private String name;
@@ -19,12 +18,12 @@ public abstract class Person {
     @Column(name = "email")
     private String email;
 
-    public Long getId() {
-        return id;
+    public Long getPersonId() {
+        return personId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 
     public String getName() {

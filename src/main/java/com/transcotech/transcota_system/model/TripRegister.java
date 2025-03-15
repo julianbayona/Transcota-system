@@ -1,16 +1,36 @@
 package com.transcotech.transcota_system.model;
 
+import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "trip_register")
 public class TripRegister {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "driver_id", nullable = false)
     private User driver;
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
-    private LocalDate date;
-    private String status;
+    @ManyToOne
+    @JoinColumn(name = "destination_id", nullable = false)
     private Ubication destinationUbication;
+    @ManyToOne
+    @JoinColumn(name = "origin_id", nullable = false)
     private Ubication originUbication;
+    @NotNull
+    @Column(nullable = false)
+    private LocalDate date;
+    @NotNull
+    @Column(nullable = false)
+    private String status;
+
 
     public TripRegister(Long id, User driver, Vehicle vehicle, LocalDate date, String status, Ubication destinationUbication, Ubication originUbication) {
         this.id = id;

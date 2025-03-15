@@ -1,15 +1,23 @@
 package com.transcotech.transcota_system.model;
 
-public class Ubication {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "ubication")
+public class Ubication {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(nullable = false, length = 100)
     private String name;
-    private Ubication ubication;
+    @JoinColumn(name = "parent_id")
+    private Ubication parentUbication;
 
     public Ubication(Long id, String name, Ubication ubication) {
         this.id = id;
         this.name = name;
-        this.ubication = ubication;
+        this.parentUbication = ubication;
     }
 
     public Ubication(Long id, String name) {
@@ -34,11 +42,11 @@ public class Ubication {
     }
 
     public Ubication getUbication() {
-        return ubication;
+        return parentUbication;
     }
 
     public void setUbication(Ubication ubication) {
-        this.ubication = ubication;
+        this.parentUbication = ubication;
     }
 }
 
