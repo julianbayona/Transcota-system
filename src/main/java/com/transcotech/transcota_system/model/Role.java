@@ -1,14 +1,15 @@
 package com.transcotech.transcota_system.model;
 
 public abstract class Role {
-    private long id;
+
+    private Integer id;
 
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
