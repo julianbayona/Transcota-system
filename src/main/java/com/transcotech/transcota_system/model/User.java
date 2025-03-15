@@ -10,7 +10,7 @@ public class User extends Person {
     @JoinColumn(name = "role_id") // Clave foránea en la tabla User
     private Role role;
 
-    public User(Role role, Integer id, String name, String email) {
+    public User(Role role, Long id, String name, String email) {
         this.role = role;
         super.setId(id);
         super.setName(name);
