@@ -1,0 +1,49 @@
+name: Update CHANGELOG
+
+on:
+  push:
+    branches: [ main, master ]
+    tags:
+      - 'v*'
+
+jobs:
+  update-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          
+      - name: Generar CHANGELOG
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v3
+        with:
+          configuration: "changelog-config.json"
+          commitMode: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Actualizar CHANGELOG.md
+        run: |
+          TODAY=$(date +'%Y-%m-%d')
+
+          # Crear el archivo si no existe
+          if [ ! -f CHANGELOG.md ]; then
+            echo "# Changelog" > CHANGELOG.md
+            echo -e "Todos los cambios notables en este proyecto serán documentados en este archivo.\n" >> CHANGELOG.md
+          fi
+
+          # Agregar nueva entrada al principio del archivo
+          echo -e "## $TODAY\n\n${{ steps.changelog.outputs.changelog }}\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
+
+      - name: Hacer commit y push si hay cambios
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          git add CHANGELOG.md
+          git diff --quiet && git diff --staged --quiet || git commit -m "docs: actualizar CHANGELOG.md"
+
+          git pull --rebase origin master
+          git push origin master
