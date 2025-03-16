@@ -30,6 +30,8 @@
 		<java.version>23</java.version>
 		<org.mapstruct.version>1.6.3</org.mapstruct.version>
 		<lombok.version>1.18.24</lombok.version>
+		<maven-compiler-source>1.8</maven-compiler-source>
+		<maven-compiler-target>1.8</maven-compiler-target>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -119,10 +121,9 @@
 			<plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-			<version>3.5.1</version>
+            <version>3.5.1</version>
             <configuration>
-				<source>1.8</source>
-				<target>1.8</target>
+                <release>1.8</release>
                 <annotationProcessorPaths>
                     <path>
                         <groupId>org.projectlombok</groupId>
