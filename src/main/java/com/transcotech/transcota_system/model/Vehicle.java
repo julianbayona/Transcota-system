@@ -13,6 +13,7 @@ public abstract class Vehicle {
     private String plate;
     private String model;
     private int year;
+    private String type;
 
 
     public String getModel() {
@@ -45,5 +46,13 @@ public abstract class Vehicle {
 
     public void setPlate(String plate) {
         this.plate = plate;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

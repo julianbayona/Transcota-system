@@ -21,21 +21,21 @@
             </a>
         </div>
         <details>
-            <summary><b>Gestión de Conductores</b></summary>
-            <a th:href="@{/drivers/select}">
-                <div class="nav-item"><span>Ver Conductores</span></div>
+            <summary><b>Gestión de Usuarios</b></summary>
+            <a th:href="@{/users/select}">
+                <div class="nav-item"><span>Ver Usuarios</span></div>
             </a>
-            <a th:href="@{/drivers/assigned}">
+            <a th:href="@{/users/assigned}">
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
-            <a th:href="@{/drivers/register}">
-                <div class="nav-item"><span>Registrar Conductor</span></div>
+            <a th:href="@{/users/register}">
+                <div class="nav-item"><span>Registrar Usuario</span></div>
             </a>
-            <a th:href="@{/drivers/update}">
-                <div class="nav-item"><span>Actualizar Conductor</span></div>
+            <a th:href="@{/users/update}">
+                <div class="nav-item"><span>Actualizar Usuario</span></div>
             </a>
-            <a th:href="@{/drivers/delete}">
-                <div class="nav-item"><span>Eliminar Conductor</span></div>
+            <a th:href="@{/users/delete}">
+                <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
         <details>
@@ -74,18 +74,18 @@
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Registrar Viaje</h2>
-                    <form id="form-type">
+                    <form id="form-type" th:object="${tripDTO}" method="POST">
                         <div class="form-group">
                             <label for="origen">Lugar de Origen:</label>
-                            <input type="text" id="origen" class="form-control" placeholder="Ingrese el lugar de origen">
+                            <input type="text" id="origen" class="form-control" placeholder="Ingrese el lugar de origen" th:field="*{origin}" required>
                         </div>
                         <div class="form-group">
                             <label for="destino">Lugar de Destino:</label>
-                            <input type="text" id="destino" class="form-control" placeholder="Ingrese el lugar de destino">
+                            <input type="text" id="destino" class="form-control" placeholder="Ingrese el lugar de destino" th:field="*{destination}" required>
                         </div>
                         <div class="form-group">
                             <label for="fecha-viaje">Fecha del Viaje:</label>
-                            <input type="date" id="fecha-viaje" class="form-control">
+                            <input type="date" id="fecha-viaje" class="form-control" th:field="*{date}" required>
                         </div>
                         
                         <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 15px; margin-bottom: 20px;">
@@ -94,82 +94,76 @@
                             <details style="margin-bottom: 15px;">
                                 <summary style="background-color:rgb(27, 71, 136); border-radius: 0.3em"><b>Vehículo</b></summary>
                                 <div style="padding: 10px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 4px 4px;">
-                                    <div class="search-container">
-                                        <div class="form-group" style="margin-bottom: 15px;">
-                                            <label for="vehiculo-id">ID del Vehículo:</label>
-                                            <div style="display: flex; gap: 10px;">
-                                                <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo">
-                                                <button type="button" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
-                                                    <i class="fa-solid fa-magnifying-glass icon"></i>
-                                                    Buscar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
                                     
-                                    <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
-                                        <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Vehículo</h4>
-                                        
-                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
-                                            
-                                            <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Placa:</strong> <span id="info-vehiculo-placa">-</span></label>
-                                            </div>
-                                            
-                                            <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Modelo:</strong> <span id="info-vehiculo-modelo">-</span></label>
-                                            </div>
-                                            
-                                            <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Año:</strong> <span id="info-vehiculo-anio">-</span></label>
-                                            </div>
-                                            
-                                            <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                                <label><strong>Tipo de Vehículo:</strong> <span id="info-vehiculo-tipo">-</span></label>
+                                        <div class="search-container">
+                                            <div class="form-group" style="margin-bottom: 15px;">
+                                                <label for="vehiculo-id">ID del Vehículo:</label>
+                                                <div style="display: flex; gap: 10px;">
+                                                    <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{vehicleId}" required>
+                                                    <button type="submit" th:formaction="@{/trips/register/searchVehicle}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                                        <i class="fa-solid fa-magnifying-glass icon"></i>
+                                                        Buscar
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        
+                                        <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
+                                            <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Vehículo</h4>
+                                            
+                                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                                                
+                                                <div class="form-group" style="margin-bottom: 5px;">
+                                                    <label><strong>Placa:</strong> <span id="info-vehiculo-placa" th:text="*{plate} ?: '---'">---</span></label>
+                                                </div>
+                                                
+                                                <div class="form-group" style="margin-bottom: 5px;">
+                                                    <label><strong>Modelo:</strong> <span id="info-vehiculo-modelo" th:text="*{model} ?: '---'">---</span></label>
+                                                </div>
+                                                
+                                                <div class="form-group" style="margin-bottom: 5px;">
+                                                    <label><strong>Año:</strong> <span id="info-vehiculo-anio" th:text="*{year} ?: '---'">---</span></label>
+                                                </div>
+                                                
+                                                <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
+                                                    <label><strong>Tipo de Vehículo:</strong> <span id="info-vehiculo-tipo" th:text="*{type} ?: '---'">---</span></label>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </div>
                             </details>
                             
                             <details>
                                 <summary style="background-color:rgb(27, 71, 136); border-radius: 0.3em"><b>Conductor<b></summary>
                                 <div style="padding: 10px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 4px 4px;">
+                                    
                                     <div class="search-container">
                                         <div class="form-group" style="margin-bottom: 15px;">
-                                            <label for="conductor-id">ID:</label>
+                                            <label for="conductor-id">ID del conductor:</label>
                                             <div style="display: flex; gap: 10px;">
-                                                <input type="text" id="conductor-id" class="form-control" placeholder="Ingrese el ID">
-                                                <button type="button" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                                <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del conductor" th:field="*{personId}" required>
+                                                <button type="submit" th:formaction="@{/trips/register/searchDriver}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                                     <i class="fa-solid fa-magnifying-glass icon"></i>
                                                     Buscar
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-                                    
+                                        
                                     <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
                                         <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Conductor</h4>
-                                        
+                                            
                                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
                                             <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Documento:</strong> <span id="info-conductor-documento">-</span></label>
+                                                <label><strong>Nombres:</strong> <span id="info-conductor-nombres" th:text="*{name} ?: '---'">---</span></label>
                                             </div>
-                                            
+                                                
                                             <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Nombres:</strong> <span id="info-conductor-nombres">-</span></label>
+                                                    <label><strong>Id rol:</strong> <span id="info-conductor-rol" th:text="*{roleDTO.roleId} ?: '---'">---</span></label>
                                             </div>
-                                            
-                                            <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Apellidos:</strong> <span id="info-conductor-apellidos">-</span></label>
-                                            </div>
-                                            
-                                            <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Teléfono:</strong> <span id="info-conductor-telefono">-</span></label>
-                                            </div>
-                                            
+                                                
                                             <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                                <label><strong>Fecha de Nacimiento:</strong> <span id="info-conductor-fecha-nacimiento">-</span></label>
+                                                <label><strong>Email:</strong> <span id="info-conductor-email" th:text="*{email} ?: '---'">---</span></label>
                                             </div>
                                         </div>
                                     </div>
@@ -178,8 +172,8 @@
                         </div>
                         
                         <div class="btn-container">
-                            <button type="button" class="btn btn-success">Registrar Viaje</button>
-                            <button type="button" class="btn btn-warning">Limpiar</button>
+                            <button type="submit" th:formaction="@{/trips/register/{tripId}}" class="btn btn-success">Registrar Viaje</button>
+                            <button type="submit" th:formaction="@{/vehicles/register/clean" class="btn btn-warning">Limpiar</button>
                         </div>
                     </form>
                 </div>
