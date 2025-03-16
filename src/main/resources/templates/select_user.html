@@ -21,21 +21,21 @@
             </a>
         </div>
         <details open>
-            <summary><b>Gestión de Conductores</b></summary>
-            <a th:href="@{/drivers/select}">
-                <div class="nav-item"><span>Ver Conductores</span></div>
+            <summary><b>Gestión de Usuarios</b></summary>
+            <a th:href="@{/users/select}">
+                <div class="nav-item active"><span>Ver Usuarios</span></div>
             </a>
-            <a th:href="@{/vehicles/assigned}">
+            <a th:href="@{/users/assigned}">
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
-            <a th:href="@{/drivers/register}">
-                <div class="nav-item active"><span>Registrar Conductor</span></div>
+            <a th:href="@{/users/register}">
+                <div class="nav-item"><span>Registrar Usuario</span></div>
             </a>
-            <a th:href="@{/drivers/update}">
-                <div class="nav-item"><span>Actualizar Conductor</span></div>
+            <a th:href="@{/users/update}">
+                <div class="nav-item"><span>Actualizar Usuario</span></div>
             </a>
-            <a th:href="@{/drivers/delete}">
-                <div class="nav-item"><span>Eliminar Conductor</span></div>
+            <a th:href="@{/users/delete}">
+                <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
         <details>
@@ -43,7 +43,7 @@
             <a th:href="@{/vehicles/select}">
                 <div class="nav-item"><span>Ver Vehículos</span></div>
             </a>
-            <a th:href="@{/drivers/register}">
+            <a th:href="@{/vehicles/register}">
                 <div class="nav-item"><span>Registrar Vehículo</span></div>
             </a>
             <a th:href="@{/vehicles/update}">
@@ -72,34 +72,30 @@
     <div class="container">
         <div class="content-container">
             <div class="main-content">
+                <h2 id="main-title">Ver usuarios registrados</h2>  
                 <div class="tab-content">
-                    <h2 id="main-title">Registrar Conductor</h2>
-                    <form id="form-type">
-                        <div class="form-group">
-                            <label for="documento">Documento de identidad:</label>
-                            <input type="text" id="documento" class="form-control" placeholder="Ingrese el documento de identidad">
-                        </div>
-                        <div class="form-group">
-                            <label for="nombres">Nombres:</label>
-                            <input type="text" id="nombres" class="form-control" placeholder="Ingrese los nombres">
-                        </div>
-                        <div class="form-group">
-                            <label for="apellidos">Apellidos:</label>
-                            <input type="text" id="apellidos" class="form-control" placeholder="Ingrese los apellidos">
-                        </div>
-                        <div class="form-group">
-                            <label for="telefono">Teléfono:</label>
-                            <input type="tel" id="telefono" class="form-control" placeholder="Ingrese el número de teléfono">
-                        </div>
-                        <div class="form-group">
-                            <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
-                            <input type="date" id="fecha-nacimiento" class="form-control">
-                        </div>
-                        <div class="btn-container">
-                            <button type="button" class="btn btn-success">Registrar Conductor</button>
-                            <button type="button" class="btn btn-warning">Limpiar</button>
+                    <form id="form-type" th:action="@{/users/select/search}" method="POST">
+                        <div class="search-container">
+                            <div class="form-group" style="flex: 1; margin-bottom: 20px;">
+                                <label for="usuario-id">ID del usuario:</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="number" id="usuario-id" class="form-control" placeholder="Ingrese el ID del usuario" th:field="*{personId}" required>
+                                    <button type="submit" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                        <i class="fa-solid fa-magnifying-glass icon"></i>
+                                        Buscar
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </form>
+                    
+                    <h2>Estos son los usuarios registrados...</h2> 
+                    <div th:each="user : ${userList}" class="driver-container">
+                        <p class="assignSpecial"><strong>ID:</strong> <span th:text="${user.personId}"></span></p>
+                        <p><strong>Id rol:</strong> <span th:text="${user.roleDTO.roleId}"></span></p>
+                        <p><strong>Nombres:</strong> <span th:text="${user.name}"></span></p>
+                        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <form th:action="@{/}" th:object="${textForm}" method="POST">
+        <form th:action="@{/}" th:object="${loginDTO}" method="POST">
             <div class="input-group">
                 <label for="username">Usuario</label>
                 <input type="text" id="username" name="username" th:field="*{username}" required>

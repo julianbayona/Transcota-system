@@ -20,7 +20,7 @@
                 <b>Inicio</b>
             </a>
         </div>
-        <details>
+        <details open>
             <summary><b>Gestión de Usuarios</b></summary>
             <a th:href="@{/users/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
@@ -29,7 +29,7 @@
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
             <a th:href="@{/users/register}">
-                <div class="nav-item"><span>Registrar Usuario</span></div>
+                <div class="nav-item active"><span>Registrar Usuario</span></div>
             </a>
             <a th:href="@{/users/update}">
                 <div class="nav-item"><span>Actualizar Usuario</span></div>
@@ -53,10 +53,10 @@
                 <div class="nav-item"><span>Eliminar Vehículo</span></div>
             </a>
         </details>            
-        <details open>
+        <details>
             <summary><b>Gestión de Viajes</b></summary>
             <a th:href="@{/trips/select}">
-                <div class="nav-item active"><span>Ver Viajes</span></div>
+                <div class="nav-item"><span>Ver Viajes</span></div>
             </a>
             <a th:href="@{/trips/register}">
                 <div class="nav-item"><span>Registrar Viaje</span></div>
@@ -72,32 +72,32 @@
     <div class="container">
         <div class="content-container">
             <div class="main-content">
-                <h2 id="main-title">Ver viajes registrados</h2>  
                 <div class="tab-content">
-                    <form th:action="@{/trips/select/search}" id="form-type" method="POST">
-                        <div class="search-container">
-                            <div class="form-group" style="flex: 1; margin-bottom: 20px;">
-                                <label for="conductor-id">ID del viaje:</label>
-                                <div style="display: flex; gap: 10px;">
-                                    <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del viaje" th:field="*{tripId}" required>
-                                    <button type="submit" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
-                                        <i class="fa-solid fa-magnifying-glass icon"></i>
-                                        Buscar
-                                    </button>
-                                </div>
-                            </div>
+                    <h2 id="main-title">Registrar Usuario</h2>
+                    <form id="form-type" th:object="${userDTO}" method="POST">
+                        <div class="form-group">
+                            <label for="nombres">Nombres:</label>
+                            <input type="text" id="nombres" class="form-control" placeholder="Ingrese los nombres" th:field="*{name}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" class="form-control" placeholder="Ingrese el email" th:field="*{email}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rol">Rol:</label>
+                            <select id="rol" class="form-control" th:field="*{roleDTO.roleId}" required>
+                                <option value="">Seleccione un rol</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="despachador">Despachador</option>
+                                <option value="conductor">Conductor</option>
+                                <option value="mecanico">Mecánico</option>
+                            </select>
+                        </div>
+                        <div class="btn-container">
+                            <button type="submit" th:formaction="@{/users/register/{userId}}" class="btn btn-success">Registrar Usuario</button>
+                            <button type="submit" th:formaction="@{/users/register/clean}" class="btn btn-warning">Limpiar</button>
                         </div>
                     </form>
-                    
-                    <h2>Estos son los viajes registrados...</h2> 
-                    <div th:each="trip : ${tripList}" class="trip-full-container">
-                        <p class="assignSpecial"><strong>ID:</strong> <span th:text="${trip.tripId}"></span></p>
-                        <p><strong>Fecha:</strong> <span th:text="${trip.date}"></span></p>
-                        <p><strong>Origen:</strong> <span th:text="${trip.origin}"></span></p>
-                        <p class="assignSpecial"><strong>ID del conductor:</strong> <span th:text="${trip.driverDTO.personId}"></span></p>
-                        <p><strong>Destino:</strong> <span th:text="${trip.destination}"></span></p>
-                        <p class="assignSpecial"><strong>ID del vehículo:</strong> <span th:text="${trip.vehicleDTO.vehicleId}"></span></p>
-                    </div>
                 </div>
             </div>
         </div>

@@ -321,11 +321,11 @@ summary::-webkit-details-marker {
 }
 
 .vehicle-container {
-    grid-template-rows: 33% 33% 33%; 
+    grid-template-rows: 35 32% 32%; 
 }
 
-.vehicle-container {
-    grid-template-rows: 55% 45%; 
+.driver-container {
+    grid-template-rows: 55% 45%;
 }
 
 .vehicle-container,
@@ -340,7 +340,7 @@ summary::-webkit-details-marker {
     width: 80%;
     max-width: 80%px; 
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 50% 50%; 
 }
 
 .trip-full-container:hover,
