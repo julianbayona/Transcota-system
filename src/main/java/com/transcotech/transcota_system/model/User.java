@@ -7,14 +7,15 @@ import jakarta.persistence.*;
 public class User extends Person {
 
     @OneToOne
-    @JoinColumn(name = "role_id") // Clave foránea en la tabla User
+    @JoinColumn(name = "roleId")
     private Role role;
 
-    public User(Role role, Long id, String name, String email) {
+    public User() {
+    }
+
+    public User(Long id, String name, String email, Role role) {
+        super(id, name, email);
         this.role = role;
-        super.setPersonId(id);
-        super.setName(name);
-        super.setEmail(email);
     }
 
     public Role getRole() {

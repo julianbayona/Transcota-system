@@ -9,6 +9,10 @@ import jakarta.persistence.Table;
 @PrimaryKeyJoinColumn(name = "vehicleId")
 public class PassengerVehicle extends Vehicle{
 
+    public PassengerVehicle(){
+
+    }
+
     public PassengerVehicle(String plate, int id ){
         super.setPlate(plate);
         super.setVehicleId(id);

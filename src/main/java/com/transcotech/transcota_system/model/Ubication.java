@@ -16,6 +16,10 @@ public class Ubication {
     @JoinColumn(name = "parent_id")
     private Ubication parentUbication;
 
+    public Ubication(){
+
+    }
+
     public Ubication(Long id, String name, Ubication ubication) {
         this.id = id;
         this.name = name;

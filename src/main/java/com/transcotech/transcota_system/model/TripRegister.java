@@ -32,6 +32,10 @@ public class TripRegister {
     private String status;
 
 
+    public TripRegister(){
+
+    }
+
     public TripRegister(Long id, User driver, Vehicle vehicle, LocalDate date, String status, Ubication destinationUbication, Ubication originUbication) {
         this.id = id;
         this.driver = driver;

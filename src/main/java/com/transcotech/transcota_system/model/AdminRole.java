@@ -15,6 +15,7 @@ public class AdminRole extends Role{
     @OneToMany
     private List<User> managedDrivers;
 
+
     public AdminRole(){
         managedVehicles = new ArrayList<Vehicle>();
         managedTrips = new ArrayList<TripRegister>();

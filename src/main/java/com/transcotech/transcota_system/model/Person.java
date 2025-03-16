@@ -9,7 +9,8 @@ import jakarta.persistence.*;
 public abstract class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "personId")
     private Long personId;
 
     @Column(name = "name")
@@ -17,6 +18,16 @@ public abstract class Person {
 
     @Column(name = "email")
     private String email;
+
+    public Person(){
+
+    }
+
+    public Person(Long personId, String name, String email) {
+        this.personId = personId;
+        this.name = name;
+        this.email = email;
+    }
 
     public Long getPersonId() {
         return personId;
