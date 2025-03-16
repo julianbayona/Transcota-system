@@ -10,10 +10,14 @@ public abstract class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer roleId;
 
+    public Role(){
+    }
 
     public Integer getRoleId() {
         return roleId;
     }
+
+
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;

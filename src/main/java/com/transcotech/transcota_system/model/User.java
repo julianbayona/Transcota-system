@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class User extends Person {
 
     @OneToOne
-    @JoinColumn(name = "role_id") // Clave foránea en la tabla User
+    @JoinColumn(name = "roleId") // Clave foránea en la tabla User
     private Role role;
 
     public User(Role role, Long id, String name, String email) {
@@ -15,6 +15,10 @@ public class User extends Person {
         super.setPersonId(id);
         super.setName(name);
         super.setEmail(email);
+    }
+
+    public User(){
+
     }
 
     public Role getRole() {

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long personId;
@@ -17,6 +18,10 @@ public abstract class Person {
 
     @Column(name = "email")
     private String email;
+
+    public Person(){
+
+    }
 
     public Long getPersonId() {
         return personId;
