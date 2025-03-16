@@ -11,6 +11,8 @@ public class Ubication {
 
     @Column(nullable = false, length = 100)
     private String name;
+
+    @ManyToOne
     @JoinColumn(name = "parent_id")
     private Ubication parentUbication;
 
