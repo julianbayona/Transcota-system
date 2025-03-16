@@ -21,21 +21,21 @@
             </a>
         </div>
         <details open>
-            <summary><b>Gestión de Conductores</b></summary>
-            <a th:href="@{/drivers/select}">
-                <div class="nav-item"><span>Ver Conductores</span></div>
+            <summary><b>Gestión de Usuarios</b></summary>
+            <a th:href="@{/users/select}">
+                <div class="nav-item"><span>Ver Usuarios</span></div>
             </a>
-            <a th:href="@{/drivers/assigned}">
+            <a th:href="@{/users/assigned}">
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
-            <a th:href="@{/drivers/register}">
-                <div class="nav-item"><span>Registrar Conductor</span></div>
+            <a th:href="@{/users/register}">
+                <div class="nav-item"><span>Registrar Usuario</span></div>
             </a>
-            <a th:href="@{/drivers/update}">
-                <div class="nav-item active"><span>Actualizar Conductor</span></div>
+            <a th:href="@{/users/update}">
+                <div class="nav-item active"><span>Actualizar Usuario</span></div>
             </a>
-            <a th:href="@{/drivers/delete}">
-                <div class="nav-item"><span>Eliminar Conductor</span></div>
+            <a th:href="@{/users/delete}">
+                <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
         <details>
@@ -73,14 +73,14 @@
         <div class="content-container">
             <div class="main-content">
                 <div class="tab-content">
-                    <h2 id="main-title">Actualizar Conductor</h2>
-                    <form id="form-type">
+                    <h2 id="main-title">Actualizar Usuario</h2>
+                    <form id="form-type" th:object="${userDTO}" method="POST">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
-                                <label for="conductor-id">ID:</label>
+                                <label for="usuario-id">ID del usuario:</label>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="text" id="conductor-id" class="form-control" placeholder="Ingrese el ID">
-                                    <button type="button" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                    <input type="text" id="usuario-id" class="form-control" placeholder="Ingrese el ID" th:field="*{personId}" required>
+                                    <button type="submit" th:formaction="@{/users/update/search}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
                                     </button>
@@ -89,29 +89,26 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="Documento">Documento de identidad:</label>
-                            <input type="text" id="nombres" class="form-control" placeholder="Documento de identidad">
-                        </div>
-
-                        <div class="form-group">
                             <label for="nombres">Nombres:</label>
-                            <input type="text" id="nombres" class="form-control" placeholder="Nombres del conductor">
+                            <input type="text" id="nombres" class="form-control" placeholder="Nombres del usuario" th:field="*{name}" required>
                         </div>
                         <div class="form-group">
-                            <label for="apellidos">Apellidos:</label>
-                            <input type="text" id="apellidos" class="form-control" placeholder="Apellidos del conductor">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" class="form-control" placeholder="Email" th:field="*{email}" required>
                         </div>
                         <div class="form-group">
-                            <label for="telefono">Teléfono:</label>
-                            <input type="tel" id="telefono" class="form-control" placeholder="Número de teléfono">
-                        </div>
-                        <div class="form-group">
-                            <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
-                            <input type="date" id="fecha-nacimiento" class="form-control">
+                            <label for="rol">Rol:</label>
+                            <select id="rol" class="form-control"  th:field="*{rolDTO}" required>
+                                <option value="">Seleccione un rol</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="despachador">Despachador</option>
+                                <option value="conductor">Conductor</option>
+                                <option value="mecanico">Mecánico</option>
+                            </select>
                         </div>
                         <div class="btn-container">
-                            <button type="button" class="btn btn-success">Actualizar Conductor</button>
-                            <button type="button" class="btn btn-warning">Limpiar</button>
+                            <button type="submit" th:formaction="@{/users/update/{userId}}" class="btn btn-success">Actualizar Usuario</button>
+                            <button type="submit" th:formaction="@{/users/update/clean}" class="btn btn-warning">Limpiar</button>
                         </div>
                     </form>
                 </div>
