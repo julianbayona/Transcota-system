@@ -46,7 +46,7 @@ public class DriverServiceTest {
     }
 
     @Test
-    void findAll_ShouldReturnAllDrivers() {
+    void findAllTest() {
         
         when(driverRepository.findAll()).thenReturn(driverList);
 
@@ -60,7 +60,7 @@ public class DriverServiceTest {
     }
 
     @Test
-    void searchId_WhenDriverExists_ShouldReturnDriver() {
+    void searchIdWhenDriverExists() {
         
         when(driverRepository.findById(1L)).thenReturn(Optional.of(driver1));
 
@@ -75,7 +75,7 @@ public class DriverServiceTest {
     }
 
     @Test
-    void searchId_WhenDriverDoesNotExist_ShouldReturnNull() {
+    void searchIdWhenDriverDoesNotExist() {
         
         when(driverRepository.findById(3L)).thenReturn(Optional.empty());
         
@@ -88,7 +88,7 @@ public class DriverServiceTest {
     }
 
     @Test
-    void deleteUser_ShouldCallRepositoryMethod() {
+    void deleteUserTest() {
         
         Long idToDelete = 1L;
         doNothing().when(driverRepository).deleteById(idToDelete);
@@ -101,7 +101,7 @@ public class DriverServiceTest {
     }
     
     @Test
-    void createDriver_ShouldReturnSavedDriver() {
+    void createDriverTest() {
         
         User newDriver = new User(new DriverRole(), 12345L, "Andrés", "Andres@gmail.com");
         newDriver.setName("Pedro López");

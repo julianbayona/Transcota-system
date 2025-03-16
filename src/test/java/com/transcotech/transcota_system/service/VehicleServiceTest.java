@@ -52,7 +52,7 @@ public class VehicleServiceTest {
     }
 
     @Test
-    void findAll_ShouldReturnAllVehicles() {
+    void findAllTest() {
 
         when(vehicleRepository.findAll()).thenReturn(vehicleList);
 
@@ -63,7 +63,7 @@ public class VehicleServiceTest {
     }
 
     @Test
-    void searchId_WhenVehicleExists_ShouldReturnVehicle() {
+    void searchIdWhenVehicleExists() {
 
         when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle1));
 
@@ -76,7 +76,7 @@ public class VehicleServiceTest {
     }
 
     @Test
-    void searchId_WhenVehicleDoesNotExist_ShouldReturnNull() {
+    void searchIdWhenVehicleDoesNotExist() {
 
         when(vehicleRepository.findById(3L)).thenReturn(Optional.empty());
 
@@ -87,7 +87,7 @@ public class VehicleServiceTest {
     }
 
     @Test
-    void deleteVehicle_WhenVehicleExists_ShouldReturnTrue() {
+    void deleteVehicleWhenVehicleExists() {
 
         when(vehicleRepository.existsById(1L)).thenReturn(true);
         doNothing().when(vehicleRepository).deleteById(1L);
@@ -100,7 +100,7 @@ public class VehicleServiceTest {
     }
 
     @Test
-    void deleteVehicle_WhenVehicleDoesNotExist_ShouldReturnFalse() {
+    void deleteVehicleWhenVehicleDoesNotExistFalse() {
 
         when(vehicleRepository.existsById(3L)).thenReturn(false);
 
@@ -112,7 +112,7 @@ public class VehicleServiceTest {
     }
 
     @Test
-    void createVehicle_WhenVehicleDoesNotExist_ShouldReturnTrue() {
+    void createVehicleWhenVehicleDoesNotExistTrue() {
 
         Vehicle newVehicle = new LoadingVehicle("GDH-398", 20);
         newVehicle.setVehicleId(3L);
@@ -131,7 +131,7 @@ public class VehicleServiceTest {
     }
 
     @Test
-    void createVehicle_WhenVehicleExists_ShouldReturnFalse() {
+    void createVehicleWhenVehicleExistsFalse() {
 
         when(vehicleRepository.existsById(1L)).thenReturn(true);
 
@@ -143,7 +143,7 @@ public class VehicleServiceTest {
     }
 
     @Test
-    void updateVehicle_WhenVehicleExists_ShouldReturnTrue() {
+    void updateVehicleWhenVehicleExistsTrue() {
 
         Vehicle updatedVehicle = new LoadingVehicle("amd-980", 21);
         updatedVehicle.setPlate("DEF456");
@@ -166,7 +166,7 @@ public class VehicleServiceTest {
     }
 
     @Test
-    void updateVehicle_WhenVehicleDoesNotExist_ShouldReturnFalse() {
+    void updateVehicleWhenVehicleDoesNotExistFalse() {
 
         Vehicle updatedVehicle = new LoadingVehicle("BMC-109", 28);
         updatedVehicle.setPlate("DEF456");
