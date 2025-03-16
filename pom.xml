@@ -18,11 +18,11 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>23</java.version> <!-- Cambiado de 23 a 17 (LTS) -->
+        <java.version>17</java.version> <!-- Cambiado de 23 a 17 (LTS) -->
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <lombok.version>1.18.36</lombok.version>
-        <maven-compiler-source>23</maven-compiler-source>
-        <maven-compiler-target>23</maven-compiler-target>
+        <maven-compiler-source>17</maven-compiler-source>
+        <maven-compiler-target>17</maven-compiler-target>
     </properties>
 
     <dependencies>
