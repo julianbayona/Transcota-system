@@ -13,9 +13,6 @@ public abstract class Role {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer roleId;
 
-    public Role(){
-    }
-
     public Integer getRoleId() {
         return roleId;
     }

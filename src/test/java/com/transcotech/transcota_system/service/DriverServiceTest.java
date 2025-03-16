@@ -36,11 +36,11 @@ public class DriverServiceTest {
     @BeforeEach
     void setUp() {
         // Configurar datos de prueba
-        driver1 = new User(new DriverRole(), 1L, "Juan Pérez", "juan.perez@ejemplo.com");;
+        driver1 = new User(1L,"Juan Pérez", "juan.perez@ejemplo.com", new DriverRole());;
         
         // Configura otros campos necesarios para User
         
-        driver2 = new User(new DriverRole(), 2L, "María García", "maria.garcia@ejemplo.com");;
+        driver2 = new User(2L,"María García", "maria.garcia@ejemplo.com", new DriverRole());;
 
         driverList = Arrays.asList(driver1, driver2);
     }
@@ -103,7 +103,7 @@ public class DriverServiceTest {
     @Test
     void createDriverTest() {
         
-        User newDriver = new User(new DriverRole(), 12345L, "Andrés", "Andres@gmail.com");
+        User newDriver = new User(12345L, "Andrés", "Andres@gmail.com", new DriverRole());
         newDriver.setName("Pedro López");
         newDriver.setEmail("pedro.lopez@ejemplo.com");
         
