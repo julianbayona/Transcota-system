@@ -16,6 +16,9 @@ public class User extends Person {
     public User(Long id, String name, String email, Role role) {
         super(id, name, email);
         this.role = role;
+        super.setPersonId(id);
+        super.setName(name);
+        super.setEmail(email);
     }
 
     public Role getRole() {
