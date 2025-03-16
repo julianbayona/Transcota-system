@@ -22,51 +22,25 @@
         </div>
         <details>
             <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/users/select}">
-                <div class="nav-item"><span>Ver Usuarios</span></div>
-            </a>
-            <a th:href="@{/users/assigned}">
-                <div class="nav-item"><span>Vehiculos Asignados</span></div>
-            </a>
-            <a th:href="@{/users/register}">
-                <div class="nav-item"><span>Registrar Usuario</span></div>
-            </a>
-            <a th:href="@{/users/update}">
-                <div class="nav-item"><span>Actualizar Usuario</span></div>
-            </a>
-            <a th:href="@{/users/delete}">
-                <div class="nav-item"><span>Eliminar Usuario</span></div>
-            </a>
+            <a th:href="@{/users/select}"><div class="nav-item"><span>Ver Usuarios</span></div></a>
+            <a th:href="@{/users/assigned}"><div class="nav-item"><span>Vehículos Asignados</span></div></a>
+            <a th:href="@{/users/register}"><div class="nav-item"><span>Registrar Usuario</span></div></a>
+            <a th:href="@{/users/update}"><div class="nav-item"><span>Actualizar Usuario</span></div></a>
+            <a th:href="@{/users/delete}"><div class="nav-item"><span>Eliminar Usuario</span></div></a>
         </details>
         <details open>
             <summary><b>Gestión de Vehículos</b></summary>
-            <a th:href="@{/vehicles/select}">
-                <div class="nav-item"><span>Ver Vehículos</span></div>
-            </a>
-            <a th:href="@{/vehicles/register}">
-                <div class="nav-item"><span>Registrar Vehículo</span></div>
-            </a>
-            <a th:href="@{/vehicles/update}">
-                <div class="nav-item"><span>Actualizar Vehículo</span></div>
-            </a>
-            <a th:href="@{/vehicles/delete}">
-                <div class="nav-item active"><span>Eliminar Vehículo</span></div>
-            </a>
+            <a th:href="@{/vehicles/select}"><div class="nav-item"><span>Ver Vehículos</span></div></a>
+            <a th:href="@{/vehicles/register}"><div class="nav-item"><span>Registrar Vehículo</span></div></a>
+            <a th:href="@{/vehicles/update}"><div class="nav-item"><span>Actualizar Vehículo</span></div></a>
+            <a th:href="@{/vehicles/delete}"><div class="nav-item active"><span>Eliminar Vehículo</span></div></a>
         </details>            
         <details>
             <summary><b>Gestión de Viajes</b></summary>
-            <a th:href="@{/trips/select}">
-                <div class="nav-item"><span>Ver Viajes</span></div>
-            </a>
-            <a th:href="@{/trips/register}">
-                <div class="nav-item"><span>Registrar Viaje</span></div>
-            </a>
-            <a th:href="@{/trips/update}">
-                <div class="nav-item"><span>Actualizar Viaje</span></div>
-            </a>
-            <a th:href="@{/trips/delete}">
-                <div class="nav-item"><span>Eliminar Viaje</span></div>
-            </a>
+            <a th:href="@{/trips/select}"><div class="nav-item"><span>Ver Viajes</span></div></a>
+            <a th:href="@{/trips/register}"><div class="nav-item"><span>Registrar Viaje</span></div></a>
+            <a th:href="@{/trips/update}"><div class="nav-item"><span>Actualizar Viaje</span></div></a>
+            <a th:href="@{/trips/delete}"><div class="nav-item"><span>Eliminar Viaje</span></div></a>
         </details>
     </div>
     <div class="container">
@@ -74,48 +48,57 @@
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Eliminar Vehículo</h2>
-                    <form id="form-type" th:object="${vehicleDTO}" method="POST">
+                    <form id="form-type" th:action="@{/vehicles/delete}" method="POST" th:object="${vehicleDTO}">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="vehiculo-id">ID del Vehículo:</label>
                                 <div style="display: flex; gap: 10px;">
                                     <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{vehicleId}" required>
-                                    <button type="submit" th:formaction="@{/vehicles/delete/search}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                    <button type="button" class="btn nav-primary" onclick="buscarVehiculo()" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        
+
+                        <script>
+                            function buscarVehiculo() {
+                                var vehicleId = document.getElementById("vehiculo-id").value;
+                                if (vehicleId) {
+                                    window.location.href = "/vehicles/delete/search?id=" + vehicleId;
+                                } else {
+                                    alert("Por favor, ingrese un ID válido.");
+                                }
+                            }
+                        </script>
+
                         <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
                             <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Vehículo</h4>
                             
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
                                 <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Id vehiculo:</strong> <span id="info-placa" th:text="*{vehicleId} ?: '---'">---</span></label>
+                                    <label><strong>Id vehículo:</strong> <span th:text="*{vehicleId} ?: '---'">---</span></label>
                                 </div>
-                                
                                 <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Placa:</strong> <span id="info-placa" th:text="*{plate} ?: '---'">---</span></label>
+                                    <label><strong>Placa:</strong> <span th:text="*{plate} ?: '---'">---</span></label>
                                 </div>
-                                
                                 <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Modelo:</strong> <span id="info-modelo" th:text="*{model} ?: '---'">---</span></label>
+                                    <label><strong>Modelo:</strong> <span th:text="*{model} ?: '---'">---</span></label>
                                 </div>
-                                
                                 <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Año:</strong> <span id="info-anio" th:text="*{year} ?: '---'">---</span></label>
+                                    <label><strong>Año:</strong> <span th:text="*{year} ?: '---'">---</span></label>
                                 </div>
-                                
                                 <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                    <label><strong>Tipo de Vehículo:</strong> <span id="info-tipo" th:text="*{type} ?: '---'">---</span></label>
+                                    <label><strong>Tipo de Vehículo:</strong> <span th:text="*{type} ?: '---'">---</span></label>
                                 </div>
                             </div>
                         </div>
-                        
+
+                        <input type="hidden" th:field="*{vehicleId}">
+
                         <div class="btn-container">
-                            <button type="submit" th:formaction="@{/vehicles/delete/{vehicleId}}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Vehículo</button>
+                            <button type="submit" th:formaction="@{/vehicles/delete}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Vehículo</button>
                         </div>
                     </form>
                 </div>
