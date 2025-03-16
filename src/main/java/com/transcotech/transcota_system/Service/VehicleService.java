@@ -54,4 +54,8 @@ public class VehicleService implements VehicleServiceInterface {
         }
         return false;
     }
+
+    public List<Vehicle> getAllVehicles() {
+        return vehicleRepository.findAll();
+    }
 }

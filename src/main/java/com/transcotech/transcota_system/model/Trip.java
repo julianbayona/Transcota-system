@@ -1,33 +1,31 @@
 package com.transcotech.transcota_system.model;
 
 import jakarta.persistence.*;
-
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "trip")
-@Inheritance(strategy = InheritanceType.JOINED)
-@PrimaryKeyJoinColumn(name = "tripId")
 public class Trip {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tripId;
 
-    @Column(name = "origin")
+    @Column(name = "origin", nullable = false)
     private String origin;
 
-    @Column(name = "destination")
+    @Column(name = "destination", nullable = false)
     private String destination;
 
-    @Column(name = "date")
-    private String date;
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
 
-    @OneToOne
-    @JoinColumn(name = "person_id")
+    @ManyToOne
+    @JoinColumn(name = "person_id", nullable = false)
     private User driver;
 
-    @OneToOne
-    @JoinColumn(name = "vehicle_id")
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
     public Long getTripId() {
@@ -54,11 +52,11 @@ public class Trip {
         this.destination = destination;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -77,5 +75,19 @@ public class Trip {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
-    
+
+   
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Trip trip = (Trip) o;
+        return tripId != null && tripId.equals(trip.tripId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
