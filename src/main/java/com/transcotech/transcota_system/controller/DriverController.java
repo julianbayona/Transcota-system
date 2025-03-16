@@ -20,7 +20,7 @@ public class DriverController {
     private DriverService driverService;
 
     @GetMapping
-    public String showAllVehicles(Model model){
+    public String showAllDrivers(Model model){
         model.addAttribute("drivers", driverService.findAll());
         return "all-drivers";
     }
@@ -31,7 +31,7 @@ public class DriverController {
         return "";
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     public User createDriver(@RequestBody User user){
         return driverService.createDriver(user);
     }
