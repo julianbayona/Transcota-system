@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,11 +22,11 @@ public class TripRegister {
 
     @ManyToOne
     @JoinColumn(name = "personId")
-    private User driver;
+    private Long driverId;
 
     @ManyToOne
     @JoinColumn(name = "vehicleId")
-    private Vehicle vehicle;
+    private Long vehicleId;
 
     @Column(name="destino")
     private String destinationUbication;
@@ -38,9 +36,6 @@ public class TripRegister {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
-
-    @Enumerated(EnumType.STRING)    
-    private StatusTrip status;
 
 
     public TripRegister(){
@@ -56,20 +51,20 @@ public class TripRegister {
         this.id = id;
     }
 
-    public User getDriver() {
-        return driver;
+    public Long getDriverId() {
+        return driverId;
     }
 
-    public void setDriver(User driver) {
-        this.driver = driver;
+    public void setDriverId(Long driverId) {
+        this.driverId = driverId;
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+    public Long getVehicleId() {
+        return vehicleId;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setVehicleId(Long vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public LocalDate getDate() {
@@ -95,14 +90,5 @@ public class TripRegister {
     public void setOriginUbication(String originUbication) {
         this.originUbication = originUbication;
     }
-
-    public StatusTrip getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusTrip status) {
-        this.status = status;
-    }
-
     
 }

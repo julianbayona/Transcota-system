@@ -6,29 +6,29 @@ import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import com.transcotech.transcota_system.dto.TripDTO;
-import com.transcotech.transcota_system.model.Trip;
+import com.transcotech.transcota_system.model.TripRegister;
 
-@Mapper(uses = {VehicleMapper.class, UserMapper.class})
+@Mapper
 public interface TripMapper {
     TripMapper INSTANCE = Mappers.getMapper(TripMapper.class);
 
     @Mappings({
-        @Mapping(source = "vehicle", target = "vehicleDTO"),
-        @Mapping(source = "driver", target = "driverDTO"),
-        @Mapping(source = "tripId", target = "tripId"),
-        @Mapping(source = "origin", target = "origin"),
-        @Mapping(source = "destination", target = "destination"),
+        @Mapping(source = "vehicleId", target = "vehicleId"),
+        @Mapping(source = "driverId", target = "driverId"),
+        @Mapping(source = "id", target = "tripId"),
+        @Mapping(source = "originUbication", target = "origin"),
+        @Mapping(source = "destinationUbication", target = "destination"),
         @Mapping(source = "date", target = "date")
     })
-    TripDTO tripToTripDTO(Trip trip);
+    TripDTO tripToTripDTO(TripRegister trip);
     @Mappings({
-        @Mapping(source = "vehicleDTO", target = "vehicle"),
-        @Mapping(source = "driverDTO", target = "driver"),
-        @Mapping(source = "tripId", target = "tripId"),
-        @Mapping(source = "origin", target = "origin"),
-        @Mapping(source = "destination", target = "destination"),
+        @Mapping(source = "vehicleId", target = "vehicleId"),
+        @Mapping(source = "driverId", target = "driverId"),
+        @Mapping(source = "tripId", target = "id"),
+        @Mapping(source = "origin", target = "originUbication"),
+        @Mapping(source = "destination", target = "destinationUbication"),
         @Mapping(source = "date", target = "date")
     })
-    Trip tripDTOToTrip(TripDTO tripDTO);
+    TripRegister tripDTOToTrip(TripDTO tripDTO);
 }
 

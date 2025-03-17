@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.model.User;
 
-@Mapper(uses = {RoleMapper.class})
+@Mapper
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 

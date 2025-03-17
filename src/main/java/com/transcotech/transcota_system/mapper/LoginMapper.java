@@ -8,6 +8,7 @@ import com.transcotech.transcota_system.model.Login;
 
 @Mapper
 public interface LoginMapper {
+    
     LoginMapper INSTANCE = Mappers.getMapper(LoginMapper.class);
 
     LoginDTO LoginToLoginDTO(Login Login);
