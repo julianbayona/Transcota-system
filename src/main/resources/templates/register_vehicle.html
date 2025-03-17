@@ -74,7 +74,8 @@
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Registrar Vehículo</h2>
-                    <form id="form-type" th:object="${vehicleDTO}" method="POST">
+                    <form id="form-type"  method="POST" th:object="${vehicleDTO}">
+                       <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> -->
                         <div class="form-group">
                             <label for="placa">Placa:</label>
                             <input type="text" id="placa" class="form-control" placeholder="Ingrese la placa del vehículo" th:field="*{plate}" required>
@@ -96,9 +97,10 @@
                             </select>
                         </div>
                         <div class="btn-container">
-                            <button type="submit" th:formaction="@{/vehicles/register/{vehicleId}}" class="btn btn-success">Registrar Vehículo</button>
-                            <button type="submit" th:formaction="@{/vehicles/register/clean}" class="btn btn-warning">Limpiar</button>
+                            <button type="submit" class="btn btn-success" th:formaction="@{registerVehicle}">Registrar Vehículo</button>
+                            <button type="button" class="btn btn-warning" >Limpiar</button>
                         </div>
+                    
                     </form>
                 </div>
             </div>
