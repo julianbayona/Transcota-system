@@ -62,6 +62,7 @@ public class VehicleService implements VehicleServiceInterface {
 // VehicleService.java
 package com.transcotech.transcota_system.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,8 @@ import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
 @Service
 public class VehicleService implements VehicleServiceInterface {
+
+    private List<Vehicle> vehiclesList = new ArrayList<>();
 
     @Autowired
     private VehicleRepositoryInterface vehicleRepository;
@@ -131,4 +134,14 @@ public class VehicleService implements VehicleServiceInterface {
         System.out.println("Lista actualizada de vehículos:");
         vehicleRepository.findAll().forEach(System.out::println);
     }
+
+    public List<Vehicle> getVehiclesList() {
+        return vehiclesList;
+    }
+
+    public void setVehiclesList(List<Vehicle> vehiclesList) {
+        this.vehiclesList = vehiclesList;
+    }
 }
+
+

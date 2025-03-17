@@ -16,6 +16,8 @@ public  class Vehicle {
     private String type;
 
 
+    
+
     public String getModel() {
         return model;
     }

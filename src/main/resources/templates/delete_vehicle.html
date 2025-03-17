@@ -43,67 +43,82 @@
             <a th:href="@{/trips/delete}"><div class="nav-item"><span>Eliminar Viaje</span></div></a>
         </details>
     </div>
+    
     <div class="container">
         <div class="content-container">
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Eliminar Vehículo</h2>
-                    <form id="form-type" th:action="@{/vehicles/delete}" method="POST" th:object="${vehicleDTO}">
+
+                    <!-- ✅ Formulario de búsqueda -->
+                    <form id="search-form" th:action="@{/vehicles/delete/search}" method="POST">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="vehiculo-id">ID del Vehículo:</label>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{vehicleId}" required>
-                                    <button type="button" class="btn nav-primary" onclick="buscarVehiculo()" style="display: flex; align-items: center; justify-content: center; height: 42px;">
-                                        <i class="fa-solid fa-magnifying-glass icon"></i>
-                                        Buscar
+                                    <input type="number" name="id" id="vehiculo-id" class="form-control"
+                                           placeholder="Ingrese el ID del vehículo"
+                                           th:value="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : ''}"
+                                           required>
+                                    <button type="submit" class="btn nav-primary" 
+                                            style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                        <i class="fa-solid fa-magnifying-glass icon"></i> Buscar
                                     </button>
                                 </div>
                             </div>
                         </div>
+                    </form>
 
-                        <script>
-                            function buscarVehiculo() {
-                                var vehicleId = document.getElementById("vehiculo-id").value;
-                                if (vehicleId) {
-                                    window.location.href = "/vehicles/delete/search?id=" + vehicleId;
-                                } else {
-                                    alert("Por favor, ingrese un ID válido.");
-                                }
-                            }
-                        </script>
-
-                        <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
-                            <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Vehículo</h4>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
-                                <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Id vehículo:</strong> <span th:text="*{vehicleId} ?: '---'">---</span></label>
-                                </div>
-                                <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Placa:</strong> <span th:text="*{plate} ?: '---'">---</span></label>
-                                </div>
-                                <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Modelo:</strong> <span th:text="*{model} ?: '---'">---</span></label>
-                                </div>
-                                <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Año:</strong> <span th:text="*{year} ?: '---'">---</span></label>
-                                </div>
-                                <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                    <label><strong>Tipo de Vehículo:</strong> <span th:text="*{type} ?: '---'">---</span></label>
-                                </div>
+                    <!-- ✅ Cuadro de información corregido -->
+                    <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 20px; margin-bottom: 15px; font-size: 1em; width: 100%; max-width: 700px;">
+                        <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1.2em;">Información del Vehículo</h4>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                            <div class="form-group">
+                                <label><strong>Id vehículo:</strong> <span th:text="${vehicleDTO != null ? vehicleDTO.vehicleId : '---'}">---</span></label>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Placa:</strong> <span th:text="${vehicleDTO != null ? vehicleDTO.plate : '---'}">---</span></label>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Modelo:</strong> <span th:text="${vehicleDTO != null ? vehicleDTO.model : '---'}">---</span></label>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Año:</strong> <span th:text="${vehicleDTO != null ? vehicleDTO.year : '---'}">---</span></label>
+                            </div>
+                            <div class="form-group" style="grid-column: span 2;">
+                                <label><strong>Tipo de Vehículo:</strong> <span th:text="${vehicleDTO != null ? vehicleDTO.type : '---'}">---</span></label>
                             </div>
                         </div>
+                    </div>
 
-                        <input type="hidden" th:field="*{vehicleId}">
-
+                    <!-- ✅ Formulario de eliminación -->
+                    <form id="delete-form" th:action="@{/vehicles/delete}" method="POST">
+                        <input type="hidden" name="vehicleId" th:value="${vehicleDTO != null ? vehicleDTO.vehicleId : ''}">
                         <div class="btn-container">
-                            <button type="submit" th:formaction="@{/vehicles/delete}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Vehículo</button>
+                            <button type="submit" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Vehículo</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- ✅ Alertas de éxito o error -->
+    <script>
+        window.onload = function() {
+            var successMessage = "[[${successMessage}]]";
+            var errorMessage = "[[${errorMessage}]]";
+
+            if (successMessage && successMessage.trim() !== "" && successMessage !== "null") {
+                alert(successMessage);
+            }
+
+            if (errorMessage && errorMessage.trim() !== "" && errorMessage !== "null") {
+                alert(errorMessage);
+            }
+        };
+    </script>
+
 </body>
 </html>
