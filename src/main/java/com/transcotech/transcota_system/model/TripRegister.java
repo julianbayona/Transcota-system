@@ -3,38 +3,44 @@ package com.transcotech.transcota_system.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+
+@Entity
 public class TripRegister {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JoinColumn(name = "personId")
     private User driver;
 
+    @JoinColumn(name = "vehicleId")
     private Vehicle vehicle;
 
-    private Ubication destinationUbication;
+    private String destinationUbication;
 
-    private Ubication originUbication;
+    private String originUbication;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
 
-    private String status;
+    @Enumerated(EnumType.STRING)    
+    private StatusTrip status;
 
 
     public TripRegister(){
 
     }
 
-    public TripRegister(Long id, User driver, Vehicle vehicle, LocalDate date, String status, Ubication destinationUbication, Ubication originUbication) {
-        this.id = id;
-        this.driver = driver;
-        this.vehicle = vehicle;
-        this.date = date;
-        this.status = status;
-        this.destinationUbication = destinationUbication;
-        this.originUbication = originUbication;
-    }
 
     public Long getId() {
         return id;
@@ -68,27 +74,29 @@ public class TripRegister {
         this.date = date;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Ubication getDestinationUbication() {
+    public String getDestinationUbication() {
         return destinationUbication;
     }
 
-    public void setDestinationUbication(Ubication destinationUbication) {
+    public void setDestinationUbication(String destinationUbication) {
         this.destinationUbication = destinationUbication;
     }
 
-    public Ubication getOriginUbication() {
+    public String getOriginUbication() {
         return originUbication;
     }
 
-    public void setOriginUbication(Ubication originUbication) {
+    public void setOriginUbication(String originUbication) {
         this.originUbication = originUbication;
     }
+
+    public StatusTrip getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusTrip status) {
+        this.status = status;
+    }
+
+    
 }
