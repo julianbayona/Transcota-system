@@ -30,8 +30,9 @@ public class TripRegisterService implements TripRegisterServiceInterface{
     }
 
     @Override
-    public TripRegister searchTripRegisterById(Long id) {
-        return tripRegisterRepositoryInterface.findById(id).orElse(null);
+    public TripDTO searchTripRegisterById(Long id) {
+        TripRegister tripRegister = tripRegisterRepositoryInterface.findById(id).orElse(null);
+        return tripMapper.tripToTripDTO(tripRegister);
     }
 
     @Override

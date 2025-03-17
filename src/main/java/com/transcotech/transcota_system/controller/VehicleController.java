@@ -122,7 +122,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.transcotech.transcota_system.Service.VehicleService;
 import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.mapper.VehicleMapper;
@@ -134,7 +139,6 @@ public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
-    private VehicleDTO vehicleDTO;
 
     @GetMapping
     public String showAllVehicles(Model model) {
@@ -153,7 +157,7 @@ public class VehicleController {
     @PostMapping("register")
     public String register(VehicleDTO vehicleDTO ,Model model){
         System.out.println("correcto");
-        Vehicle vehicle = VehicleMapper.INSTANCE.vehicleDTOToLoadingVehicle(vehicleDTO); 
+        Vehicle vehicle = VehicleMapper.INSTANCE.vehicleDTOToVehicle(vehicleDTO); 
         System.out.println(vehicle.toString());
         //vehicleService.createVehicle(vehicle);
         
@@ -163,10 +167,10 @@ public class VehicleController {
     //ACTUALIZAR ----------------------------------------------------------------------------
 
     @GetMapping("/update")
-public String showUpdateForm(Model model) {
-    model.addAttribute("vehicleDTO", new VehicleDTO());  // Se inicializa un objeto vacío
-    return "update_vehicle";
-}
+    public String showUpdateForm(Model model) {
+        model.addAttribute("vehicleDTO", new VehicleDTO());  // Se inicializa un objeto vacío
+        return "update_vehicle";
+    }
 
 @PostMapping("/update/search")
 public String searchVehicle(@RequestParam("vehicleId") Long id, Model model) {
@@ -177,7 +181,7 @@ public String searchVehicle(@RequestParam("vehicleId") Long id, Model model) {
     Vehicle veic = new Vehicle();
     veic.setModel("Toyota");
     veic.setPlate("ABC123");
-    veic.setType("Carga");
+    veic.setType(null);
     veic.setVehicleId(21); // ID de prueba
     veic.setYear(2020);
 
@@ -212,7 +216,7 @@ public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO)
     Vehicle veic = new Vehicle();
     veic.setModel("Toyota");
     veic.setPlate("ABC123");
-    veic.setType("Carga");
+    veic.setType(vehicleDTO.getType());
     veic.setVehicleId(21); // ID de prueba
     veic.setYear(2020);
 
@@ -250,14 +254,14 @@ vehicleService.getVehiclesList().clear();
     Vehicle v1 = new Vehicle();
     v1.setModel("mazda");
     v1.setPlate("ABC123");
-    v1.setType("Carga");
+    v1.setType(null);
     v1.setVehicleId(21); // ID de prueba
     v1.setYear(2020);
 
     Vehicle v2 = new Vehicle();
     v2.setModel("Toyota");
     v2.setPlate("ABC");
-    v2.setType("Pasajeros");
+    v2.setType(null);
     v2.setVehicleId(22); // ID de prueba
     v2.setYear(2020);
 

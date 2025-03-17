@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.transcotech.transcota_system.Service.TripRegisterService;
+import com.transcotech.transcota_system.dto.TripDTO;
 import com.transcotech.transcota_system.model.TripRegister;
 
 @Controller
@@ -46,8 +47,8 @@ public class TripRegisterController {
     }
 
     @PostMapping("/create")
-    public void createTrip(@RequestBody TripRegister tripRegister) {
-        tripRegisterService.createTripRegister(tripRegister);
+    public void createTrip(@RequestBody TripDTO tripDTO) {
+        tripRegisterService.createTripRegister(tripDTO);
     }
 
     @PostMapping("/register")

@@ -72,8 +72,12 @@ package com.transcotech.transcota_system.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.transcotech.transcota_system.dto.VehicleDTO;
+import com.transcotech.transcota_system.mapper.VehicleMapper;
 import com.transcotech.transcota_system.model.Vehicle;
 import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
@@ -81,6 +85,8 @@ import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 public class VehicleService implements VehicleServiceInterface {
 
     private List<Vehicle> vehiclesList = new ArrayList<>();
+
+    private final VehicleMapper vehicleMapper = VehicleMapper.INSTANCE;
 
     @Autowired
     private VehicleRepositoryInterface vehicleRepository;
@@ -91,8 +97,9 @@ public class VehicleService implements VehicleServiceInterface {
     }
 
     @Override
-    public Vehicle searchId(Long id) {
-        return vehicleRepository.findById(id).orElse(null);
+    public VehicleDTO searchId(Long id) {
+        Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+        return vehicleMapper.vehicleToVehicleDTO(vehicle);
     }
 
     @Override
