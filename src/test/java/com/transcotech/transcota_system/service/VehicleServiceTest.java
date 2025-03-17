@@ -1,22 +1,28 @@
 package com.transcotech.transcota_system.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.transcotech.transcota_system.Service.VehicleService;
-import com.transcotech.transcota_system.model.LoadingVehicle;
-import com.transcotech.transcota_system.model.PassengerVehicle;
 import com.transcotech.transcota_system.model.Vehicle;
 import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
@@ -36,13 +42,13 @@ public class VehicleServiceTest {
     @BeforeEach
     void setUp() {
         // Configurar datos de prueba
-        vehicle1 = new PassengerVehicle("BMC-499", 15);
+        vehicle1 = new Vehicle();
         vehicle1.setVehicleId(1L);
         vehicle1.setPlate("ABC123");
         vehicle1.setModel("Toyota Corolla");
         vehicle1.setYear(2022);
 
-        vehicle2 = new PassengerVehicle("CPM-835", 12);
+        vehicle2 = new Vehicle();
         vehicle2.setVehicleId(2L);
         vehicle2.setPlate("XYZ789");
         vehicle2.setModel("Honda Civic");
@@ -114,7 +120,7 @@ public class VehicleServiceTest {
     @Test
     void createVehicleWhenVehicleDoesNotExistTrue() {
 
-        Vehicle newVehicle = new LoadingVehicle("GDH-398", 20);
+        Vehicle newVehicle = new Vehicle();
         newVehicle.setVehicleId(3L);
         newVehicle.setPlate("DEF456");
         newVehicle.setModel("Nissan Altima");
@@ -145,7 +151,7 @@ public class VehicleServiceTest {
     @Test
     void updateVehicleWhenVehicleExistsTrue() {
 
-        Vehicle updatedVehicle = new LoadingVehicle("amd-980", 21);
+        Vehicle updatedVehicle = new Vehicle();
         updatedVehicle.setPlate("DEF456");
         updatedVehicle.setModel("Toyota Camry");
         updatedVehicle.setYear(2025);
@@ -168,7 +174,7 @@ public class VehicleServiceTest {
     @Test
     void updateVehicleWhenVehicleDoesNotExistFalse() {
 
-        Vehicle updatedVehicle = new LoadingVehicle("BMC-109", 28);
+        Vehicle updatedVehicle = new Vehicle();
         updatedVehicle.setPlate("DEF456");
         updatedVehicle.setModel("Toyota Camry");
         updatedVehicle.setYear(2025);

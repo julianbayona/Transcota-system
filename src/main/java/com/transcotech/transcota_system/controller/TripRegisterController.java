@@ -1,13 +1,20 @@
 package com.transcotech.transcota_system.controller;
 
-import com.transcotech.transcota_system.Service.TripRegisterService;
-import com.transcotech.transcota_system.dto.TripDTO;
-import com.transcotech.transcota_system.model.TripRegister;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.transcotech.transcota_system.Service.TripRegisterService;
+import com.transcotech.transcota_system.model.TripRegister;
 
 @Controller
 @RequestMapping("/trips")
@@ -22,6 +29,11 @@ public class TripRegisterController {
         return "select_trip";
     }
 
+    @GetMapping("/all")
+    public List<TripRegister> showAlltri(){
+        return tripRegisterService.findAll();
+    }
+
     @GetMapping("/search")
     public String searchTrip(@RequestParam("tripId") Long tripId, Model model) {
         var trip = tripRegisterService.searchTripRegisterById(tripId);
@@ -31,6 +43,11 @@ public class TripRegisterController {
             model.addAttribute("error", "No se encontró el viaje con ID: " + tripId);
         }
         return "select_trip";
+    }
+
+    @PostMapping("/create")
+    public void createTrip(@RequestBody TripRegister tripRegister) {
+        tripRegisterService.createTripRegister(tripRegister);
     }
 
     @PostMapping("/register")
