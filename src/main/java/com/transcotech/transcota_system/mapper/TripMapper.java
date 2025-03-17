@@ -1,12 +1,12 @@
 package com.transcotech.transcota_system.mapper;
 
+import com.transcotech.transcota_system.model.TripRegister;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import com.transcotech.transcota_system.dto.TripDTO;
-import com.transcotech.transcota_system.model.Trip;
 
 @Mapper(uses = {VehicleMapper.class, UserMapper.class})
 public interface TripMapper {
@@ -20,7 +20,7 @@ public interface TripMapper {
         @Mapping(source = "destination", target = "destination"),
         @Mapping(source = "date", target = "date")
     })
-    TripDTO tripToTripDTO(Trip trip);
+    TripDTO tripToTripDTO(TripRegister trip);
     @Mappings({
         @Mapping(source = "vehicleDTO", target = "vehicle"),
         @Mapping(source = "driverDTO", target = "driver"),
@@ -29,6 +29,6 @@ public interface TripMapper {
         @Mapping(source = "destination", target = "destination"),
         @Mapping(source = "date", target = "date")
     })
-    Trip tripDTOToTrip(TripDTO tripDTO);
+    TripRegister tripDTOToTrip(TripDTO tripDTO);
 }
 

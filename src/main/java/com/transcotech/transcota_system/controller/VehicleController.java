@@ -1,6 +1,7 @@
 package com.transcotech.transcota_system.controller;
 
 
+import com.transcotech.transcota_system.dto.VehicleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +56,7 @@ public class VehicleController {
 
     @GetMapping("/search")
     public String getVehicleById(@RequestParam("id") Long id, Model model) {
-        Vehicle vehicle = vehicleService.searchId(id);
+        VehicleDTO vehicle = vehicleService.searchId(id);
         if (vehicle != null) {
             model.addAttribute("vehicle", vehicle);
             return "vehicle_detail"; 
@@ -80,7 +81,7 @@ public String showDeleteForm(Model model) {
 
 @GetMapping("/delete/search")
 public String searchVehicleForDelete(@RequestParam("id") Long id, Model model) {
-    Vehicle vehicle = vehicleService.searchId(id);
+    VehicleDTO vehicle = vehicleService.searchId(id);
     if (vehicle != null) {
         model.addAttribute("vehicleDTO", vehicle);
         return "delete_vehicle";

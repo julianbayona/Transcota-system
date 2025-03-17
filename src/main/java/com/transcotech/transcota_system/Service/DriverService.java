@@ -2,6 +2,8 @@ package com.transcotech.transcota_system.Service;
 
 import java.util.List;
 
+import com.transcotech.transcota_system.dto.UserDTO;
+import com.transcotech.transcota_system.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,8 @@ import com.transcotech.transcota_system.repositories.DriverRepositoryInterface;
 
 @Service
 public class DriverService implements DriverServiceInterface{
+
+    private final UserMapper userMapper = UserMapper.INSTANCE;
 
     @Autowired
     private DriverRepositoryInterface driverRepository;
@@ -20,8 +24,9 @@ public class DriverService implements DriverServiceInterface{
     }
 
     @Override
-    public User searchId(Long id){
-        return driverRepository.findById(id).orElse(null);
+    public UserDTO searchId(Long id){
+        UserDTO userDTO = userMapper.userToUserDTO(driverRepository.findById(id).orElse(null));
+        return userDTO;
     }
 
     @Override

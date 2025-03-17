@@ -2,6 +2,10 @@ package com.transcotech.transcota_system.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.transcotech.transcota_system.dto.UserDTO;
+import com.transcotech.transcota_system.dto.VehicleDTO;
+import com.transcotech.transcota_system.mapper.VehicleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.transcotech.transcota_system.model.Vehicle;
@@ -9,6 +13,8 @@ import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
 @Service
 public class VehicleService implements VehicleServiceInterface {
+
+    private final VehicleMapper vehicleMapper = VehicleMapper.INSTANCE;
 
     @Autowired
     private VehicleRepositoryInterface vehicleRepository;
@@ -19,8 +25,9 @@ public class VehicleService implements VehicleServiceInterface {
     }
 
     @Override
-    public Vehicle searchId(Long id) {
-        return vehicleRepository.findById(id).orElse(null);
+    public VehicleDTO searchId(Long id) {
+        VehicleDTO vehicleDTO = vehicleMapper.vehicleToVehicleDTO(vehicleRepository.findById(id).orElse(null));
+        return vehicleDTO;
     }
 
     @Override
