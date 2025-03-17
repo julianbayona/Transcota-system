@@ -29,14 +29,15 @@ public class TripRegisterService implements TripRegisterServiceInterface{
     }
 
     @Override
-    public TripRegister createTripRegister(TripDTO tripDTO) {
+    public TripRegister createTripRegister(TripRegister tripRegister) {
 
-        return this.tripRegisterRepositoryInterface.save();
+        return this.tripRegisterRepositoryInterface.save(tripRegister);
 
     }
 
     public TripRegister dtoToObject(TripDTO tripDTO){
         TripRegister tripRegister = new TripRegister();
+        return tripRegister;
     }
 
 

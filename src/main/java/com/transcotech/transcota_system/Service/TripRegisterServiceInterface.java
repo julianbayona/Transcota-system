@@ -11,5 +11,5 @@ public interface TripRegisterServiceInterface {
     public List<TripRegister> findAll();
     public TripRegister searchTripRegisterById(Long id);
     public void deleteTripRegister(Long id);
-    public TripRegister createTripRegister(TripDTO tripDto);
+    public TripRegister createTripRegister(TripRegister tripRegister);
 }

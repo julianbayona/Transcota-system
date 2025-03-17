@@ -2,6 +2,7 @@ package com.transcotech.transcota_system.controller;
 
 import com.transcotech.transcota_system.Service.TripRegisterService;
 import com.transcotech.transcota_system.dto.TripDTO;
+import com.transcotech.transcota_system.model.TripRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,9 +34,9 @@ public class TripRegisterController {
     }
 
     @PostMapping("/register")
-    public String registerTrip(@ModelAttribute("trip") TripDTO tripDTO, RedirectAttributes redirectAttributes) {
+    public String registerTrip(@ModelAttribute("trip") TripRegister tripRegister, RedirectAttributes redirectAttributes) {
         try {
-            tripRegisterService.createTripRegister(tripDTO); // Guarda el viaje en la BD
+            tripRegisterService.createTripRegister(tripRegister); // Guarda el viaje en la BD
             redirectAttributes.addFlashAttribute("success", "Viaje registrado con éxito!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al registrar el viaje.");
