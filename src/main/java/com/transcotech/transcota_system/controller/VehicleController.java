@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.transcotech.transcota_system.Service.VehicleService;
+import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.model.Vehicle;
 
 @Controller
@@ -62,7 +63,7 @@ public class VehicleController {
 
     @GetMapping("/search")
     public String getVehicleById(@RequestParam("id") Long id, Model model) {
-        Vehicle vehicle = vehicleService.searchId(id);
+        VehicleDTO vehicle = vehicleService.searchId(id);
         if (vehicle != null) {
             model.addAttribute("vehicle", vehicle);
             return "vehicle_detail"; 
@@ -87,7 +88,7 @@ public String showDeleteForm(Model model) {
 
 @GetMapping("/delete/search")
 public String searchVehicleForDelete(@RequestParam("id") Long id, Model model) {
-    Vehicle vehicle = vehicleService.searchId(id);
+    VehicleDTO vehicle = vehicleService.searchId(id);
     if (vehicle != null) {
         model.addAttribute("vehicleDTO", vehicle);
         return "delete_vehicle";

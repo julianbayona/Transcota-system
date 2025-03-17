@@ -1,13 +1,15 @@
 package com.transcotech.transcota_system.Service;
 
 import java.util.List;
+
+import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.model.Vehicle;
 
 public interface VehicleServiceInterface {
 
     List<Vehicle> findAll();
 
-    Vehicle searchId(Long id);
+    VehicleDTO searchId(Long id);
 
     boolean deleteVehicle(Long id);
 

@@ -51,9 +51,9 @@ public class TripRegisterController {
     }
 
     @PostMapping("/register")
-    public String registerTrip(@ModelAttribute("trip") TripRegister tripRegister, RedirectAttributes redirectAttributes) {
+    public String registerTrip(@ModelAttribute("trip") TripDTO tripDTO, RedirectAttributes redirectAttributes) {
         try {
-            tripRegisterService.createTripRegister(tripRegister); // Guarda el viaje en la BD
+            tripRegisterService.createTripRegister(tripDTO); // Guarda el viaje en la BD
             redirectAttributes.addFlashAttribute("success", "Viaje registrado con éxito!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al registrar el viaje.");
