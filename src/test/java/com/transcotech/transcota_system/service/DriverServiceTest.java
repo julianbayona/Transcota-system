@@ -1,22 +1,25 @@
 package com.transcotech.transcota_system.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.transcotech.transcota_system.Service.DriverService;
-import com.transcotech.transcota_system.model.DriverRole;
 import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.repositories.DriverRepositoryInterface;
 
@@ -36,11 +39,11 @@ public class DriverServiceTest {
     @BeforeEach
     void setUp() {
         // Configurar datos de prueba
-        driver1 = new User(1L,"Juan Pérez", "juan.perez@ejemplo.com", new DriverRole());;
+        driver1 = new User();
         
         // Configura otros campos necesarios para User
         
-        driver2 = new User(2L,"María García", "maria.garcia@ejemplo.com", new DriverRole());;
+        driver2 = new User();
 
         driverList = Arrays.asList(driver1, driver2);
     }
@@ -103,7 +106,7 @@ public class DriverServiceTest {
     @Test
     void createDriverTest() {
         
-        User newDriver = new User(12345L, "Andrés", "Andres@gmail.com", new DriverRole());
+        User newDriver = new User();
         newDriver.setName("Pedro López");
         newDriver.setEmail("pedro.lopez@ejemplo.com");
         

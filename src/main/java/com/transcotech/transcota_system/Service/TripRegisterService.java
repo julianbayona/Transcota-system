@@ -1,16 +1,16 @@
 package com.transcotech.transcota_system.Service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.transcotech.transcota_system.dto.TripDTO;
 import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.mapper.TripMapper;
 import com.transcotech.transcota_system.model.TripRegister;
 import com.transcotech.transcota_system.repositories.TripRegisterRepositoryInterface;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
 @Service
 public class TripRegisterService implements TripRegisterServiceInterface{
 

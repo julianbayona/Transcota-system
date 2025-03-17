@@ -25,6 +25,10 @@ public class Vehicle {
     @Enumerated(EnumType.STRING)
     private TypeVehicle type;
 
+    public Vehicle(){
+        
+    }
+
 
     public String getModel() {
         return model;

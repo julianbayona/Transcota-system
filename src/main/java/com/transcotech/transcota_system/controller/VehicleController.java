@@ -1,7 +1,8 @@
 package com.transcotech.transcota_system.controller;
 
 
-import com.transcotech.transcota_system.dto.VehicleDTO;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.transcotech.transcota_system.Service.VehicleService;
+import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.model.Vehicle;
 
 @Controller
@@ -27,6 +29,11 @@ public class VehicleController {
     public String showAllVehicles(Model model) {
         model.addAttribute("vehicles", vehicleService.findAll());
         return "all-vehicles"; 
+    }
+
+    @GetMapping("/all")
+    public List<Vehicle> showAllVehi(){
+        return vehicleService.findAll();
     }
 
     @GetMapping("/register")
