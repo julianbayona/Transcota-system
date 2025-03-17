@@ -1,5 +1,7 @@
 package com.transcotech.transcota_system.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,22 +11,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.transcotech.transcota_system.Service.DriverService;
 import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.model.Vehicle;
 
 @Controller
-@RequestMapping("/api/drivers")
+@RequestMapping("/drivers")
 public class DriverController {
 
     @Autowired
     private DriverService driverService;
 
-    @GetMapping
+    //@GetMapping
     public String showAllDrivers(Model model){
         model.addAttribute("drivers", driverService.findAll());
         return "all-drivers";
+    }
+
+    @GetMapping("/all")
+    public List<User> showAllDri(){
+        return driverService.findAll();
     }
 
     @GetMapping("/delete/{id}")
@@ -34,8 +42,9 @@ public class DriverController {
     }
 
     @PostMapping("/create")
-    public User createDriver(@RequestBody User user){
-        return driverService.createDriver(user);
+    @ResponseBody
+    public void createDriver(@RequestBody User user){
+        driverService.createDriver(user);
     }
 
       @PostMapping("/register")

@@ -1,19 +1,12 @@
 package com.transcotech.transcota_system.model;
 
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "ubication")
 public class Ubication {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
 
-    @Column(nullable = false, length = 100)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
     private Ubication parentUbication;
 
     public Ubication(){
