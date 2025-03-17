@@ -1,24 +1,21 @@
 package com.transcotech.transcota_system.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "personId")
+@Table(name="userSystem")
 public class User extends Person {
 
-    @OneToOne
-    @JoinColumn(name = "roleId")
+    @Enumerated(EnumType.STRING)
+    @Column(name= "role")
     private Role role;
 
-    public User() {
-    }
+    public User(){
 
-    public User(Long id, String name, String email, Role role) {
-        super(id, name, email);
-        this.role = role;
-        super.setPersonId(id);
-        super.setName(name);
-        super.setEmail(email);
     }
 
     public Role getRole() {

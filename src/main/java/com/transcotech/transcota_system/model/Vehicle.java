@@ -1,10 +1,19 @@
 package com.transcotech.transcota_system.model;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public  class Vehicle {
+@Table(name = "vehicles")
+public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,7 +22,8 @@ public  class Vehicle {
     private String plate;
     private String model;
     private int year;
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TypeVehicle type;
 
 
     public String getModel() {
@@ -48,11 +58,13 @@ public  class Vehicle {
         this.plate = plate;
     }
 
-    public String getType() {
+    public TypeVehicle getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TypeVehicle type) {
         this.type = type;
     }
+
+    
 }

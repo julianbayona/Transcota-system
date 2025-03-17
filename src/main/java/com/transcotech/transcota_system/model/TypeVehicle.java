@@ -1,8 +1,7 @@
 package com.transcotech.transcota_system.model;
 
-public enum Role {
+public enum  TypeVehicle {
+    LOADING,
+    PASSENGER
     
-    ADMIN,
-    DRIVER
-
 }

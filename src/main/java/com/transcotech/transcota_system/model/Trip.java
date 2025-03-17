@@ -1,31 +1,26 @@
 package com.transcotech.transcota_system.model;
 
-import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "trip")
+
 public class Trip {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long tripId;
 
-    @Column(name = "origin", nullable = false)
     private String origin;
 
-    @Column(name = "destination", nullable = false)
+
     private String destination;
 
-    @Column(name = "date", nullable = false)
+
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
+
     private User driver;
 
-    @ManyToOne
-    @JoinColumn(name = "vehicle_id", nullable = false)
+
     private Vehicle vehicle;
 
     public Long getTripId() {

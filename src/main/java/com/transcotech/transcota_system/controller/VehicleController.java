@@ -4,7 +4,14 @@ package com.transcotech.transcota_system.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.transcotech.transcota_system.Service.VehicleService;
 import com.transcotech.transcota_system.model.Vehicle;
 
@@ -40,6 +47,12 @@ public class VehicleController {
         return "register_vehicle"; 
     }
 
+    @PostMapping("/create")
+    @ResponseBody
+    public void create(@RequestBody Vehicle vehicle) {
+        vehicleService.createVehicle(vehicle); 
+    }
+
     @GetMapping("/search")
     public String getVehicleById(@RequestParam("id") Long id, Model model) {
         Vehicle vehicle = vehicleService.searchId(id);
@@ -61,7 +74,7 @@ public class VehicleController {
 
     @GetMapping("/delete")
 public String showDeleteForm(Model model) {
-    model.addAttribute("vehicleDTO", new Vehicle()); 
+   // model.addAttribute("vehicleDTO", new Vehicle()); 
     return "delete_vehicle"; 
 }
 
