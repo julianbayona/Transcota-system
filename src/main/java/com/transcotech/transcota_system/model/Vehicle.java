@@ -55,4 +55,13 @@ public  class Vehicle {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Vehicle [vehicleId=" + vehicleId + ", plate=" + plate + ", model=" + model + ", year=" + year
+                + ", type=" + type + "]";
+    }
+
+
+    
 }

@@ -95,12 +95,15 @@ public String showVehiclesList(Model model) {
 }*/
 package com.transcotech.transcota_system.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.transcotech.transcota_system.Service.VehicleService;
 import com.transcotech.transcota_system.dto.VehicleDTO;
+import com.transcotech.transcota_system.mapper.VehicleMapper;
 import com.transcotech.transcota_system.model.Vehicle;
 
 @Controller
@@ -116,37 +119,62 @@ public class VehicleController {
         return "all-vehicles";
     }
 
+
+    //REGISTRAR--------------------------------------------------------------------
+
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("vehicleDTO", new VehicleDTO());
         return "register_vehicle";
     }
-
-
-    @PostMapping("registerVehicle")
+    @PostMapping("register")
     public String register(VehicleDTO vehicleDTO ,Model model){
         System.out.println("correcto");
+        Vehicle vehicle = VehicleMapper.INSTANCE.vehicleDTOToLoadingVehicle(vehicleDTO); 
+        System.out.println(vehicle.toString());
+        //vehicleService.createVehicle(vehicle);
         return "register_vehicle";
     }
 
-
-    @PostMapping("/register")
-    public String registerVehicle(@ModelAttribute("vehicleDTO") Vehicle vehicle, Model model) {
-        boolean created = vehicleService.createVehicle(vehicle);
-        if (created) {
-            System.out.println("Vehículo registrado: " + vehicle);
-            model.addAttribute("successMessage", "Vehículo registrado correctamente");
-        } else {
-            model.addAttribute("errorMessage", "Error al registrar vehículo");
-        }
-        return "register_vehicle";
-    }
+    //ACTUALIZAR ----------------------------------------------------------------------------
 
     @GetMapping("/update")
     public String showUpdateForm(Model model) {
         model.addAttribute("vehicleDTO", new Vehicle());
         return "update_vehicle";
     }
+
+    @PostMapping("/update/search")
+public String searchVehicle(@RequestParam("vehicleId") Long id, Model model) {
+    //Vehicle vehicle = vehicleService.searchId(id);
+    ArrayList <Vehicle> vs = new ArrayList<Vehicle>();
+    Vehicle veic = new Vehicle();
+    veic.setModel("a");
+    veic.setPlate("123");
+    veic.setType("Carga");
+    veic.setVehicleId(21);
+    veic.setYear(1339);
+
+    Vehicle dind = null;
+        for (Vehicle v : vs) {
+            if (v.getVehicleId() == id) {
+                dind = v;
+                break; // Como los números de patas no se repiten, podemos salir del bucle
+            }
+        }
+
+    if (dind == null) {
+        model.addAttribute("errorMessage", "El vehículo con ID " + id + " no existe.");
+        return "update_vehicle";  // Recargar la vista sin llenar datos
+    }
+
+    // Convertir el vehículo a DTO si es necesario
+    VehicleDTO vehicleDTO = VehicleMapper.INSTANCE.vehicleToVehicleDTO(dind);
+    
+    model.addAttribute("vehicleDTO", vehicleDTO);
+    return "update_vehicle";  // Cargar la vista con los datos llenos
+}
+
 
     @PostMapping("/update")
     public String updateVehicle(@RequestParam("vehicleId") Long id, @ModelAttribute("vehicleDTO") Vehicle vehicle, Model model) {
