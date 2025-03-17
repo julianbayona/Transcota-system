@@ -113,6 +113,7 @@ public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
+    private VehicleDTO vehicleDTO;
 
     @GetMapping
     public String showAllVehicles(Model model) {
@@ -134,6 +135,7 @@ public class VehicleController {
         Vehicle vehicle = VehicleMapper.INSTANCE.vehicleDTOToLoadingVehicle(vehicleDTO); 
         System.out.println(vehicle.toString());
         //vehicleService.createVehicle(vehicle);
+        
         return "register_vehicle";
     }
 

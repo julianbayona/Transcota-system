@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.transcotech.transcota_system.Service.DriverService;
+import com.transcotech.transcota_system.dto.UserDTO;
+import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.model.Vehicle;
 
 @Controller
-@RequestMapping("/api/drivers")
+@RequestMapping("/users")
 public class DriverController {
 
     @Autowired
@@ -26,6 +28,15 @@ public class DriverController {
         model.addAttribute("drivers", driverService.findAll());
         return "all-drivers";
     }
+
+   
+
+     @GetMapping("/register")
+    public String showRegisterForm(Model model) {
+        model.addAttribute("userDTO", new UserDTO());
+        return "register_user";
+    }
+
 
     @GetMapping("/delete/{id}")
     public String deleteDriver(@PathVariable Long id){
