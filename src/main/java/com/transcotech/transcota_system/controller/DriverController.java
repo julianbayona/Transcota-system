@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.transcotech.transcota_system.Service.DriverService;
+import com.transcotech.transcota_system.dto.UserDTO;
+import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.model.Vehicle;
 

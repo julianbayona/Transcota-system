@@ -47,27 +47,36 @@
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Actualizar Vehículo</h2>
-                    <form id="form-type" th:action="@{/vehicles/update}" method="POST" th:object="${vehicleDTO}">
+                    
+                    <form id="form-type" th:action="@{/vehicles/update/search}" method="POST" th:object="${vehicleDTO}">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
-                                <label for="vehiculo-id">ID del Vehículo:</label>
+                                <label for="vehiculo-id">Ingrese el ID del Vehículo:</label>
                                 <div style="display: flex; gap: 10px;">
                                     <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{vehicleId}" required>
-                                    <button type="submit" th:formaction="@{/vehicles/update/search}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                    <button type="submit" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
                                     </button>
                                 </div>
                             </div>
                         </div>
+
+                    </form>
+                    <form id="form-type" th:action="@{/vehicles/update}" method="POST" th:object="${vehicleDTO}">
                         
+                        <div class="form-group">
+                            <label for="id">ID:</label>
+                            <input type="text" id="id" class="form-control" placeholder="Id del vehiculo" th:field="*{vehicleId}" required disabled>
+                        </div>
+
                         <div class="form-group">
                             <label for="placa">Placa:</label>
                             <input type="text" id="placa" class="form-control" placeholder="Placa del vehículo" th:field="*{plate}" required>
                         </div>
                         <div class="form-group">
                             <label for="modelo">Modelo:</label>
-                            <input type="text" id="modelo" class="form-control" placeholder="Modelo del vehículo" th:field="*{model}" required>
+                            <input type="text" id="modelo" class="form-control" placeholder="Modelo del vehículo" th:field="*{model}" required >
                         </div>
                         <div class="form-group">
                             <label for="anio">Año:</label>
@@ -75,20 +84,28 @@
                         </div>
                         <div class="form-group">
                             <label for="tipo-vehiculo">Tipo de Vehículo:</label>
-                            <select id="tipo-vehiculo" class="form-control"  th:field="*{type}" required>
-                                <option value="">Seleccione un tipo</option>
-                                <option value="loading">Carga</option>
-                                <option value="bus">Pasajeros</option>
+                            <select id="tipo-vehiculo" class="form-control" th:field="*{type}" required >
+                                <option value="" disabled selected>Seleccione un tipo</option>
+                                <option value="Carga">Carga</option>
+                                <option value="Pasajeros">Pasajeros</option>
                             </select>
                         </div>
+                        
                         <div class="btn-container">
                             <button type="submit" th:formaction="@{/vehicles/update}" class="btn btn-success">Actualizar Vehículo</button>
-                            <button type="reset" class="btn btn-warning">Limpiar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var errorMessage = /*[[${errorMessage}]]*/ null;
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+        /*]]>*/
+    </script>
 </body>
 </html>
