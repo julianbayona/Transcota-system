@@ -22,19 +22,19 @@
         </div>
         <details open>
             <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/users/select}">
+            <a th:href="@{/drivers/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
             </a>
-            <a th:href="@{/users/assigned}">
+            <a th:href="@{/drivers/assigned}">
                 <div class="nav-item active"><span>Vehiculos Asignados</span></div>
             </a>
-            <a th:href="@{/users/register}">
+            <a th:href="@{/drivers/register}">
                 <div class="nav-item"><span>Registrar Usuarios</span></div>
             </a>
-            <a th:href="@{/users/update}">
+            <a th:href="@{/drivers/update}">
                 <div class="nav-item"><span>Actualizar Usuarios</span></div>
             </a>
-            <a th:href="@{/users/delete}">
+            <a th:href="@{/drivers/delete}">
                 <div class="nav-item"><span>Eliminar Usuarios</span></div>
             </a>
         </details>
@@ -74,7 +74,7 @@
             <div class="main-content">
                 <h2 id="main-title">Ver vehiculos asignados a un conductor</h2>  
                 <div class="tab-content">
-                    <form id="form-type" th:action="@{/users/assigned/search}" method="POST">
+                    <form id="form-type" th:action="@{/drivers/assigned/search}" method="POST">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="conductor-id">ID del conductor:</label>

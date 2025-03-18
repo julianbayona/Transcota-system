@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestión de Transporte</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link rel="stylesheet" href="../static/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -22,11 +21,11 @@
         </div>
         <details>
             <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/users/select}"><div class="nav-item"><span>Ver Usuarios</span></div></a>
-            <a th:href="@{/users/assigned}"><div class="nav-item"><span>Vehículos Asignados</span></div></a>
-            <a th:href="@{/users/register}"><div class="nav-item"><span>Registrar Usuario</span></div></a>
-            <a th:href="@{/users/update}"><div class="nav-item"><span>Actualizar Usuario</span></div></a>
-            <a th:href="@{/users/delete}"><div class="nav-item"><span>Eliminar Usuario</span></div></a>
+            <a th:href="@{/drivers/select}"><div class="nav-item"><span>Ver Usuarios</span></div></a>
+            <a th:href="@{/drivers/assigned}"><div class="nav-item"><span>Vehículos Asignados</span></div></a>
+            <a th:href="@{/drivers/register}"><div class="nav-item"><span>Registrar Usuario</span></div></a>
+            <a th:href="@{/drivers/update}"><div class="nav-item"><span>Actualizar Usuario</span></div></a>
+            <a th:href="@{/drivers/delete}"><div class="nav-item"><span>Eliminar Usuario</span></div></a>
         </details>
         <details open>
             <summary><b>Gestión de Vehículos</b></summary>
@@ -58,7 +57,7 @@
                                 <div style="display: flex; gap: 10px;">
                                     <input type="number" name="id" id="vehiculo-id" class="form-control"
                                            placeholder="Ingrese el ID del vehículo"
-                                           th:value="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : ''}"
+                                           th:value="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '0'}"
                                            required>
                                     <button type="submit" class="btn nav-primary" 
                                             style="display: flex; align-items: center; justify-content: center; height: 42px;">
@@ -69,32 +68,38 @@
                         </div>
                     </form>
 
-                    <!-- ✅ Cuadro de información corregido -->
+                    <!-- ✅ Tabla de información del vehículo -->
                     <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 20px; margin-bottom: 15px; font-size: 1em; width: 100%; max-width: 700px;">
                         <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1.2em;">Información del Vehículo</h4>
                         
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                            <div class="form-group">
-                                <label><strong>Id vehículo:</strong> <span th:text="${vehicleDTO != null ? vehicleDTO.vehicleId : '---'}">---</span></label>
-                            </div>
-                            <div class="form-group">
-                                <label><strong>Placa:</strong> <span th:text="${vehicleDTO != null ? vehicleDTO.plate : '---'}">---</span></label>
-                            </div>
-                            <div class="form-group">
-                                <label><strong>Modelo:</strong> <span th:text="${vehicleDTO != null ? vehicleDTO.model : '---'}">---</span></label>
-                            </div>
-                            <div class="form-group">
-                                <label><strong>Año:</strong> <span th:text="${vehicleDTO != null ? vehicleDTO.year : '---'}">---</span></label>
-                            </div>
-                            <div class="form-group" style="grid-column: span 2;">
-                                <label><strong>Tipo de Vehículo:</strong> <span th:text="${vehicleDTO != null ? vehicleDTO.type : '---'}">---</span></label>
-                            </div>
-                        </div>
+                        <table style="width: 100%; border-collapse: collapse;">
+                           
+                            <tr>
+                                <td style="padding: 8px;"><strong>Id vehículo:</strong></td>
+                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '0'}">0</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;"><strong>Placa:</strong></td>
+                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.plate != null ? vehicleDTO.plate : '---'}">---</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;"><strong>Modelo:</strong></td>
+                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.model != null ? vehicleDTO.model : '---'}">---</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;"><strong>Año:</strong></td>
+                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.year != null ? vehicleDTO.year : '0'}">0</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;"><strong>Tipo de Vehículo:</strong></td>
+                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.type != null ? vehicleDTO.type : '---'}">---</td>
+                            </tr>
+                        </table>
                     </div>
 
                     <!-- ✅ Formulario de eliminación -->
                     <form id="delete-form" th:action="@{/vehicles/delete}" method="POST">
-                        <input type="hidden" name="vehicleId" th:value="${vehicleDTO != null ? vehicleDTO.vehicleId : ''}">
+                        <input type="hidden" name="vehicleId" th:value="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '0'}">
                         <div class="btn-container">
                             <button type="submit" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Vehículo</button>
                         </div>
@@ -105,17 +110,19 @@
     </div>
 
     <!-- ✅ Alertas de éxito o error -->
-    <script>
+    <script th:inline="javascript">
         window.onload = function() {
-            var successMessage = "[[${successMessage}]]";
-            var errorMessage = "[[${errorMessage}]]";
-
-            if (successMessage && successMessage.trim() !== "" && successMessage !== "null") {
-                alert(successMessage);
-            }
-
-            if (errorMessage && errorMessage.trim() !== "" && errorMessage !== "null") {
-                alert(errorMessage);
+            var message = /*[[${message}]]*/ null;
+            var alertType = /*[[${alertType}]]*/ null;
+            if (message) {
+                if(alertType === "error" ){
+                    alert("❌ " + message);
+                }else if(alertType === "info"){
+                    alert("ℹ️ " + message);
+                }
+                else if (alertType === "success") {
+                    alert("✅ " + message);
+                }
             }
         };
     </script>

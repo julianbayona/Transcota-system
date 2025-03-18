@@ -2,6 +2,7 @@ package com.transcotech.transcota_system.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,92 +39,21 @@ public class VehicleController {
         model.addAttribute("vehicleDTO", new VehicleDTO());
         return "register_vehicle";
     }
-    @PostMapping("register")
-    public String register(VehicleDTO vehicleDTO ,Model model){
-        vehicleService.createVehicle(vehicleDTO);
-        return "register_vehicle";
+
+    @PostMapping("/register")
+public String register(@ModelAttribute VehicleDTO vehicleDTO, Model model) {
+    boolean isCreated = vehicleService.createVehicle(vehicleDTO);
+    
+    if (isCreated) {
+        model.addAttribute("message", "Vehículo registrado correctamente.");
+        model.addAttribute("alertType", "success");
+    } else {
+        model.addAttribute("message", "Error: La placa ya está registrada.");
+        model.addAttribute("alertType", "error");
     }
 
-    //ACTUALIZAR ----------------------------------------------------------------------------
-
-    @GetMapping("/update")
-    public String showUpdateForm(Model model) {
-        model.addAttribute("vehicleDTO", new VehicleDTO());
-        return "update_vehicle";
-    }
-
-@PostMapping("/update/search")
-public String searchVehicle(@RequestParam("vehicleId") Long id, Model model) {
-    // Lista de vehículos con datos de prueba
-    List<Vehicle> vs = new ArrayList<>();
-
-    // Crear vehículo de prueba
-    Vehicle veic = new Vehicle();
-    veic.setModel("Toyota");
-    veic.setPlate("ABC123");
-    veic.setType(null);
-    veic.setVehicleId(21); // ID de prueba
-    veic.setYear(2020);
-
-    vs.add(veic); // Agregar vehículo a la lista
-
-    // Buscar vehículo en la lista sin usar equals()
-    Vehicle foundVehicle = vs.stream()
-        .filter(v -> v.getVehicleId() == id)  // ✅ Comparación directa
-        .findFirst()
-        .orElse(null);
-
-    if (foundVehicle == null) {
-        System.out.println("⚠ Vehículo con ID " + id + " no encontrado.");
-        model.addAttribute("errorMessage", "El vehículo con ID " + id + " no existe.");
-        model.addAttribute("vehicleDTO", new VehicleDTO()); // 🔹 Se envía un objeto vacío a la vista
-        return "update_vehicle";  
-    }
-
-    // Convertir el vehículo encontrado a DTO
-    VehicleDTO vehicleDTO = VehicleMapper.INSTANCE.vehicleToVehicleDTO(foundVehicle);
-    System.out.println("✅ Vehículo encontrado: " + vehicleDTO.getPlate() + " - " + vehicleDTO.getType());
-
-    model.addAttribute("vehicleDTO", vehicleDTO);
-    return "update_vehicle";  // Cargar la vista con los datos llenos
+    return "register_vehicle"; // Asegúrate de que este sea el nombre correcto de tu plantilla HTML
 }
-
-
-@PostMapping("/update")
-public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO) {
-    List<Vehicle> vs = new ArrayList<>();
-
-    Vehicle veic = new Vehicle();
-    veic.setModel("Toyota");
-    veic.setPlate("ABC123");
-    veic.setType(vehicleDTO.getType());
-    veic.setVehicleId(21); // ID de prueba
-    veic.setYear(2020);
-
-    vs.add(veic); // Agregar vehículo a la lista
-
-    // Buscar y actualizar el vehículo
-    for (Vehicle v : vs) {
-        if (v.getVehicleId() == vehicleDTO.getVehicleId()) {  // ✅ Solución con ==
-            v.setPlate(vehicleDTO.getPlate());
-            v.setModel(vehicleDTO.getModel());
-            v.setType(vehicleDTO.getType());
-            v.setYear(vehicleDTO.getYear());
-
-            // Imprimir en consola
-            System.out.println("✅ Vehículo actualizado correctamente:");
-            System.out.println("ID: " + v.getVehicleId());
-            System.out.println("Placa: " + v.getPlate());
-            System.out.println("Modelo: " + v.getModel());
-            System.out.println("Año: " + v.getYear());
-            System.out.println("Tipo: " + v.getType());
-            break;
-        }
-    }
-
-    return "redirect:/vehicles/update";
-}
-
 // VER VEHICULOS-----------------------
 
 @GetMapping("/select")
@@ -135,22 +65,75 @@ public String showVehiclesList(Model model) {
 }
 
 @PostMapping("/select/search")
-public String searchVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, Model model) {
-    Long id = vehicleDTO.getVehicleId();
+public String searchVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, @RequestParam("vehicleId") Long id, Model model) {
+ 
     VehicleDTO vehicle = vehicleService.searchId(id);
     if(vehicle == null){
-        model.addAttribute("errorMessage", "El vehículo con ID " + id + " no existe.");
-        model.addAttribute("vehicleList", new ArrayList<>());
+        model.addAttribute("message", "El vehículo con ID " + id + " no existe.");
+        model.addAttribute("alertType", "info");
+        model.addAttribute("vehicleList", vehicleService.getAllVehicles());
         return "select_vehicle";
     }
     
+    List<VehicleDTO> vehicleFound = new ArrayList<>();
+    vehicleFound.add(vehicle);
 
-    List<VehicleDTO> dtos = new ArrayList<>();
-    dtos.add(vehicle);
-
-    model.addAttribute("vehicleList", dtos);
+    model.addAttribute("vehicleList", vehicleFound);
     return "select_vehicle";
 }
+
+
+    //ACTUALIZAR ----------------------------------------------------------------------------
+
+    @GetMapping("/update")
+    public String showUpdateForm(Model model) {
+        model.addAttribute("vehicleDTO", new VehicleDTO());
+        return "update_vehicle";
+    }
+
+    @PostMapping("/update/search")
+    public String searchVehicle(@RequestParam("vehicleId") Long id, Model model) {
+    
+    VehicleDTO foundVehicle = vehicleService.searchId(id);
+
+    if (foundVehicle == null) {
+        model.addAttribute("message", "El vehículo con ID " + id + " no existe.");
+        model.addAttribute("alertType", "info");
+        model.addAttribute("vehicleDTO", new VehicleDTO());
+        return "update_vehicle";  
+    }
+
+    model.addAttribute("vehicleDTO", foundVehicle);
+    return "update_vehicle";  // Cargar la vista con los datos llenos
+}
+
+
+@PostMapping("/update")
+public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, @RequestParam("vehicleId") Long id, Model model) {
+    String operation =vehicleService.updateVehicle(id, vehicleDTO);
+
+    if (operation.equals("vehiculoInexistente")){
+        model.addAttribute("message", "El vehículo con ID " + id + " no existe.");
+        model.addAttribute("alertType", "error");
+        model.addAttribute("vehicleDTO", new VehicleDTO());
+        return "update_vehicle";  
+    }
+    if (operation.equals("placaOcupada")){
+        Long idPlate = vehicleService.searchPlate(vehicleDTO).getVehicleId();
+        model.addAttribute("message", "la placa " + vehicleDTO.getPlate() + " ya esta en uso por el vehiculo con ID: " + idPlate);
+        model.addAttribute("alertType", "error");
+        model.addAttribute("vehicleDTO", vehicleDTO);
+        return "update_vehicle";
+    }
+
+    vehicleService.updateVehicle(id, vehicleDTO);
+    model.addAttribute("message","Vechiculo actualizado correctamente");
+    model.addAttribute("alertType", "success");
+    model.addAttribute("vehicleDTO", vehicleDTO);
+    return "update_vehicle";
+}
+
+
     //ELIMINAR ------------------------------------------------------------------------
 
     @GetMapping("/delete")
@@ -167,23 +150,31 @@ public String searchVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO,
         if (vehicle != null) {
             model.addAttribute("vehicleDTO", vehicle);
         } else {
-            model.addAttribute("errorMessage", "El vehículo con ID " + id + " no existe.");
+            model.addAttribute("message","El vehículo con ID " + id + " no existe.");
+            model.addAttribute("alertType", "info");
         }
         return "delete_vehicle";
     }
-    
-    @PostMapping("/delete")
-    public String deleteVehicle(@RequestParam("vehicleId") Long id, Model model) {
-        boolean removed = vehicleService.getVehiclesList().removeIf(v -> v.getVehicleId() == id);
-        
-        if (removed) {
-            model.addAttribute("successMessage", "Vehículo eliminado correctamente.");
-        } else {
-            model.addAttribute("errorMessage", "No se encontró el vehículo con ID " + id);
-        }
 
+@PostMapping("/delete")
+public String deleteVehicle(@RequestParam("vehicleId") Long vehicleId, Model model) {
+    // Buscar el vehículo en la base de datos
+    if(vehicleService.deleteVehicle(vehicleId)){
+        model.addAttribute("message","Vechiculo eliminado correctamente");
+        model.addAttribute("alertType", "success");
+        model.addAttribute("vehicleDTO", new VehicleDTO());
         return "delete_vehicle";
     }
+    model.addAttribute("message","El vehículo con ID " + vehicleId + " no existe.");
+    model.addAttribute("alertType", "info");
+    model.addAttribute("vehicleDTO", new VehicleDTO());
+    
+    System.out.println(vehicleId);
+
+    return "delete_vehicle"; // Retorna la vista con los datos del vehículo
+}
+
+
 
 }
 
