@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestión de Transporte</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link rel="stylesheet" href="../static/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -28,7 +27,7 @@
             <a th:href="@{/users/assigned}">
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
-            <a th:href="@{/users/register}">
+            <a th:href="@{/users/register1}">
                 <div class="nav-item active"><span>Registrar Usuario</span></div>
             </a>
             <a th:href="@{/users/update}">
@@ -55,7 +54,7 @@
         </details>            
         <details>
             <summary><b>Gestión de Viajes</b></summary>
-            <a th:href="@{/trips/select}">
+            <a th:href="@{/trips/all}">
                 <div class="nav-item"><span>Ver Viajes</span></div>
             </a>
             <a th:href="@{/trips/register}">
@@ -85,17 +84,14 @@
                         </div>
                         <div class="form-group">
                             <label for="rol">Rol:</label>
-                            <select id="rol" class="form-control" th:field="*{roleDTO.roleId}" required>
+                            <select id="rol" class="form-control" th:field="*{roleDTO}" required>
                                 <option value="">Seleccione un rol</option>
-                                <option value="administrador">Administrador</option>
-                                <option value="despachador">Despachador</option>
-                                <option value="conductor">Conductor</option>
-                                <option value="mecanico">Mecánico</option>
+                                <option value="ADMIN">Administrador</option>
+                                <option value="DRIVER">Conductor</option>
                             </select>
                         </div>
                         <div class="btn-container">
-                            <button type="submit" th:formaction="@{/users/register/{userId}}" class="btn btn-success">Registrar Usuario</button>
-                            <button type="submit" th:formaction="@{/users/register/clean}" class="btn btn-warning">Limpiar</button>
+                            <button type="submit" th:formaction="@{/users/create}" class="btn btn-success">Registrar Usuario</button>
                         </div>
                     </form>
                 </div>

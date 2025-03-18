@@ -2,11 +2,11 @@ package com.transcotech.transcota_system.Service;
 
 import java.util.List;
 
-import com.transcotech.transcota_system.dto.UserDTO;
-import com.transcotech.transcota_system.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.transcotech.transcota_system.dto.UserDTO;
+import com.transcotech.transcota_system.mapper.UserMapper;
 import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.repositories.DriverRepositoryInterface;
 
