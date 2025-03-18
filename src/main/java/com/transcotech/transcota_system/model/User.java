@@ -10,17 +10,17 @@ public class User extends Person {
 
     
     @Column(name= "role")
-    private String role;
+    private TypeVehicle role;
 
     public User(){
 
     }
 
-    public String getRole() {
+    public TypeVehicle getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(TypeVehicle role) {
         this.role = role;
     }
 }
