@@ -1,5 +1,7 @@
 package com.transcotech.transcota_system.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -30,5 +32,10 @@ public interface TripMapper {
         @Mapping(source = "date", target = "date")
     })
     TripRegister tripDTOToTrip(TripDTO tripDTO);
+
+    List<TripDTO> tripsToTripDTOs(List<TripRegister> trips);
+
+    List<TripRegister> tripDTOsTotrips(List<TripDTO> tripDTOs);
+
 }
 

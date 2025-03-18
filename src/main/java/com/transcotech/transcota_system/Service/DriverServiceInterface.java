@@ -7,9 +7,9 @@ import com.transcotech.transcota_system.model.User;
 
 public interface DriverServiceInterface {
 
-    public List<User> findAll();
+    public List<UserDTO> findAll();
     public UserDTO searchId(Long id);
     public void deleteUser(Long id);
-    public User createDriver(User user);
+    public User createDriver(UserDTO userDTO);
 
 }

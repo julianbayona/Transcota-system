@@ -14,8 +14,8 @@ import com.transcotech.transcota_system.repositories.TripRegisterRepositoryInter
 @Service
 public class TripRegisterService implements TripRegisterServiceInterface{
 
-
     private final TripMapper tripMapper = TripMapper.INSTANCE;
+
     @Autowired
     private DriverService driverService;
     @Autowired
@@ -25,8 +25,9 @@ public class TripRegisterService implements TripRegisterServiceInterface{
     private TripRegisterRepositoryInterface tripRegisterRepositoryInterface;
 
     @Override
-    public List<TripRegister> findAll() {
-        return tripRegisterRepositoryInterface.findAll();
+    public List<TripDTO> findAll() {
+        List<TripRegister> trips = tripRegisterRepositoryInterface.findAll();
+        return tripMapper.tripsToTripDTOs(trips);
     }
 
     @Override

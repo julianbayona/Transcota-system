@@ -1,5 +1,7 @@
 package com.transcotech.transcota_system.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -26,5 +28,9 @@ public interface UserMapper {
         @Mapping(source = "email", target = "email")
     })
     User userDTOToUser(UserDTO userDTO);
+
+    List<UserDTO> usersToUserDTOs(List<User> users);
+
+    List<User> userDTOsToUsers(List<UserDTO> userDTOs);
 }
 

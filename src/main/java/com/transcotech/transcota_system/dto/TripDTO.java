@@ -17,7 +17,7 @@ public class TripDTO {
     private String origin;
     private String destination;
     private LocalDate date;
-    private Long driverId;
-    private Long vehicleId;
+    private User driverId;
+    private Vehicle vehicleId;
     
 }
