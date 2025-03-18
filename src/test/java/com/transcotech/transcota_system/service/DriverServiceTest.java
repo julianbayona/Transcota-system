@@ -41,9 +41,9 @@ public class DriverServiceTest {
     void setUp() {
         // Configurar datos de prueba
         driver1 = new User();
-        
+
         // Configura otros campos necesarios para User
-        
+
         driver2 = new User();
 
         driverList = Arrays.asList(driver1, driver2);
@@ -51,13 +51,11 @@ public class DriverServiceTest {
 
     @Test
     void findAllTest() {
-        
+
         when(driverRepository.findAll()).thenReturn(driverList);
 
-        
         List<User> result = driverService.findAll();
 
-        
         assertEquals(2, result.size());
         assertEquals(driverList, result);
         verify(driverRepository, times(1)).findAll();
@@ -93,30 +91,26 @@ public class DriverServiceTest {
 
     @Test
     void deleteUserTest() {
-        
+
         Long idToDelete = 1L;
         doNothing().when(driverRepository).deleteById(idToDelete);
 
-        
         driverService.deleteUser(idToDelete);
-        
-        
+
         verify(driverRepository, times(1)).deleteById(idToDelete);
     }
-    
+
     @Test
     void createDriverTest() {
-        
+
         User newDriver = new User();
         newDriver.setName("Pedro López");
         newDriver.setEmail("pedro.lopez@ejemplo.com");
-        
+
         when(driverRepository.save(any(User.class))).thenReturn(newDriver);
 
-        
         User result = driverService.createDriver(newDriver);
-        
-        
+
         assertNotNull(result);
         assertEquals("Pedro López", result.getName());
         assertEquals("pedro.lopez@ejemplo.com", result.getEmail());
