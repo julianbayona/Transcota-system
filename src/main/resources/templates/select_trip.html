@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestión de Transporte</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <!--<link rel="stylesheet" href="../static/css/styles.css">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -74,12 +74,12 @@
             <div class="main-content">
                 <h2 id="main-title">Ver viajes registrados</h2>  
                 <div class="tab-content">
-                    <form th:action="@{/trips/select/search}" id="form-type" method="POST">
+                    <form th:action="@{/trips/select/search}" id="form-type" method="GET">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="conductor-id">ID del viaje:</label>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del viaje" th:field="*{tripId}" required>
+                                    <input type="number" name = "tripId" id="conductor-id" class="form-control" placeholder="Ingrese el ID del viaje" required>
                                     <button type="submit" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
@@ -90,17 +90,20 @@
                     </form>
                     
                     <h2>Estos son los viajes registrados...</h2> 
-                    <div th:each="trip : ${tripList}" class="trip-full-container">
-                        <p class="assignSpecial"><strong>ID:</strong> <span th:text="${trip.tripId}"></span></p>
-                        <p><strong>Fecha:</strong> <span th:text="${trip.date}"></span></p>
-                        <p><strong>Origen:</strong> <span th:text="${trip.origin}"></span></p>
-                        <p class="assignSpecial"><strong>ID del conductor:</strong> <span th:text="${trip.driverDTO.personId}"></span></p>
-                        <p><strong>Destino:</strong> <span th:text="${trip.destination}"></span></p>
-                        <p class="assignSpecial"><strong>ID del vehículo:</strong> <span th:text="${trip.vehicleDTO.vehicleId}"></span></p>
+                    <div th:each="tripDTO : ${tripList}" class="trip-full-container">
+                        <p class="assignSpecial"><strong>ID:</strong> <span th:text="${tripDTO.tripId}"></span></p>
+                        <p><strong>Fecha:</strong> <span th:text="${tripDTO.date}"></span></p>
+                        <p><strong>Origen:</strong> <span th:text="${tripDTO.origin}"></span></p>
+                        <p class="assignSpecial"><strong>ID del conductor:</strong> <span th:text="${tripDTO.driverId.personId}"></span></p>
+                        <p><strong>Destino:</strong> <span th:text="${tripDTO.destination}"></span></p>
+                        <p class="assignSpecial"><strong>ID del vehículo:</strong> <span th:text="${tripDTO.vehicleId.vehicleId}"></span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script th:if="${errorMessage}">
+        alert("[[${errorMessage}]]");
+    </script>
 </body>
 </html>
