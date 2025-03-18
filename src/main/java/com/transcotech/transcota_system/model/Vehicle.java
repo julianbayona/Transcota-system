@@ -25,8 +25,18 @@ public class Vehicle {
     @Enumerated(EnumType.STRING)
     private TypeVehicle type;
 
+
+    
+
     public Vehicle(){
         
+    }
+
+    public Vehicle(String model, String plate, TypeVehicle type, int year) {
+        this.model = model;
+        this.plate = plate;
+        this.type = type;
+        this.year = year;
     }
 
 
