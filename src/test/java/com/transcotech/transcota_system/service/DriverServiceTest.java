@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.transcotech.transcota_system.Service.DriverService;
+import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.repositories.DriverRepositoryInterface;
 
@@ -68,7 +69,7 @@ public class DriverServiceTest {
         when(driverRepository.findById(1L)).thenReturn(Optional.of(driver1));
 
         
-        User result = driverService.searchId(1L);
+        UserDTO result = driverService.searchId(1L);
 
         
         assertNotNull(result);
@@ -83,7 +84,7 @@ public class DriverServiceTest {
         when(driverRepository.findById(3L)).thenReturn(Optional.empty());
         
         
-        User result = driverService.searchId(3L);
+        UserDTO result = driverService.searchId(3L);
         
         
         assertNull(result);

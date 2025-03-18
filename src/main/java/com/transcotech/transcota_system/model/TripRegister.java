@@ -22,11 +22,11 @@ public class TripRegister {
 
     @ManyToOne
     @JoinColumn(name = "personId")
-    private Long driverId;
+    private User driverId;
 
     @ManyToOne
     @JoinColumn(name = "vehicleId")
-    private Long vehicleId;
+    private Vehicle vehicleId;
 
     @Column(name="destino")
     private String destinationUbication;
@@ -51,19 +51,19 @@ public class TripRegister {
         this.id = id;
     }
 
-    public Long getDriverId() {
+    public User getDriverId() {
         return driverId;
     }
 
-    public void setDriverId(Long driverId) {
-        this.driverId = driverId;
+    public void setDriverId(User personId) {
+        this.driverId = personId;
     }
 
-    public Long getVehicleId() {
+    public Vehicle getVehicleId() {
         return vehicleId;
     }
 
-    public void setVehicleId(Long vehicleId) {
+    public void setVehicleId(Vehicle vehicleId) {
         this.vehicleId = vehicleId;
     }
 

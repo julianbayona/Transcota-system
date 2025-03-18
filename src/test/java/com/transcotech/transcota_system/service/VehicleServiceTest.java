@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.transcotech.transcota_system.Service.VehicleService;
+import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.model.Vehicle;
 import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
@@ -73,7 +74,7 @@ public class VehicleServiceTest {
 
         when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle1));
 
-        Vehicle result = vehicleService.searchId(1L);
+        VehicleDTO result = vehicleService.searchId(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.getVehicleId());
@@ -86,7 +87,7 @@ public class VehicleServiceTest {
 
         when(vehicleRepository.findById(3L)).thenReturn(Optional.empty());
 
-        Vehicle result = vehicleService.searchId(3L);
+        VehicleDTO result = vehicleService.searchId(3L);
 
         assertNull(result);
         verify(vehicleRepository, times(1)).findById(3L);

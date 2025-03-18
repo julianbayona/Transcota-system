@@ -2,6 +2,9 @@ package com.transcotech.transcota_system.dto;
 
 import java.time.LocalDate;
 
+import com.transcotech.transcota_system.model.User;
+import com.transcotech.transcota_system.model.Vehicle;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +17,7 @@ public class TripDTO {
     private String origin;
     private String destination;
     private LocalDate date;
-    private Long driverId;
-    private Long vehicleId;
+    private User driverId;
+    private Vehicle vehicleId;
     
 }
