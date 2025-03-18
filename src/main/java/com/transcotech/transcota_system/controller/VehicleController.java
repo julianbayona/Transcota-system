@@ -52,7 +52,7 @@ public String register(@ModelAttribute VehicleDTO vehicleDTO, Model model) {
         model.addAttribute("alertType", "error");
     }
 
-    return "register_vehicle"; // Asegúrate de que este sea el nombre correcto de tu plantilla HTML
+    return "register_vehicle";
 }
 // VER VEHICULOS-----------------------
 
@@ -104,7 +104,7 @@ public String searchVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO,
     }
 
     model.addAttribute("vehicleDTO", foundVehicle);
-    return "update_vehicle";  // Cargar la vista con los datos llenos
+    return "update_vehicle"; 
 }
 
 
@@ -142,7 +142,6 @@ public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO,
         return "delete_vehicle";
     }
     
-
     @PostMapping("/delete/search")
     public String searchVehicleForDelete(@RequestParam("id") Long id, Model model) {
         VehicleDTO vehicle = vehicleService.searchId(id);
@@ -158,7 +157,7 @@ public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO,
 
 @PostMapping("/delete")
 public String deleteVehicle(@RequestParam("vehicleId") Long vehicleId, Model model) {
-    // Buscar el vehículo en la base de datos
+
     if(vehicleService.deleteVehicle(vehicleId)){
         model.addAttribute("message","Vechiculo eliminado correctamente");
         model.addAttribute("alertType", "success");
@@ -171,7 +170,7 @@ public String deleteVehicle(@RequestParam("vehicleId") Long vehicleId, Model mod
     
     System.out.println(vehicleId);
 
-    return "delete_vehicle"; // Retorna la vista con los datos del vehículo
+    return "delete_vehicle";
 }
 
 

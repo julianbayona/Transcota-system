@@ -49,7 +49,6 @@
                 <div class="tab-content">
                     <h2 id="main-title">Eliminar Vehículo</h2>
 
-                    <!-- ✅ Formulario de búsqueda -->
                     <form id="search-form" th:action="@{/vehicles/delete/search}" method="POST">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
@@ -68,7 +67,6 @@
                         </div>
                     </form>
 
-                    <!-- ✅ Tabla de información del vehículo -->
                     <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 20px; margin-bottom: 15px; font-size: 1em; width: 100%; max-width: 700px;">
                         <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1.2em;">Información del Vehículo</h4>
                         
@@ -97,7 +95,6 @@
                         </table>
                     </div>
 
-                    <!-- ✅ Formulario de eliminación -->
                     <form id="delete-form" th:action="@{/vehicles/delete}" method="POST">
                         <input type="hidden" name="vehicleId" th:value="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '0'}">
                         <div class="btn-container">
@@ -109,7 +106,6 @@
         </div>
     </div>
 
-    <!-- ✅ Alertas de éxito o error -->
     <script th:inline="javascript">
         window.onload = function() {
             var message = /*[[${message}]]*/ null;
