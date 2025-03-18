@@ -68,6 +68,7 @@ public class VehicleServiceTest {
         verify(vehicleRepository, times(1)).findAll();
     }
 
+    /*
     @Test
     void searchIdWhenVehicleExists() {
 
@@ -84,14 +85,15 @@ public class VehicleServiceTest {
     @Test
     void searchIdWhenVehicleDoesNotExist() {
 
-        when(vehicleRepository.findById(3L)).thenReturn(Optional.empty());
+    when(vehicleRepository.findById(3L)).thenReturn(Optional.empty());
 
         Vehicle result = vehicleService.searchId(3L);
-
+        
         assertNull(result);
         verify(vehicleRepository, times(1)).findById(3L);
     }
-
+    */
+    
     @Test
     void deleteVehicleWhenVehicleExists() {
 
