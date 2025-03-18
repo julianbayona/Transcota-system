@@ -22,8 +22,7 @@ public class Vehicle {
     private String plate;
     private String model;
     private int year;
-    @Enumerated(EnumType.STRING)
-    private TypeVehicle type;
+    private String type;
 
 
     
@@ -32,7 +31,7 @@ public class Vehicle {
         
     }
 
-    public Vehicle(String model, String plate, TypeVehicle type, int year) {
+    public Vehicle(String model, String plate, String type, int year) {
         this.model = model;
         this.plate = plate;
         this.type = type;
@@ -72,11 +71,11 @@ public class Vehicle {
         this.plate = plate;
     }
 
-    public TypeVehicle getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(TypeVehicle type) {
+    public void setType(String type) {
         this.type = type;
     }
 

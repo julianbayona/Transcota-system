@@ -22,19 +22,19 @@
         </div>
         <details open>
             <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/users/select}">
+            <a th:href="@{/drivers/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
             </a>
-            <a th:href="@{/users/assigned}">
+            <a th:href="@{/drivers/assigned}">
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
-            <a th:href="@{/users/register}">
+            <a th:href="@{/drivers/register}">
                 <div class="nav-item"><span>Registrar Usuario</span></div>
             </a>
-            <a th:href="@{/users/update}">
+            <a th:href="@{/drivers/update}">
                 <div class="nav-item active"><span>Actualizar Usuario</span></div>
             </a>
-            <a th:href="@{/users/delete}">
+            <a th:href="@{/drivers/delete}">
                 <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
@@ -80,7 +80,7 @@
                                 <label for="usuario-id">ID del usuario:</label>
                                 <div style="display: flex; gap: 10px;">
                                     <input type="text" id="usuario-id" class="form-control" placeholder="Ingrese el ID" th:field="*{personId}" required>
-                                    <button type="submit" th:formaction="@{/users/update/search}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                    <button type="submit" th:formaction="@{/drivers/update/search}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
                                     </button>
@@ -107,8 +107,8 @@
                             </select>
                         </div>
                         <div class="btn-container">
-                            <button type="submit" th:formaction="@{/users/update/{userId}}" class="btn btn-success">Actualizar Usuario</button>
-                            <button type="submit" th:formaction="@{/users/update/clean}" class="btn btn-warning">Limpiar</button>
+                            <button type="submit" th:formaction="@{/drivers/update/{userId}}" class="btn btn-success">Actualizar Usuario</button>
+                            
                         </div>
                     </form>
                 </div>

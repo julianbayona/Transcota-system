@@ -22,19 +22,19 @@
         </div>
         <details open>
             <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/users/select}">
+            <a th:href="@{/drivers/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
             </a>
-            <a th:href="@{/users/assigned}">
+            <a th:href="@{/drivers/assigned}">
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
-            <a th:href="@{/users/register}">
+            <a th:href="@{/drivers/register}">
                 <div class="nav-item active"><span>Registrar Usuario</span></div>
             </a>
-            <a th:href="@{/users/update}">
+            <a th:href="@{/drivers/update}">
                 <div class="nav-item"><span>Actualizar Usuario</span></div>
             </a>
-            <a th:href="@{/users/delete}">
+            <a th:href="@{/drivers/delete}">
                 <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
@@ -94,8 +94,8 @@
                             </select>
                         </div>
                         <div class="btn-container">
-                            <button type="submit" th:formaction="@{/users/register/{userId}}" class="btn btn-success">Registrar Usuario</button>
-                            <button type="submit" th:formaction="@{/users/register/clean}" class="btn btn-warning">Limpiar</button>
+                            <button type="submit" th:formaction="@{/drivers/register/{userId}}" class="btn btn-success">Registrar Usuario</button>
+                            <button type="submit" th:formaction="@{/drivers/register/clean}" class="btn btn-warning">Limpiar</button>
                         </div>
                     </form>
                 </div>

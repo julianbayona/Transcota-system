@@ -14,6 +14,6 @@ public class VehicleDTO {
     private String plate;
     private String model;
     private int year;
-    private TypeVehicle type;
+    private String type;
     
 }
