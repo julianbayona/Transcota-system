@@ -115,7 +115,7 @@ public class DriverServiceTest {
         User user = userMapper.userDTOToUser(userDTO);
 
         when(driverRepository.save(any(User.class))).thenReturn(user);
-
+        System.out.println();
         User result = driverService.createDriver(userDTO);
 
         assertEquals(user, result);
