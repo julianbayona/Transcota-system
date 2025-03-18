@@ -104,9 +104,17 @@
         </div>
     </div>
     <!-- Script para mostrar alerta si el vehículo no existe -->
-<script th:if="${errorMessage}">
-    alert("[[${errorMessage}]]");
-</script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            if (message) {
+                alert("ℹ️ " + message);
+            }
+        };
+        /*]]>*/
+    </script>
+    
 
 </body>
 </html>
