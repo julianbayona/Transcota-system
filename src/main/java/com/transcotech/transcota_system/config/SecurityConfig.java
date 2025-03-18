@@ -15,7 +15,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/user/**").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated())
@@ -23,11 +23,11 @@ public class SecurityConfig {
                         .successHandler((request, response, authentication) -> {
                             String role = authentication.getAuthorities().toString();
                             if (role.contains("ROLE_ADMIN")) {
-                                response.sendRedirect("/index");
+                                response.sendRedirect("/");
                             } else if (role.contains("ROLE_USER")) {
-                                response.sendRedirect("/index");
+                                response.sendRedirect("/");
                             } else {
-                                response.sendRedirect("/index");
+                                response.sendRedirect("/");
                             }
                         })
                         .permitAll())
