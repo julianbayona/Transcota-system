@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.transcotech.transcota_system.Service.TripRegisterService;
@@ -23,7 +24,7 @@ public class TripRegisterController {
     @Autowired
     private TripRegisterService tripRegisterService;
 
-    @GetMapping("/showAllTrips")
+    @GetMapping
     public String showAllTrips(Model model){
         model.addAttribute("drivers", tripRegisterService.findAll());
         return "select_trip";
@@ -66,6 +67,7 @@ public class TripRegisterController {
         }
         return "redirect:/trips/register"; //
     }
+
 
 
 }

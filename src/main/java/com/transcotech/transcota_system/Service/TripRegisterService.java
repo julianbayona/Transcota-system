@@ -28,12 +28,8 @@ public class TripRegisterService implements TripRegisterServiceInterface{
 
     @Override
     public List<TripDTO> findAll() {
-        List<TripDTO> tripDTOS = new ArrayList<TripDTO>();
-        List<TripRegister> tripRegisters = tripRegisterRepositoryInterface.findAll();
-        for(int i=0; i<tripRegisters.size();i++){
-            tripDTOS.add(tripMapper.tripToTripDTO(tripRegisters.get(i)));
-        }
-        return tripDTOS;
+        List<TripRegister> trips = tripRegisterRepositoryInterface.findAll();
+        return tripMapper.tripsToTripDTOs(trips);
     }
 
     @Override
