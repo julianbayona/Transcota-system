@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -21,6 +24,9 @@ import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.transcotech.transcota_system.Service.VehicleService;
+import com.transcotech.transcota_system.dto.VehicleDTO;
+import com.transcotech.transcota_system.mapper.VehicleMapper;
+import com.transcotech.transcota_system.model.TypeVehicle;
 import com.transcotech.transcota_system.model.Vehicle;
 import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
@@ -32,6 +38,8 @@ public class VehicleServiceTest {
 
     @InjectMocks
     private VehicleService vehicleService;
+
+    private final VehicleMapper vehicleMapper = VehicleMapper.INSTANCE;
 
     private Vehicle vehicle1;
     private Vehicle vehicle2;
@@ -45,14 +53,18 @@ public class VehicleServiceTest {
         vehicle1.setPlate("ABC123");
         vehicle1.setModel("Toyota Corolla");
         vehicle1.setYear(2022);
+        vehicle1.setType(TypeVehicle.LOADING);
 
         vehicle2 = new Vehicle();
         vehicle2.setVehicleId(2L);
         vehicle2.setPlate("XYZ789");
         vehicle2.setModel("Honda Civic");
         vehicle2.setYear(2023);
+        vehicle2.setType(TypeVehicle.PASSENGER);
 
         vehicleList = Arrays.asList(vehicle1, vehicle2);
+
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -60,38 +72,41 @@ public class VehicleServiceTest {
 
         when(vehicleRepository.findAll()).thenReturn(vehicleList);
 
-        //List<Vehicle> result = vehicleService.findAll();
+        // Act
+        List<VehicleDTO> result = vehicleService.findAll();
 
-        //assertEquals(2, result.size());
-        verify(vehicleRepository, times(1)).findAll();
+        // Assert
+        List<VehicleDTO> expectedVehicleDTOs = vehicleMapper.vehiclesToVehicleDTOs(vehicleList);
+        assertEquals(expectedVehicleDTOs, result);
     }
 
-    /*
     @Test
     void searchIdWhenVehicleExists() {
+        Long vehicleId = 1L;
 
-        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle1));
+        VehicleDTO expectedVehicleDTO = vehicleMapper.vehicleToVehicleDTO(vehicle1);
 
-        VehicleDTO result = vehicleService.searchId(1L);
+        when(vehicleRepository.findById(vehicleId)).thenReturn(Optional.of(vehicle1));
 
-        assertNotNull(result);
-        assertEquals(1L, result.getVehicleId());
-        assertEquals("ABC123", result.getPlate());
-        verify(vehicleRepository, times(1)).findById(1L);
+        VehicleDTO result = vehicleService.searchId(vehicleId);
+
+        assertEquals(expectedVehicleDTO, result);
+        verify(vehicleRepository, times(1)).findById(vehicleId);
     }
 
     @Test
     void searchIdWhenVehicleDoesNotExist() {
 
-    when(vehicleRepository.findById(3L)).thenReturn(Optional.empty());
+        Long vehicleId = 99L;
 
-        VehicleDTO result = vehicleService.searchId(3L);
+        when(vehicleRepository.findById(vehicleId)).thenReturn(Optional.empty());
+
+        VehicleDTO result = vehicleService.searchId(vehicleId);
 
         assertNull(result);
-        verify(vehicleRepository, times(1)).findById(3L);
+        verify(vehicleRepository, times(1)).findById(vehicleId);
     }
-    */
-    
+
     @Test
     void deleteVehicleWhenVehicleExists() {
 
@@ -119,72 +134,64 @@ public class VehicleServiceTest {
 
     @Test
     void createVehicleWhenVehicleDoesNotExistTrue() {
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, "ABC123", "Model1", 2020, TypeVehicle.PASSENGER);
+        Vehicle vehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
 
-        Vehicle newVehicle = new Vehicle();
-        newVehicle.setVehicleId(3L);
-        newVehicle.setPlate("DEF456");
-        newVehicle.setModel("Nissan Altima");
-        newVehicle.setYear(2024);
+        when(vehicleRepository.existsById(vehicle.getVehicleId())).thenReturn(false);
+        when(vehicleRepository.save(any(Vehicle.class))).thenReturn(vehicle);
 
-        when(vehicleRepository.existsById(3L)).thenReturn(false);
-        when(vehicleRepository.save(newVehicle)).thenReturn(newVehicle);
+        boolean result = vehicleService.createVehicle(vehicleDTO);
 
-        //boolean result = vehicleService.createVehicle(newVehicle);
-
-        //assertTrue(result);
-        verify(vehicleRepository, times(1)).existsById(3L);
-        verify(vehicleRepository, times(1)).save(newVehicle);
+        assertTrue(result); // Verifica que el método devuelva true
+        verify(vehicleRepository, times(1)).save(any(Vehicle.class));
     }
 
     @Test
     void createVehicleWhenVehicleExistsFalse() {
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, "ABC123", "Model1", 2020, TypeVehicle.LOADING);
+        Vehicle newVehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
 
-        when(vehicleRepository.existsById(1L)).thenReturn(true);
+        when(vehicleRepository.existsById(newVehicle.getVehicleId())).thenReturn(true);
 
-        //boolean result = vehicleService.createVehicle(vehicle1);
+        boolean result = vehicleService.createVehicle(vehicleDTO);
 
-        //assertFalse(result);
-        verify(vehicleRepository, times(1)).existsById(1L);
-        verify(vehicleRepository, never()).save(any());
+        assertFalse(result);
+        verify(vehicleRepository, never()).save(newVehicle);
     }
 
     @Test
     void updateVehicleWhenVehicleExistsTrue() {
 
-        Vehicle updatedVehicle = new Vehicle();
-        updatedVehicle.setPlate("DEF456");
-        updatedVehicle.setModel("Toyota Camry");
-        updatedVehicle.setYear(2025);
+        Long vehicleId = vehicle1.getVehicleId();
+        VehicleDTO vehicleDTO = new VehicleDTO(vehicleId, "XYZ789", "Model2", 2021, TypeVehicle.LOADING);
+        Vehicle updatedVehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
 
-        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle1));
-        when(vehicleRepository.save(any(Vehicle.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(vehicleRepository.findById(vehicleId)).thenReturn(Optional.of(vehicle1));
+        when(vehicleRepository.save(vehicle1)).thenReturn(vehicle1);
 
-        //boolean result = vehicleService.updateVehicle(1L, updatedVehicle);
+        boolean result = vehicleService.updateVehicle(vehicleId, vehicleDTO);
 
-        //assertTrue(result);
-        verify(vehicleRepository, times(1)).findById(1L);
-        verify(vehicleRepository, times(1)).save(any(Vehicle.class));
-
-        Vehicle captured = vehicle1;
-        assertEquals("DEF456", captured.getPlate());
-        assertEquals("Toyota Camry", captured.getModel());
-        assertEquals(2025, captured.getYear());
+        assertTrue(result);
+        verify(vehicleRepository, times(1)).findById(vehicleId);
+        verify(vehicleRepository, times(1)).save(vehicle1);
+        assertEquals(updatedVehicle.getPlate(), vehicle1.getPlate());
+        assertEquals(updatedVehicle.getModel(), vehicle1.getModel());
+        assertEquals(updatedVehicle.getYear(), vehicle1.getYear());
+        assertEquals(updatedVehicle.getType(), vehicle1.getType());
     }
 
     @Test
     void updateVehicleWhenVehicleDoesNotExistFalse() {
+        Long vehicleId = 99L;
+        VehicleDTO vehicleDTO = new VehicleDTO(vehicleId, "XYZ789", "Model2", 2021, TypeVehicle.PASSENGER);
 
-        Vehicle updatedVehicle = new Vehicle();
-        updatedVehicle.setPlate("DEF456");
-        updatedVehicle.setModel("Toyota Camry");
-        updatedVehicle.setYear(2025);
+        when(vehicleRepository.findById(vehicleId)).thenReturn(Optional.empty());
 
-        when(vehicleRepository.findById(3L)).thenReturn(Optional.empty());
+        boolean result = vehicleService.updateVehicle(vehicleId, vehicleDTO);
 
-        //boolean result = vehicleService.updateVehicle(3L, updatedVehicle);
-
-        //assertFalse(result);
-        verify(vehicleRepository, times(1)).findById(3L);
-        verify(vehicleRepository, never()).save(any());
+        assertFalse(result);
+        verify(vehicleRepository, times(1)).findById(vehicleId);
+        verify(vehicleRepository, never()).save(any(Vehicle.class)); 
     }
+
 }
