@@ -19,8 +19,8 @@ public class DriverService implements DriverServiceInterface{
     private DriverRepositoryInterface driverRepository;
 
     @Override
-    public List<User> findAll(){
-        return driverRepository.findAll();
+    public List<UserDTO> findAll(){
+        return userMapper.usersToUserDTOs(driverRepository.findAll());
     }
 
     @Override
@@ -35,7 +35,8 @@ public class DriverService implements DriverServiceInterface{
     }
 
     @Override
-    public User createDriver(User user) {
+    public User createDriver(UserDTO userDTO) {
+        User user = UserMapper.INSTANCE.userDTOToUser(userDTO);
         return this.driverRepository.save(user);
         
     }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.transcotech.transcota_system.Service.DriverService;
+import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.model.Vehicle;
 
@@ -31,7 +32,7 @@ public class DriverController {
     }
 
     @GetMapping("/all")
-    public List<User> showAllDri(){
+    public List<UserDTO> showAllDri(){
         return driverService.findAll();
     }
 
@@ -44,7 +45,7 @@ public class DriverController {
     @PostMapping("/create")
     @ResponseBody
     public void createDriver(@RequestBody User user){
-        driverService.createDriver(user);
+        //driverService.createDriver(user);
     }
 
       @PostMapping("/register")

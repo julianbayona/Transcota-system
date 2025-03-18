@@ -9,15 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.transcotech.transcota_system.Service.VehicleService;
 import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.mapper.VehicleMapper;
-import com.transcotech.transcota_system.model.TypeVehicle;
 import com.transcotech.transcota_system.model.Vehicle;
 
 @Controller
@@ -33,13 +30,6 @@ public class VehicleController {
         return "all-vehicles";
     }
 
-    @PostMapping("/create")
-    @ResponseBody
-    public void createEjemploParaBorrar(@RequestBody Vehicle vehicle) {
-        vehicleService.createVehicle(vehicle); 
-    }
-
-
 
     //REGISTRAR--------------------------------------------------------------------
 
@@ -50,11 +40,7 @@ public class VehicleController {
     }
     @PostMapping("register")
     public String register(VehicleDTO vehicleDTO ,Model model){
-        System.out.println("correcto");
-        Vehicle vehicle = VehicleMapper.INSTANCE.vehicleDTOToVehicle(vehicleDTO); 
-        System.out.println(vehicle.toString());
-        //vehicleService.createVehicle(vehicle);
-        
+        vehicleService.createVehicle(vehicleDTO);
         return "register_vehicle";
     }
 
@@ -62,7 +48,7 @@ public class VehicleController {
 
     @GetMapping("/update")
     public String showUpdateForm(Model model) {
-        model.addAttribute("vehicleDTO", new VehicleDTO());  // Se inicializa un objeto vacío
+        model.addAttribute("vehicleDTO", new VehicleDTO());
         return "update_vehicle";
     }
 
@@ -144,53 +130,23 @@ public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO)
 public String showVehiclesList(Model model) {
 
     model.addAttribute("vehicleDTO", new VehicleDTO());
-vehicleService.getVehiclesList().clear();
-    Vehicle v1 = new Vehicle();
-    v1.setModel("mazda");
-    v1.setPlate("ABC123");
-    v1.setType(null);
-    v1.setVehicleId(21); // ID de prueba
-    v1.setYear(2020);
-
-    Vehicle v2 = new Vehicle();
-    v2.setModel("Toyota");
-    v2.setPlate("ABC");
-    v2.setType(null);
-    v2.setVehicleId(22); // ID de prueba
-    v2.setYear(2020);
-
-    vehicleService.getVehiclesList().add(v1);
-    vehicleService.getVehiclesList().add(v2);
-
-
-    List <VehicleDTO> dtos = new ArrayList<VehicleDTO>();
-    for(Vehicle vehicle:vehicleService.getVehiclesList()){
-        dtos.add(VehicleMapper.INSTANCE.vehicleToVehicleDTO(vehicle));
-    }
-
-    model.addAttribute("vehicleList", dtos); // Cargar lista de vehículos
+    model.addAttribute("vehicleList", vehicleService.getAllVehicles());
     return "select_vehicle"; 
 }
 
 @PostMapping("/select/search")
 public String searchVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, Model model) {
     Long id = vehicleDTO.getVehicleId();
-
-    // Buscar el vehículo en la lista
-    Vehicle foundVehicle = vehicleService.getVehiclesList().stream()
-    .filter(v -> v.getVehicleId() == id)  // ✅ Comparación directa
-    .findFirst()
-    .orElse(null);
-
-    if (foundVehicle == null) {
+    VehicleDTO vehicle = vehicleService.searchId(id);
+    if(vehicle == null){
         model.addAttribute("errorMessage", "El vehículo con ID " + id + " no existe.");
-        model.addAttribute("vehicleList", new ArrayList<>()); // Evita mostrar datos erróneos
+        model.addAttribute("vehicleList", new ArrayList<>());
         return "select_vehicle";
     }
+    
 
-    // Si se encuentra, actualizar la lista con solo ese vehículo
     List<VehicleDTO> dtos = new ArrayList<>();
-    dtos.add(VehicleMapper.INSTANCE.vehicleToVehicleDTO(foundVehicle));
+    dtos.add(vehicle);
 
     model.addAttribute("vehicleList", dtos);
     return "select_vehicle";
@@ -205,35 +161,29 @@ public String searchVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO,
     
 
     @PostMapping("/delete/search")
-public String searchVehicleForDelete(@RequestParam("id") Long id, Model model) {
-    Vehicle vehicle = vehicleService.getVehiclesList().stream()
-        .filter(v -> v.getVehicleId() == id)
-        .findFirst()
-        .orElse(null);
+    public String searchVehicleForDelete(@RequestParam("id") Long id, Model model) {
+        VehicleDTO vehicle = vehicleService.searchId(id);
 
-    if (vehicle != null) {
-        model.addAttribute("vehicleDTO", VehicleMapper.INSTANCE.vehicleToVehicleDTO(vehicle));
-    } else {
-        model.addAttribute("errorMessage", "El vehículo con ID " + id + " no existe.");
+        if (vehicle != null) {
+            model.addAttribute("vehicleDTO", vehicle);
+        } else {
+            model.addAttribute("errorMessage", "El vehículo con ID " + id + " no existe.");
+        }
+        return "delete_vehicle";
     }
-    return "delete_vehicle";
-}
     
-@PostMapping("/delete")
-public String deleteVehicle(@RequestParam("vehicleId") Long id, Model model) {
-    boolean removed = vehicleService.getVehiclesList().removeIf(v -> v.getVehicleId() == id);
+    @PostMapping("/delete")
+    public String deleteVehicle(@RequestParam("vehicleId") Long id, Model model) {
+        boolean removed = vehicleService.getVehiclesList().removeIf(v -> v.getVehicleId() == id);
+        
+        if (removed) {
+            model.addAttribute("successMessage", "Vehículo eliminado correctamente.");
+        } else {
+            model.addAttribute("errorMessage", "No se encontró el vehículo con ID " + id);
+        }
 
-    if (removed) {
-        model.addAttribute("successMessage", "Vehículo eliminado correctamente.");
-    } else {
-        model.addAttribute("errorMessage", "No se encontró el vehículo con ID " + id);
+        return "delete_vehicle";
     }
-
-    return "delete_vehicle";
-}
-
-    
-
 
 }
 

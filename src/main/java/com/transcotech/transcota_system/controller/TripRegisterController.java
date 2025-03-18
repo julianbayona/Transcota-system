@@ -32,7 +32,7 @@ public class TripRegisterController {
     }
 
     @GetMapping("/all")
-    public List<TripRegister> showAlltri(){
+    public List<TripDTO> showAlltri(){
         return tripRegisterService.findAll();
     }
 
