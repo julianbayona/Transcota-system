@@ -12,17 +12,17 @@ public class User extends Person {
 
     @Enumerated(EnumType.STRING)
     @Column(name= "role")
-    private Role role;
+    private String role;
 
     public User(){
 
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }
