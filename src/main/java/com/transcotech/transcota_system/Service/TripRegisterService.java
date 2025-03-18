@@ -1,5 +1,7 @@
 package com.transcotech.transcota_system.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,13 @@ public class TripRegisterService implements TripRegisterServiceInterface{
     private TripRegisterRepositoryInterface tripRegisterRepositoryInterface;
 
     @Override
-    public List<TripRegister> findAll() {
-        return tripRegisterRepositoryInterface.findAll();
+    public List<TripDTO> findAll() {
+        List<TripDTO> tripDTOS = new ArrayList<TripDTO>();
+        List<TripRegister> tripRegisters = tripRegisterRepositoryInterface.findAll();
+        for(int i=0; i<tripRegisters.size();i++){
+            tripDTOS.add(tripMapper.tripToTripDTO(tripRegisters.get(i)));
+        }
+        return tripDTOS;
     }
 
     @Override
