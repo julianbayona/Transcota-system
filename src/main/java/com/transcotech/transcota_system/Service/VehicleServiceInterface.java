@@ -9,5 +9,5 @@ public interface VehicleServiceInterface {
     VehicleDTO searchId(Long id);
     boolean deleteVehicle(Long id);
     boolean createVehicle(VehicleDTO vehicleDTO);
-    boolean updateVehicle(Long id, VehicleDTO vehicleDTO);
+    String updateVehicle(Long id, VehicleDTO vehicleDTO);
 }

@@ -37,7 +37,6 @@ public class VehicleService implements VehicleServiceInterface {
     public boolean deleteVehicle(Long id) {
         if (vehicleRepository.existsById(id)) {
             vehicleRepository.deleteById(id);
-            mostrarListaVehiculos();
             return true;
         }
         return false;
@@ -46,29 +45,20 @@ public class VehicleService implements VehicleServiceInterface {
     @Override
     public boolean createVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
-        if (vehicleRepository.existsById(vehicle.getVehicleId())) {
-            return false;
+        Optional<Vehicle> existingVehicle = vehicleRepository.findByPlate(vehicle.getPlate());
+        if (existingVehicle.isPresent()) {
+            return false; // La placa ya existe
         }
         vehicleRepository.save(vehicle);
-        return true;
+        return true; // Registro exitoso
     }
-    
 
-    @Override
-    public boolean updateVehicle(Long id, VehicleDTO vehicleDTO) {
+    public VehicleDTO searchPlate(VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
-        Optional<Vehicle> existingVehicle = vehicleRepository.findById(id);
-        if (existingVehicle.isPresent()) {
-            Vehicle updatedVehicle = existingVehicle.get();
-            updatedVehicle.setPlate(vehicle.getPlate());
-            updatedVehicle.setModel(vehicle.getModel());
-            updatedVehicle.setYear(vehicle.getYear());
-            vehicleRepository.save(updatedVehicle);
-            System.out.println("Vehículo actualizado: " + updatedVehicle);
-            mostrarListaVehiculos();
-            return true;
-        }
-        return false;
+        Optional<Vehicle> existingVehicle = vehicleRepository.findByPlate(vehicle.getPlate());
+        return existingVehicle
+        .map(vehicleMapper::vehicleToVehicleDTO) 
+        .orElse(null);
     }
 
     public List<Vehicle> getAllVehicles() {
@@ -87,6 +77,28 @@ public class VehicleService implements VehicleServiceInterface {
     public void setVehiclesList(List<Vehicle> vehiclesList) {
         this.vehiclesList = vehiclesList;
     }
+
+    @Override
+    public String updateVehicle(Long vehicleId, VehicleDTO vehicleDTO) {
+        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElse(null);
+
+        if (vehicle == null) {
+            return "vehiculoInexistente"; } //No encontró el vehículo 
+
+            Optional<Vehicle> existingVehicle = vehicleRepository.findByPlate(vehicleDTO.getPlate());
+
+            // Verifica si la placa ya existe y no pertenece al mismo vehículo
+            if (existingVehicle.isPresent() && existingVehicle.get().getVehicleId() != vehicleId) {
+                return "placaOcupada";
+            }
+        // Actualizar los atributos
+        vehicle.setPlate(vehicleDTO.getPlate());
+        vehicle.setModel(vehicleDTO.getModel());
+        vehicle.setYear(vehicleDTO.getYear());
+        vehicle.setType(vehicleDTO.getType());
+    
+        vehicleRepository.save(vehicle); 
+        return "actualizado"; 
+    }
+
 }
-
-

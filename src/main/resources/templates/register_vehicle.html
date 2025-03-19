@@ -22,19 +22,19 @@
         </div>
         <details>
             <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/users/select}">
+            <a th:href="@{/drivers/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
             </a>
-            <a th:href="@{/users/assigned}">
+            <a th:href="@{/drivers/assigned}">
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
-            <a th:href="@{/users/register}">
+            <a th:href="@{/drivers/register}">
                 <div class="nav-item"><span>Registrar Usuario</span></div>
             </a>
-            <a th:href="@{/users/update}">
+            <a th:href="@{/drivers/update}">
                 <div class="nav-item"><span>Actualizar Usuario</span></div>
             </a>
-            <a th:href="@{/users/delete}">
+            <a th:href="@{/drivers/delete}">
                 <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
@@ -75,7 +75,7 @@
                 <div class="tab-content">
                     <h2 id="main-title">Registrar Vehículo</h2>
                     <form id="form-type"  method="POST" th:object="${vehicleDTO}">
-                       <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> -->
+                     
                         <div class="form-group">
                             <label for="placa">Placa:</label>
                             <input type="text" id="placa" class="form-control" placeholder="Ingrese la placa del vehículo" th:field="*{plate}" required>
@@ -92,8 +92,8 @@
                             <label for="tipo-vehiculo">Tipo de Vehículo:</label>
                             <select id="tipo-vehiculo" class="form-control"  th:field="*{type}" required>
                                 <option value="">Seleccione un tipo</option>
-                                <option value="bus">Carga</option>
-                                <option value="microbus">Pasajeros</option>
+                                <option value="LOADING">Carga</option>
+                                <option value="PASSENGER">Pasajeros</option>
                             </select>
                         </div>
                         <div class="btn-container">
@@ -106,5 +106,16 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            var alertType = /*[[${alertType}]]*/ null;
+            if (message) {
+                alert((alertType === "success" ? "✅ " : "❌ ") + message);
+            }
+        };
+        /*]]>*/
+    </script>
 </body>
 </html>
