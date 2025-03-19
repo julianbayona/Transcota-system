@@ -1,6 +1,5 @@
 package com.transcotech.transcota_system.controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.transcotech.transcota_system.Service.DriverService;
 import com.transcotech.transcota_system.Service.TripRegisterService;
 import com.transcotech.transcota_system.Service.VehicleService;
-import com.transcotech.transcota_system.dto.TripDTO;
 import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.dto.VehicleDTO;
 
@@ -26,10 +24,6 @@ public class DriverController {
 
     @Autowired
     private DriverService driverService;
-    @Autowired
-    private TripRegisterService tripService;
-    @Autowired
-    private VehicleService vehicleService;
 
     @GetMapping("/register")
     public String registerVehicle(Model model) {
@@ -135,20 +129,13 @@ public class DriverController {
         return "delete_user";
     }
 
-    /*@PostMapping("delete")
-    public String deleteUser(@RequestParam("personId") Long id, Model model){
-        driverService.deleteUser(id);
-        return "redirect:/users/delete/message";
-    }*/
-
     @PostMapping("/delete")
     public String deleteVehicle(@RequestParam("userId") Long personId, Model model) {
         UserDTO foundUser = driverService.searchId(personId);
-        System.out.println(foundUser);
         if(foundUser == null){
             model.addAttribute("errorMessage", "El usuario con ID " + personId + " no existe.");
-            model.addAttribute("vehicleDTO", new VehicleDTO());
-            return "redirect:/users/delete";
+            model.addAttribute("userDTO", new UserDTO());
+            return "delete_user";
         }
         driverService.deleteUser(personId);
         return "redirect:/users/delete/message";
@@ -171,8 +158,12 @@ public class DriverController {
     @PostMapping("/assigned/search")
     public String assignedSearch(@RequestParam("personId") Long personId, Model model){
         UserDTO userDTO = driverService.searchId(personId);
+        if(userDTO == null){
+            model.addAttribute("errorMessage", "El usuario con ID " + personId + " no existe.");
+            model.addAttribute("userDTO", new UserDTO());
+            return "assigned_vehicle";
+        }
         List<VehicleDTO> vehicles = driverService.getVehiclesAssignedDriver(personId);
-        System.out.println(vehicles.size());
         if(vehicles.size() == 0){
             model.addAttribute("errorMessage", "EL USUARIO NO TIENE VEHICULOS ASIGNADOS.");
         }
