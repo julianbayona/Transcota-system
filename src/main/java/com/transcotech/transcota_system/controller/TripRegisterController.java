@@ -80,8 +80,8 @@ public class TripRegisterController {
         return "delete_trip";
     }
 
-    @GetMapping("/delete/search")
-    public String sharchToDelete(@RequestParam("vehicleId") Long id, Model model){
+    @PostMapping("/delete/search")
+    public String sharchToDelete(@ModelAttribute("tripDTO") TripDTO tripDTO, @RequestParam("vehicleId") Long id, Model model){
         TripDTO trip = tripRegisterService.searchTripRegisterById(id);
         model.addAttribute("tripFound", trip);
         return "delete_trip";
