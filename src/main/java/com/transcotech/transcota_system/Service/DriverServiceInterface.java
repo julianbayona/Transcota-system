@@ -11,5 +11,5 @@ public interface DriverServiceInterface {
     public UserDTO searchId(Long id);
     public void deleteUser(Long id);
     public User createDriver(UserDTO userDTO);
-
+    public User updateDriver(Long id, UserDTO userDTO);
 }

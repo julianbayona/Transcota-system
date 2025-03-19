@@ -1,12 +1,14 @@
 package com.transcotech.transcota_system.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.mapper.UserMapper;
+import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.repositories.DriverRepositoryInterface;
 
@@ -39,6 +41,18 @@ public class DriverService implements DriverServiceInterface{
         User user = UserMapper.INSTANCE.userDTOToUser(userDTO);
         return this.driverRepository.save(user);
         
+    }
+
+    @Override
+    public User updateDriver(Long id, UserDTO userDTO) {
+        Optional<User> existingUser = driverRepository.findById(id);
+        if (existingUser.isPresent()) {
+            User updatedUser = userMapper.userDTOToUser(userDTO);
+            driverRepository.save(updatedUser);
+            return updatedUser;
+        }
+        System.out.println("Uusario actualizado");
+        return null;
     }
     
 }

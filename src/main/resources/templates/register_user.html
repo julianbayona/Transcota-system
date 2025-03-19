@@ -91,12 +91,21 @@
                             </select>
                         </div>
                         <div class="btn-container">
-                            <button type="submit" th:formaction="@{/users/create}" class="btn btn-success">Registrar Usuario</button>
+                            <button type="submit" th:formaction="@{/users/register}" class="btn btn-success">Registrar Usuario</button>
+                            <button type="submit" th:formaction="@{/users/register/clear}" class="btn btn-warning">Limpiar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var errorMessage = /*[[${errorMessage}]]*/ null;
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+        /*]]>*/
+    </script>
 </body>
 </html>

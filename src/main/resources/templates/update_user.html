@@ -91,7 +91,7 @@
                     <form id="form-type" th:action="@{/users/update}" method="POST" th:object="${userDTO}">
                         <div class="form-group">
                             <label for="id">ID:</label>
-                            <input type="text" id="id" class="form-control" placeholder="Id del usuario" th:field="*{personId}" required disabled>
+                            <input type="number" id="id" class="form-control" placeholder="Id del usuario" th:field="*{personId}" required readOnly>
                         </div>
 
                         <div class="form-group">
@@ -106,15 +106,13 @@
                             <label for="rol">Rol:</label>
                             <select id="rol" class="form-control" th:field="*{roleDTO}" required>
                                 <option value="" disabled selected>Seleccione un rol</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Despachador">Despachador</option>
-                                <option value="Donductor">Conductor</option>
-                                <option value="Mecanico">Mecánico</option>
+                                <option value="ADMIN">Administrador</option>
+                                <option value="DRIVER">Conductor</option>
                             </select>
                         </div>
                         <div class="btn-container">
                         <button type="submit" th:formaction="@{/users/update}" class="btn btn-success">Actualizar Usuario</button>
-                            
+                        <button type="submit" th:formaction="@{/users/update/clear}" class="btn btn-warning">Limpiar</button>
                         </div>
                     </form>
                 </div>
