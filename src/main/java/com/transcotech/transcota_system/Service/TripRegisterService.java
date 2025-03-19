@@ -1,11 +1,7 @@
 package com.transcotech.transcota_system.Service;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.transcotech.transcota_system.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +9,8 @@ import com.transcotech.transcota_system.dto.TripDTO;
 import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.mapper.TripMapper;
+import com.transcotech.transcota_system.model.TripRegister;
+import com.transcotech.transcota_system.model.TripVehicleDTO;
 import com.transcotech.transcota_system.repositories.TripRegisterRepositoryInterface;
 @Service
 public class TripRegisterService implements TripRegisterServiceInterface{
@@ -69,6 +67,11 @@ public class TripRegisterService implements TripRegisterServiceInterface{
     @Override
     public TripRegister createTripRegister(TripDTO tripDTO) {
         TripRegister tripRegister = tripMapper.tripDTOToTrip(tripDTO);
+        return this.tripRegisterRepositoryInterface.save(tripRegister);
+    }
+
+    public TripRegister createTripRegister2(TripVehicleDTO tripVehicleDTO) {
+        TripRegister tripRegister = tripMapper.tripDTOToTrip(tripVehicleDTO.getTripDTO());
         return this.tripRegisterRepositoryInterface.save(tripRegister);
     }
 

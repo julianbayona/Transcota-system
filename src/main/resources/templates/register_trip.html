@@ -74,18 +74,18 @@
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Registrar Viaje</h2>
-                    <form id="form-type" th:object="${tripDTO}" method="POST">
+                    <form id="form-type" th:object="${tripVehicleDTO}" method="POST">
                         <div class="form-group">
                             <label for="origen">Lugar de Origen:</label>
-                            <input type="text" id="origen" class="form-control" placeholder="Ingrese el lugar de origen" th:field="*{origin}" required>
+                            <input type="text" id="origen" class="form-control" placeholder="Ingrese el lugar de origen" th:field="*{tripDTO.origin}" required>
                         </div>
                         <div class="form-group">
                             <label for="destino">Lugar de Destino:</label>
-                            <input type="text" id="destino" class="form-control" placeholder="Ingrese el lugar de destino" th:field="*{destination}" required>
+                            <input type="text" id="destino" class="form-control" placeholder="Ingrese el lugar de destino" th:field="*{tripDTO.destination}" required>
                         </div>
                         <div class="form-group">
                             <label for="fecha-viaje">Fecha del Viaje:</label>
-                            <input type="date" id="fecha-viaje" class="form-control" th:field="*{date}" required>
+                            <input type="date" id="fecha-viaje" class="form-control" th:field="*{tripDTO.date}" required>
                         </div>
                         
                         <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 15px; margin-bottom: 20px;">
@@ -99,7 +99,7 @@
                                             <div class="form-group" style="margin-bottom: 15px;">
                                                 <label for="vehiculo-id">ID del Vehículo:</label>
                                                 <div style="display: flex; gap: 10px;">
-                                                    <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{vehicleId}" required>
+                                                    <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{vehicleDTO.vehicleId}" required>
                                                     <button type="submit" th:formaction="@{/trips/register/searchVehicle}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                                         Buscar
@@ -114,19 +114,19 @@
                                             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Placa:</strong> <span id="info-vehiculo-placa" th:text="*{plate} ?: '---'">---</span></label>
+                                                    <label><strong>Placa:</strong> <span id="info-vehiculo-placa" th:text="*{vehicleDTO.plate} ?: '---'">---</span></label>
                                                 </div>
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Modelo:</strong> <span id="info-vehiculo-modelo" th:text="*{model} ?: '---'">---</span></label>
+                                                    <label><strong>Modelo:</strong> <span id="info-vehiculo-modelo" th:text="*{vehicleDTO.model} ?: '---'">---</span></label>
                                                 </div>
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Año:</strong> <span id="info-vehiculo-anio" th:text="*{year} ?: '---'">---</span></label>
+                                                    <label><strong>Año:</strong> <span id="info-vehiculo-anio" th:text="*{vehicleDTO.year} ?: '---'">---</span></label>
                                                 </div>
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                                    <label><strong>Tipo de Vehículo:</strong> <span id="info-vehiculo-tipo" th:text="*{type} ?: '---'">---</span></label>
+                                                    <label><strong>Tipo de Vehículo:</strong> <span id="info-vehiculo-tipo" th:text="*{vehicleDTO.type} ?: '---'">---</span></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,7 +141,7 @@
                                         <div class="form-group" style="margin-bottom: 15px;">
                                             <label for="conductor-id">ID del conductor:</label>
                                             <div style="display: flex; gap: 10px;">
-                                                <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del conductor" th:field="*{personId}" required>
+                                                <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del conductor" th:field="*{userDTO.personId}" required>
                                                 <button type="submit" th:formaction="@{/trips/register/searchDriver}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                                     <i class="fa-solid fa-magnifying-glass icon"></i>
                                                     Buscar
@@ -155,25 +155,23 @@
                                             
                                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
                                             <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Nombres:</strong> <span id="info-conductor-nombres" th:text="*{name} ?: '---'">---</span></label>
+                                                <label><strong>Nombres:</strong> <span id="info-conductor-nombres" th:text="*{userDTO.name} ?: '---'">---</span></label>
                                             </div>
                                                 
                                             <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Id rol:</strong> <span id="info-conductor-rol" th:text="*{roleDTO.roleId} ?: '---'">---</span></label>
+                                                    <label><strong>Id rol:</strong> <span id="info-conductor-rol" th:text="*{userDTO.roleDTO} ?: '---'">---</span></label>
                                             </div>
                                                 
                                             <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                                <label><strong>Email:</strong> <span id="info-conductor-email" th:text="*{email} ?: '---'">---</span></label>
+                                                <label><strong>Email:</strong> <span id="info-conductor-email" th:text="*{userDTO.email} ?: '---'">---</span></label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </details>
                         </div>
-                        
                         <div class="btn-container">
-                            <button type="submit" th:formaction="@{/trips/register/{tripId}}" class="btn btn-success">Registrar Viaje</button>
-                            <button type="submit" th:formaction="@{/vehicles/register/clean" class="btn btn-warning">Limpiar</button>
+                            <button type="submit" th:formaction="@{/trips/create}" class="btn btn-success">Registrar Viaje</button>
                         </div>
                     </form>
                 </div>

@@ -2,21 +2,18 @@ package com.transcotech.transcota_system.controller;
 
 import java.util.List;
 
-import com.transcotech.transcota_system.dto.VehicleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.transcotech.transcota_system.Service.TripRegisterService;
 import com.transcotech.transcota_system.dto.TripDTO;
+import com.transcotech.transcota_system.model.TripVehicleDTO;
 
 @Controller
 @RequestMapping("/trips")
@@ -66,21 +63,18 @@ public class TripRegisterController {
 
 
     @PostMapping("/create")
-    public void createTrip(@RequestBody TripDTO tripDTO) {
-
-        tripRegisterService.createTripRegister(tripDTO);
+    public String createTrip(@ModelAttribute TripVehicleDTO tripVehicleDTO) {
+        tripRegisterService.createTripRegister2(tripVehicleDTO);
+        return  "register_trip";
     }
 
-    @PostMapping("/register")
-    public String registerTrip(@ModelAttribute("trip") TripDTO tripDTO, RedirectAttributes redirectAttributes) {
-        try {
-            tripRegisterService.createTripRegister(tripDTO);
-            redirectAttributes.addFlashAttribute("success", "Viaje registrado con éxito!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al registrar el viaje.");
-        }
-        return "redirect:/trips/register"; //
+    @GetMapping("/register")
+    public String showRegisterTrip(Model model) {
+        model.addAttribute("tripVehicleDTO", new TripVehicleDTO());
+        return "register_trip";
     }
+
+    
 
 
 
