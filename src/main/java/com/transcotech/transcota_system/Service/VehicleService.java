@@ -42,8 +42,6 @@ public class VehicleService implements VehicleServiceInterface {
         return false;
     }
 
-
-
     @Override
     public boolean createVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
@@ -55,16 +53,13 @@ public class VehicleService implements VehicleServiceInterface {
         return true; // Registro exitoso
     }
 
-
     public VehicleDTO searchPlate(VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
         Optional<Vehicle> existingVehicle = vehicleRepository.findByPlate(vehicle.getPlate());
         return existingVehicle
-        .map(vehicleMapper::vehicleToVehicleDTO) // Si encuentra, lo convierte a DTO
+        .map(vehicleMapper::vehicleToVehicleDTO) 
         .orElse(null);
     }
-
-   
 
     public List<Vehicle> getAllVehicles() {
         return vehicleRepository.findAll();
@@ -96,20 +91,14 @@ public class VehicleService implements VehicleServiceInterface {
             if (existingVehicle.isPresent() && existingVehicle.get().getVehicleId() != vehicleId) {
                 return "placaOcupada";
             }
-
-    
         // Actualizar los atributos
         vehicle.setPlate(vehicleDTO.getPlate());
         vehicle.setModel(vehicleDTO.getModel());
         vehicle.setYear(vehicleDTO.getYear());
         vehicle.setType(vehicleDTO.getType());
     
-        vehicleRepository.save(vehicle); //Guardar cambios en la BD
+        vehicleRepository.save(vehicle); 
         return "actualizado"; 
     }
 
 }
-
-
-
-
