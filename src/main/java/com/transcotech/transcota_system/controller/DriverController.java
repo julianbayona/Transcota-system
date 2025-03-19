@@ -1,5 +1,6 @@
 package com.transcotech.transcota_system.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.transcotech.transcota_system.Service.DriverService;
+import com.transcotech.transcota_system.Service.TripRegisterService;
+import com.transcotech.transcota_system.Service.VehicleService;
+import com.transcotech.transcota_system.dto.TripDTO;
 import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.dto.VehicleDTO;
 
@@ -22,6 +26,10 @@ public class DriverController {
 
     @Autowired
     private DriverService driverService;
+    @Autowired
+    private TripRegisterService tripService;
+    @Autowired
+    private VehicleService vehicleService;
 
     @GetMapping("/register")
     public String registerVehicle(Model model) {
@@ -164,6 +172,10 @@ public class DriverController {
     public String assignedSearch(@RequestParam("personId") Long personId, Model model){
         UserDTO userDTO = driverService.searchId(personId);
         List<VehicleDTO> vehicles = driverService.getVehiclesAssignedDriver(personId);
+        System.out.println(vehicles.size());
+        if(vehicles.size() == 0){
+            model.addAttribute("errorMessage", "EL USUARIO NO TIENE VEHICULOS ASIGNADOS.");
+        }
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("vehicleList", vehicles);
         return "assigned_vehicle";
@@ -180,5 +192,7 @@ public class DriverController {
         model.addAttribute("userDTO", new UserDTO());
         return "redirect:/users/register";
     }
+
+    
     
 }

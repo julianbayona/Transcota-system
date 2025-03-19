@@ -19,7 +19,7 @@ public class TripDTO {
     private String destination;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
-    private User driverId;
-    private Vehicle vehicleId;
+    private UserDTO driverId;
+    private VehicleDTO vehicleId;
     
 }
