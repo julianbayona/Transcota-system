@@ -22,19 +22,19 @@
         </div>
         <details open>
             <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/drivers/select}">
+            <a th:href="@{/users/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
             </a>
-            <a th:href="@{/drivers/assigned}">
+            <a th:href="@{/users/assigned}">
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
-            <a th:href="@{/drivers/register}">
+            <a th:href="@{/users/register}">
                 <div class="nav-item"><span>Registrar Usuario</span></div>
             </a>
-            <a th:href="@{/drivers/update}">
+            <a th:href="@{/users/update}">
                 <div class="nav-item active"><span>Actualizar Usuario</span></div>
             </a>
-            <a th:href="@{/drivers/delete}">
+            <a th:href="@{/users/delete}">
                 <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
@@ -74,18 +74,24 @@
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Actualizar Usuario</h2>
-                    <form id="form-type" th:object="${userDTO}" method="POST">
+                    <form id="form-type" th:action="@{/users/update/search}" th:object="${userDTO}" method="POST">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="usuario-id">ID del usuario:</label>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="text" id="usuario-id" class="form-control" placeholder="Ingrese el ID" th:field="*{personId}" required>
-                                    <button type="submit" th:formaction="@{/drivers/update/search}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                    <input type="number" id="usuario-id" class="form-control" placeholder="Ingrese el ID" th:field="*{personId}" required>
+                                    <button type="submit" th:formaction="@{/users/update/search}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    </form>
+                    <form id="form-type" th:action="@{/users/update}" method="POST" th:object="${userDTO}">
+                        <div class="form-group">
+                            <label for="id">ID:</label>
+                            <input type="number" id="id" class="form-control" placeholder="Id del usuario" th:field="*{personId}" required readOnly>
                         </div>
 
                         <div class="form-group">
@@ -98,22 +104,28 @@
                         </div>
                         <div class="form-group">
                             <label for="rol">Rol:</label>
-                            <select id="rol" class="form-control"  th:field="*{rolDTO}" required>
-                                <option value="">Seleccione un rol</option>
-                                <option value="administrador">Administrador</option>
-                                <option value="despachador">Despachador</option>
-                                <option value="conductor">Conductor</option>
-                                <option value="mecanico">Mecánico</option>
+                            <select id="rol" class="form-control" th:field="*{roleDTO}" required>
+                                <option value="" readOnly selected>Seleccione un rol</option>
+                                <option value="ADMIN">Administrador</option>
+                                <option value="DRIVER">Conductor</option>
                             </select>
                         </div>
                         <div class="btn-container">
-                            <button type="submit" th:formaction="@{/drivers/update/{userId}}" class="btn btn-success">Actualizar Usuario</button>
-                            
+                        <button type="submit" th:formaction="@{/users/update}" class="btn btn-success">Actualizar Usuario</button>
+                        <button type="submit" th:formaction="@{/users/update/clear}" class="btn btn-warning">Limpiar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var errorMessage = /*[[${errorMessage}]]*/ null;
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+        /*]]>*/
+    </script>
 </body>
 </html>
