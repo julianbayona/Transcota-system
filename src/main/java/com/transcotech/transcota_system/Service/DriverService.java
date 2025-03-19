@@ -1,22 +1,35 @@
 package com.transcotech.transcota_system.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.transcotech.transcota_system.dto.TripDTO;
 import com.transcotech.transcota_system.dto.UserDTO;
+import com.transcotech.transcota_system.dto.VehicleDTO;
+import com.transcotech.transcota_system.mapper.TripMapper;
 import com.transcotech.transcota_system.mapper.UserMapper;
+import com.transcotech.transcota_system.model.TripRegister;
+import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.repositories.DriverRepositoryInterface;
+import com.transcotech.transcota_system.repositories.TripRegisterRepositoryInterface;
 
 @Service
 public class DriverService implements DriverServiceInterface{
 
     private final UserMapper userMapper = UserMapper.INSTANCE;
+    private final TripMapper tripMapper = TripMapper.INSTANCE;
 
     @Autowired
     private DriverRepositoryInterface driverRepository;
+    @Autowired
+    private VehicleServiceInterface vehicleRepository;
+    @Autowired
+    private TripRegisterRepositoryInterface tripRepository;
 
     @Override
     public List<UserDTO> findAll(){
@@ -40,5 +53,33 @@ public class DriverService implements DriverServiceInterface{
         return this.driverRepository.save(user);
         
     }
+
+    @Override
+    public User updateDriver(Long id, UserDTO userDTO) {
+        Optional<User> existingUser = driverRepository.findById(id);
+        if (existingUser.isPresent()) {
+            User updatedUser = userMapper.userDTOToUser(userDTO);
+            driverRepository.save(updatedUser);
+            return updatedUser;
+        }
+        System.out.println("Uusario actualizado");
+        return null;
+    }
+
+    @Override
+    public List<VehicleDTO> getVehiclesAssignedDriver(Long driverId) {
+        List<TripRegister> tripRegisters = tripRepository.findAll();
+        System.out.println(tripRegisters);
+        List<TripDTO> tripDTOs = tripMapper.tripsToTripDTOs(tripRegisters);
+        List<VehicleDTO> vehicleFind = new ArrayList<>();
+        for(TripDTO tripDTO: tripDTOs){
+            if(tripDTO.getDriverId().equals(driverId)){
+                vehicleFind.add(vehicleRepository.searchId(tripDTO.getVehicleId().getVehicleId()));
+            }
+        }
+        return vehicleFind;
+    }
+
+    
     
 }
