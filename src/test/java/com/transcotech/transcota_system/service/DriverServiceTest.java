@@ -110,9 +110,11 @@ public class DriverServiceTest {
 
     @Test
     void createDriverTest() {
-
-        UserDTO userDTO = new UserDTO(1L, Role.DRIVER, "John Doe", "john.doe@example.com");
-        User user = userMapper.userDTOToUser(userDTO);
+        User user =  new User();
+        user.setPersonId(1L);
+        user.setName("John Doe");
+        user.setEmail("john.doe@example.com");
+        UserDTO userDTO = userMapper.userToUserDTO(user);
 
         when(driverRepository.save(any(User.class))).thenReturn(user);
 
