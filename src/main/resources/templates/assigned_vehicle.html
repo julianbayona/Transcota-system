@@ -100,5 +100,13 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var errorMessage = /*[[${errorMessage}]]*/ null;
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+        /*]]>*/
+    </script>
 </body>
 </html>
