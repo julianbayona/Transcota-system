@@ -92,33 +92,33 @@
                             
                             <div style="display: grid; grid-template-columns: repeat(2, 3fr); gap: 8px;">
                                 <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Id del viaje: </strong> <span id="info-lugar-origen" th:text="*{tripId} ?: '---'">---</span></label>
+                                    <label><strong>Id del viaje: </strong> <span id="info-lugar-origen" th:text="*{tripFound.tripId} ?: '---'">---</span></label>
                                 </div>
 
                                 <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Lugar de Origen: </strong> <span id="info-lugar-origen" th:text="*{origin} ?: '---'">---</span></label>
+                                    <label><strong>Lugar de Origen: </strong> <span id="info-lugar-origen" th:text="*{tripFound.origin} ?: '---'">---</span></label>
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Lugar Destino: </strong> <span id="info-luga-destino" th:text="*{destination} ?: '---'">---</span></label>
+                                    <label><strong>Lugar Destino: </strong> <span id="info-luga-destino" th:text="*{tripFound.destination} ?: '---'">---</span></label>
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Fecha del Viaje: </strong> <span id="info-fecha-viaje" th:text="*{date} ?: '---'">---</span></label>
+                                    <label><strong>Fecha del Viaje: </strong> <span id="info-fecha-viaje" th:text="${tripFound.date} ?: '---'">---</span></label>
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>ID Conductor: </strong> <span id="info-id-conductor" th:text="*{driverDTO.personId} ?: '---'">---</span></label>
+                                    <label><strong>ID Conductor: </strong> <span id="info-id-conductor" th:text="${tripFound.driverDTO.personId} ?: '---'">---</span></label>
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                    <label><strong>ID Vehiculo: </strong> <span id="info-id-vehiculo" th:text="*{vehicleDTO.vehicleId} ?: '---'">---</span></label>
+                                    <label><strong>ID Vehiculo: </strong> <span id="info-id-vehiculo" th:text="${tripFound.vehicleDTO.vehicleId} ?: '---'">---</span></label>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="btn-container">
-                            <button type="submit"  th:formaction="@{/trips/delete/{tripId}}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
+                            <button type="submit"  th:formaction="@{/todoit}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
                         </div>
                     </form>
                 </div>
