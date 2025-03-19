@@ -15,16 +15,21 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers("/user/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/**").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
+                        .requestMatchers("/vehicles/register").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
+                        .requestMatchers("/vehicles/select").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
+                        .requestMatchers("/vehicles/register").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
+                        .requestMatchers("/vehicles/update").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
+                        .requestMatchers("/vehicles/delete").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_"+Constants.ADMIN_ROLE)
+                        .requestMatchers("/user/**").hasAuthority("ROLE_"+Constants.USER_ROLE)
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .successHandler((request, response, authentication) -> {
                             String role = authentication.getAuthorities().toString();
-                            if (role.contains("ROLE_ADMIN")) {
+                            if (role.contains("ROLE_"+Constants.ADMIN_ROLE)) {
                                 response.sendRedirect("/");
-                            } else if (role.contains("ROLE_USER")) {
+                            } else if (role.contains("ROLE_"+Constants.USER_ROLE)) {
                                 response.sendRedirect("/");
                             } else {
                                 response.sendRedirect("/");

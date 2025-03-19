@@ -15,16 +15,22 @@ public class UserConfig {
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
         UserDetails user = User.builder()
             .username("user")
-            .password(passwordEncoder.encode("password"))
-            .roles("USER")
+            .password(passwordEncoder.encode("user"))
+            .roles(Constants.USER_ROLE)
             .build();
 
         UserDetails admin = User.builder()
             .username("admin")
             .password(passwordEncoder.encode("admin"))
-            .roles("ADMIN")
+            .roles(Constants.ADMIN_ROLE)
             .build();
 
-        return new InMemoryUserDetailsManager(user, admin);
+        UserDetails anotherUser = User.builder()
+            .username("other")
+            .password(passwordEncoder.encode("other"))
+            .roles(Constants.OTHER_ROLE)
+            .build();
+
+        return new InMemoryUserDetailsManager(user, admin, anotherUser);
     }
 }
