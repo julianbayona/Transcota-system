@@ -15,21 +15,27 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
-                        .requestMatchers("/vehicles/register").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
-                        .requestMatchers("/vehicles/select").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
-                        .requestMatchers("/vehicles/register").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
-                        .requestMatchers("/vehicles/update").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
-                        .requestMatchers("/vehicles/delete").hasAnyAuthority("ROLE_"+Constants.ADMIN_ROLE, "ROLE_"+Constants.USER_ROLE)
-                        .requestMatchers("/admin/**").hasAuthority("ROLE_"+Constants.ADMIN_ROLE)
-                        .requestMatchers("/user/**").hasAuthority("ROLE_"+Constants.USER_ROLE)
+                        .requestMatchers("/**")
+                        .hasAnyAuthority("ROLE_" + Constants.ADMIN_ROLE, "ROLE_" + Constants.USER_ROLE)
+                        .requestMatchers("/vehicles/register")
+                        .hasAnyAuthority("ROLE_" + Constants.ADMIN_ROLE, "ROLE_" + Constants.USER_ROLE)
+                        .requestMatchers("/vehicles/select")
+                        .hasAnyAuthority("ROLE_" + Constants.ADMIN_ROLE, "ROLE_" + Constants.USER_ROLE)
+                        .requestMatchers("/vehicles/register")
+                        .hasAnyAuthority("ROLE_" + Constants.ADMIN_ROLE, "ROLE_" + Constants.USER_ROLE)
+                        .requestMatchers("/vehicles/update")
+                        .hasAnyAuthority("ROLE_" + Constants.ADMIN_ROLE, "ROLE_" + Constants.USER_ROLE)
+                        .requestMatchers("/vehicles/delete")
+                        .hasAnyAuthority("ROLE_" + Constants.ADMIN_ROLE, "ROLE_" + Constants.USER_ROLE)
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_" + Constants.ADMIN_ROLE)
+                        .requestMatchers("/user/**").hasAuthority("ROLE_" + Constants.USER_ROLE)
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .successHandler((request, response, authentication) -> {
                             String role = authentication.getAuthorities().toString();
-                            if (role.contains("ROLE_"+Constants.ADMIN_ROLE)) {
+                            if (role.contains("ROLE_" + Constants.ADMIN_ROLE)) {
                                 response.sendRedirect("/");
-                            } else if (role.contains("ROLE_"+Constants.USER_ROLE)) {
+                            } else if (role.contains("ROLE_" + Constants.USER_ROLE)) {
                                 response.sendRedirect("/");
                             } else {
                                 response.sendRedirect("/");
@@ -38,7 +44,8 @@ public class SecurityConfig {
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/public/login?logout"));
+                        .logoutSuccessUrl("/login?logout"));
+        http.csrf(csrf -> csrf.disable());
         return http.build();
     }
 
