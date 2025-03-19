@@ -76,15 +76,20 @@ public class TripRegisterController {
 
     @GetMapping("/delete")
     public String showDeleteForm(Model model) {
-        model.addAttribute("tripDTO", new TripDTO());
+        model.addAttribute("tripFound", new TripDTO());
         return "delete_trip";
     }
 
     @PostMapping("/delete/search")
-    public String sharchToDelete(@ModelAttribute("tripDTO") TripDTO tripDTO, @RequestParam("vehicleId") Long id, Model model){
+    public String sharchToDelete(@RequestParam("tripId") Long id, Model model){
         TripDTO trip = tripRegisterService.searchTripRegisterById(id);
-        model.addAttribute("tripFound", trip);
-        return "delete_trip";
+        if (trip != null) {
+            model.addAttribute("tripFound", trip);
+            return "delete_trip";
+        }else{
+            model.addAttribute("tripFound", new TripDTO());
+            return "redirect:/delete";
+        }
     }
 
 
