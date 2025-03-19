@@ -99,7 +99,7 @@
                                             <div class="form-group" style="margin-bottom: 15px;">
                                                 <label for="vehiculo-id">ID del Vehículo:</label>
                                                 <div style="display: flex; gap: 10px;">
-                                                    <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{vehicleDTO.vehicleId}" required>
+                                                    <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{tripDTO.vehicleId.vehicleId}" required>
                                                     <button type="submit" th:formaction="@{/trips/register/searchVehicle}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                                         Buscar
@@ -114,19 +114,19 @@
                                             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Placa:</strong> <span id="info-vehiculo-placa" th:text="*{vehicleDTO.plate} ?: '---'">---</span></label>
+                                                    <label><strong>Placa:</strong> <span id="info-vehiculo-placa">---</span></label>
                                                 </div>
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Modelo:</strong> <span id="info-vehiculo-modelo" th:text="*{vehicleDTO.model} ?: '---'">---</span></label>
+                                                    <label><strong>Modelo:</strong> <span id="info-vehiculo-modelo" >---</span></label>
                                                 </div>
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Año:</strong> <span id="info-vehiculo-anio" th:text="*{vehicleDTO.year} ?: '---'">---</span></label>
+                                                    <label><strong>Año:</strong> <span id="info-vehiculo-anio" >---</span></label>
                                                 </div>
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                                    <label><strong>Tipo de Vehículo:</strong> <span id="info-vehiculo-tipo" th:text="*{vehicleDTO.type} ?: '---'">---</span></label>
+                                                    <label><strong>Tipo de Vehículo:</strong> <span id="info-vehiculo-tipo" >---</span></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,7 +141,7 @@
                                         <div class="form-group" style="margin-bottom: 15px;">
                                             <label for="conductor-id">ID del conductor:</label>
                                             <div style="display: flex; gap: 10px;">
-                                                <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del conductor" th:field="*{userDTO.personId}" required>
+                                                <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del conductor" th:field="*{tripDTO.driverId.personId}" required>
                                                 <button type="submit" th:formaction="@{/trips/register/searchDriver}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                                     <i class="fa-solid fa-magnifying-glass icon"></i>
                                                     Buscar
@@ -155,15 +155,15 @@
                                             
                                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
                                             <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Nombres:</strong> <span id="info-conductor-nombres" th:text="*{userDTO.name} ?: '---'">---</span></label>
+                                                <label><strong>Nombres:</strong> <span id="info-conductor-nombres" >---</span></label>
                                             </div>
                                                 
                                             <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Id rol:</strong> <span id="info-conductor-rol" th:text="*{userDTO.roleDTO} ?: '---'">---</span></label>
+                                                    <label><strong>Id rol:</strong> <span id="info-conductor-rol" >---</span></label>
                                             </div>
                                                 
                                             <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                                <label><strong>Email:</strong> <span id="info-conductor-email" th:text="*{userDTO.email} ?: '---'">---</span></label>
+                                                <label><strong>Email:</strong> <span id="info-conductor-email" >---</span></label>
                                             </div>
                                         </div>
                                     </div>

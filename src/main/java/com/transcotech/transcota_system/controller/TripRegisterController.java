@@ -64,7 +64,7 @@ public class TripRegisterController {
 
     @PostMapping("/create")
     public String createTrip(@ModelAttribute TripVehicleDTO tripVehicleDTO) {
-        tripRegisterService.createTripRegister2(tripVehicleDTO);
+        tripRegisterService.createTripRegister(tripVehicleDTO.getTripDTO());
         return  "register_trip";
     }
 
