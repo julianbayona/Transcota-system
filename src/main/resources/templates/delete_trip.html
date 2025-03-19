@@ -74,12 +74,12 @@
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Eliminar Viaje</h2>
-                    <form id="form-type" th:action="@{/trips/delete/search}" method="POST">
+                    <form id="form-type" th:object="${tripDTO}" th:action="@{/trips/delete/search}" method="POST" >
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="conductor-id">ID del viaje:</label>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="number" name="tripId" id="conductor-id" class="form-control" placeholder="Ingrese el ID" required>
+                                    <input type="number" name="tripX" id="conductor-id" class="form-control" placeholder="Ingrese el ID" required>
                                     <button type="submit"  class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
@@ -87,42 +87,44 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
+                            <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Viaje</h4>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(2, 3fr); gap: 8px;">
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label><strong>Id del viaje: </strong> <span id="info-lugar-origen" th:text="*{tripId} ?: '---'">---</span></label>
+                                </div>
+    
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label><strong>Lugar de Origen: </strong> <span id="info-lugar-origen" th:text="*{origin} ?: '---'">---</span></label>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label><strong>Lugar Destino: </strong> <span id="info-luga-destino" th:text="*{destination} ?: '---'">---</span></label>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label><strong>Fecha del Viaje: </strong> <span id="info-fecha-viaje" th:text="*{date} ?: '---'">---</span></label>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom: 5px;">
+                                    <label><strong>ID Conductor: </strong> <span id="info-id-conductor" th:text="*{driverId.personId} ?: '---'">---</span></label>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
+                                    <label><strong>ID Vehiculo: </strong> <span id="info-id-vehiculo" th:text="*{vehicleId.vehicleId} ?: '---'">---</span></label>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="btn-container">
+                            <button type="submit"  th:formaction="@{/todoit}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
+                        </div>
                         
                     </form>
 
-                    <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
-                        <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Viaje</h4>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(2, 3fr); gap: 8px;">
-                            <div class="form-group" style="margin-bottom: 5px;">
-                                <label><strong>Id del viaje: </strong> <span id="info-lugar-origen" th:text="${tripFound.tripId} ?: '---'">---</span></label>
-                            </div>
-
-                            <div class="form-group" style="margin-bottom: 5px;">
-                                <label><strong>Lugar de Origen: </strong> <span id="info-lugar-origen" th:text="${tripFound.origin} ?: '---'">---</span></label>
-                            </div>
-                            
-                            <div class="form-group" style="margin-bottom: 5px;">
-                                <label><strong>Lugar Destino: </strong> <span id="info-luga-destino" th:text="${tripFound.destination} ?: '---'">---</span></label>
-                            </div>
-                            
-                            <div class="form-group" style="margin-bottom: 5px;">
-                                <label><strong>Fecha del Viaje: </strong> <span id="info-fecha-viaje" th:text="${tripFound.date} ?: '---'">---</span></label>
-                            </div>
-                            
-                            <div class="form-group" style="margin-bottom: 5px;">
-                                <label><strong>ID Conductor: </strong> <span id="info-id-conductor" th:text="${tripFound.driverId.personId} ?: '---'">---</span></label>
-                            </div>
-                            
-                            <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                <label><strong>ID Vehiculo: </strong> <span id="info-id-vehiculo" th:text="${tripFound.vehicleId.vehicleId} ?: '---'">---</span></label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="btn-container">
-                        <button type="submit"  th:formaction="@{/todoit}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
-                    </div>
+                    
                     
                 </div>
             </div>
