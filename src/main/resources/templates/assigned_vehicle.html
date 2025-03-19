@@ -74,12 +74,12 @@
             <div class="main-content">
                 <h2 id="main-title">Ver vehiculos asignados a un conductor</h2>  
                 <div class="tab-content">
-                    <form id="form-type" th:action="@{/users/assigned/search}" method="POST">
+                    <form id="form-type" th:action="@{/users/assigned/search}" th:object="${userDTO}" method="POST">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="conductor-id">ID del conductor:</label>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del Conductor" th:field="*{personId}" required>
+                                    <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del Conductor" name = "personId" th:field="*{personId}" required>
                                     <button type="submit" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar

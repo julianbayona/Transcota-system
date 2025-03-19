@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.transcotech.transcota_system.Service.DriverService;
 import com.transcotech.transcota_system.dto.UserDTO;
+import com.transcotech.transcota_system.dto.VehicleDTO;
 
 @Controller
 @RequestMapping("/users")
@@ -36,7 +37,7 @@ public class DriverController {
 
     @GetMapping("/register/message")
     public String registerMessage(Model model){
-        model.addAttribute("errorMessage", "EL VEHICULO SE REGISTRO CON EXITO.");
+        model.addAttribute("errorMessage", "EL USUARIO SE REGISTRO CON EXITO.");
         model.addAttribute("userDTO", new UserDTO());
         return "/register_user";
     }
@@ -45,19 +46,31 @@ public class DriverController {
 
     @GetMapping("/update")
     public String showUpdateForm(Model model) {
+        
         model.addAttribute("userDTO", new UserDTO());
         return "update_user";
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute("userDTO") UserDTO userDTO) {
+    public String updateUser(@ModelAttribute("userDTO") UserDTO userDTO, Model model) {
+        if(userDTO.getPersonId() == null){
+            model.addAttribute("errorMessage", "Primero debe verificar el usuario.");
+            model.addAttribute("userDTO", new UserDTO());
+            return "update_user";  
+        }
+        UserDTO foundUser = driverService.searchId(userDTO.getPersonId());
+        if (foundUser == null) {
+            model.addAttribute("errorMessage", "El usuario con ID " + userDTO.getPersonId() + " no existe.");
+            model.addAttribute("userDTO", new UserDTO());
+            return "update_user";  
+        }
         driverService.updateDriver(userDTO.getPersonId(), userDTO);
         return "redirect:/users/update/message";
     }
 
     @GetMapping("/update/message")
     public String updateMessage(Model model){
-        model.addAttribute("errorMessage", "EL VEHICULO SE ACTUALIZO CON EXITO.");
+        model.addAttribute("errorMessage", "EL USUARIO SE ACTUALIZO CON EXITO.");
         model.addAttribute("userDTO", new UserDTO());
         return "/update_user";
     }
@@ -66,7 +79,7 @@ public class DriverController {
     public String searchUser(@RequestParam("personId") Long id, Model model) {
         UserDTO foundUser = driverService.searchId(id);
         if (foundUser == null) {
-            model.addAttribute("errorMessage", "El vehículo con ID " + id + " no existe.");
+            model.addAttribute("errorMessage", "El usuario con ID " + id + " no existe.");
             model.addAttribute("userDTO", new UserDTO());
             return "update_user";  
         }
@@ -86,7 +99,7 @@ public class DriverController {
         Long id = userDTO.getPersonId();
         UserDTO user = driverService.searchId(id);
         if(user == null){
-            model.addAttribute("errorMessage", "El vehículo con ID " + id + " no existe.");
+            model.addAttribute("errorMessage", "El usuario con ID " + id + " no existe.");
             model.addAttribute("UserList", new ArrayList<>());
             return "select_User";
         }
@@ -106,7 +119,7 @@ public class DriverController {
     public String deleteSearch(@RequestParam("personId") Long id, Model model){
         UserDTO foundUser = driverService.searchId(id);
         if (foundUser == null) {
-            model.addAttribute("errorMessage", "El vehículo con ID " + id + " no existe.");
+            model.addAttribute("errorMessage", "El usuario con ID " + id + " no existe.");
             model.addAttribute("userDTO", new UserDTO());
             return "delete_user";  
         }
@@ -114,17 +127,46 @@ public class DriverController {
         return "delete_user";
     }
 
-    @PostMapping("delete")
+    /*@PostMapping("delete")
     public String deleteUser(@RequestParam("personId") Long id, Model model){
         driverService.deleteUser(id);
+        return "redirect:/users/delete/message";
+    }*/
+
+    @PostMapping("/delete")
+    public String deleteVehicle(@RequestParam("userId") Long personId, Model model) {
+        UserDTO foundUser = driverService.searchId(personId);
+        System.out.println(foundUser);
+        if(foundUser == null){
+            model.addAttribute("errorMessage", "El usuario con ID " + personId + " no existe.");
+            model.addAttribute("vehicleDTO", new VehicleDTO());
+            return "redirect:/users/delete";
+        }
+        driverService.deleteUser(personId);
         return "redirect:/users/delete/message";
     }
 
     @GetMapping("/delete/message")
     public String deleteMessage(Model model){
-        model.addAttribute("errorMessage", "EL VEHICULO SE ELIMINO CON EXITO.");
+        model.addAttribute("errorMessage", "EL USUARIO SE ELIMINO CON EXITO.");
         model.addAttribute("userDTO", new UserDTO());
         return "/delete_user";
+    }
+
+    @GetMapping("/assigned")
+    public String assignedVehicles(Model model){
+        model.addAttribute("userDTO", new UserDTO());
+        model.addAttribute("vehicleList", new ArrayList<>());
+        return "assigned_vehicle";
+    }
+
+    @PostMapping("/assigned/search")
+    public String assignedSearch(@RequestParam("personId") Long personId, Model model){
+        UserDTO userDTO = driverService.searchId(personId);
+        List<VehicleDTO> vehicles = driverService.getVehiclesAssignedDriver(personId);
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("vehicleList", vehicles);
+        return "assigned_vehicle";
     }
 
     @PostMapping("update/clear")

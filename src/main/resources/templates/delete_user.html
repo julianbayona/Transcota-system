@@ -87,33 +87,37 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
-                            <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Conductor</h4>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
-                                <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Id usuario:</strong> <span id="info-documento" th:text="*{personId} ?: '---'">---</span></label>
-                                </div>
-                                
-                                <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Nombre:</strong> <span id="info-nombres" th:text="*{name} ?: '---'">---</span></label>
-                                </div>
-                                
-                                <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>Email:</strong> <span id="info-telefono" th:text="*{email} ?: '---'">---</span></label>
-                                </div>
-                                
-                                <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                    <label><strong>Rol:</strong> <span id="info-fecha-nacimiento" th:text="*{roleDTO} ?: '---'">---</span></label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="btn-container">
-                            <button type="submit" th:formaction="@{/users/delete}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Conductor</button>
-                        </div>
                     </form>
+                        <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 20px; margin-bottom: 15px; font-size: 1em; width: 100%; max-width: 700px;">
+                            <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1.2em;">Información del Vehículo</h4>
+                            
+                            <table style="width: 100%; border-collapse: collapse;">
+                               
+                                <tr>
+                                    <td style="padding: 8px;"><strong>Id usuario:</strong></td>
+                                    <td style="padding: 8px;" th:text="${userDTO != null and userDTO.personId != null ? userDTO.personId : '0'}">---</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;"><strong>Nombre:</strong></td>
+                                    <td style="padding: 8px;" th:text="${userDTO != null and userDTO.name != null ? userDTO.name : '---'}">---</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;"><strong>Correo:</strong></td>
+                                    <td style="padding: 8px;" th:text="${userDTO != null and userDTO.email != null ? userDTO.email : '---'}"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;"><strong>Rol:</strong></td>
+                                    <td style="padding: 8px;" th:text="${userDTO != null and userDTO.roleDTO != null ? userDTO.roleDTO : '---'}">---</td>
+                                </tr>
+                            </table>
+                        </div>
+    
+                        <form id="delete-form" th:action="@{/users/delete}" method="POST">
+                            <input type="hidden" name="userId" th:value="${userDTO != null and userDTO.personId != null ? userDTO.personId : '0'}">
+                            <div class="btn-container">
+                                <button type="submit" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Vehículo</button>
+                            </div>
+                        </form>
                 </div>
             </div>
         </div>
