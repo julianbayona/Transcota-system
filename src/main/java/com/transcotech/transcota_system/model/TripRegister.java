@@ -24,11 +24,11 @@ public class TripRegister {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "driverId")
+    @JoinColumn(name = "driver_id")
     private User driverId;
 
     @ManyToOne
-    @JoinColumn(name = "vehicleId")
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicleId;
 
     @Column(name="destino")

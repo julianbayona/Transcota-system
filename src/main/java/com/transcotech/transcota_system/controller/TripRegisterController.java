@@ -53,6 +53,12 @@ public class TripRegisterController {
         tripRegisterService.createTripRegister(tripDTO);
     }
 
+    @GetMapping("/register")
+    public String registerTrip(Model model) {
+        model.addAttribute("tripDTO", new TripDTO());
+        return "register_trip";
+    }
+
     @PostMapping("/register")
     public String registerTrip(@ModelAttribute("trip") TripDTO tripDTO, RedirectAttributes redirectAttributes) {
         try {
