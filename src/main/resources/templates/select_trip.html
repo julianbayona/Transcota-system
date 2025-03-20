@@ -74,7 +74,7 @@
             <div class="main-content">
                 <h2 id="main-title">Ver viajes registrados</h2>  
                 <div class="tab-content">
-                    <form th:action="@{/trips/select/search}" id="form-type" method="GET">
+                    <form th:action="@{/trips/select/search}" id="form-type" method="POST">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="conductor-id">ID del viaje:</label>
@@ -102,8 +102,13 @@
             </div>
         </div>
     </div>
-    <script th:if="${errorMessage}">
-        alert("[[${errorMessage}]]");
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var errorMessage = /*[[${errorMessage}]]*/ null;
+        if (errorMessage && errorMessage.trim() !== "") {
+            alert(errorMessage);
+        }
+        /*]]>*/
     </script>
 </body>
 </html>

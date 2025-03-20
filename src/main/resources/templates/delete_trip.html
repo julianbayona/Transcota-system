@@ -79,7 +79,7 @@
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="conductor-id">ID del viaje:</label>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="number" name="tripX" id="conductor-id" class="form-control" placeholder="Ingrese el ID" required>
+                                    <input type="number" name="tripId" id="conductor-id" class="form-control" placeholder="Ingrese el ID" required>
                                     <button type="submit"  class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
@@ -119,7 +119,7 @@
                         </div>
     
                         <div class="btn-container">
-                            <button type="submit"  th:formaction="@{/todoit}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
+                            <button type="submit"  th:formaction="@{/trips/delete}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
                         </div>
                         
                     </form>
@@ -130,5 +130,13 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var errorMessage = /*[[${errorMessage}]]*/ null;
+        if (errorMessage && errorMessage.trim() !== "") {
+            alert(errorMessage);
+        }
+        /*]]>*/
+    </script>
 </body>
 </html>

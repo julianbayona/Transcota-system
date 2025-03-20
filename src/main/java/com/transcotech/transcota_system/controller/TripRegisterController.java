@@ -47,8 +47,23 @@ public class TripRegisterController {
 
     @GetMapping("/select")
     public String showSearchForm(Model model) {
-        model.addAttribute("tripDTO", new TripDTO());
         List<TripDTO> tripList = tripRegisterService.findAll();
+        model.addAttribute("tripList", tripList);
+        return "select_trip";
+    }
+
+    @PostMapping("/select/search")
+    public String searchTrip(@RequestParam("tripId") Long tripId, Model model) {
+        TripDTO trip = tripRegisterService.searchTripRegisterById(tripId);
+        
+        if (trip == null) {
+            model.addAttribute("errorMessage", "No se encontró un viaje con el ID ingresado "+tripId+".");
+            List<TripDTO> tripList = tripRegisterService.findAll();
+            model.addAttribute("tripList", tripList);
+            return "select_trip";
+        }
+        List<TripDTO> tripList = new ArrayList<>();
+        tripList.add(trip);
         model.addAttribute("tripList", tripList);
         return "select_trip";
     }
@@ -80,11 +95,11 @@ public class TripRegisterController {
     }
 
     @PostMapping("/update/search")
-    public String searchTrip(@RequestParam("tripId") Long tripId, Model model) {
+    public String searchTripUpdate(@RequestParam("tripId") Long tripId, Model model) {
         TripDTO trip = tripRegisterService.searchTripRegisterById(tripId);
         
         if (trip == null) {
-            model.addAttribute("errorMessage", "No se encontró un viaje con el ID ingresado.");
+            model.addAttribute("errorMessage", "No se encontró un viaje con el ID ingresado "+tripId+".");
             model.addAttribute("tripDTO", new TripDTO());
             return "update_trip";
         } else {
@@ -193,11 +208,26 @@ public class TripRegisterController {
     }
 
     @PostMapping("/delete/search")
-    public String sharchToDelete(@RequestParam("tripX") Long id, Model model){
+    public String searchDelete(@RequestParam("tripId") Long id, Model model){
         TripDTO trip = tripRegisterService.searchTripRegisterById(id);
+        
+        if (trip == null) {
+            model.addAttribute("errorMessage", "No se encontró un viaje con el ID ingresado "+id+".");
+            model.addAttribute("tripDTO", new TripDTO());
+            return "select_trip";
+        }
         model.addAttribute("tripDTO", trip);
         return "delete_trip";
     }
+
+    @PostMapping("/delete")
+    public String deleteTrip(@RequestParam("tripId") Long id, Model model) {
+        tripRegisterService.deleteTripRegister(id);
+        model.addAttribute("tripDTO", new TripDTO());
+        model.addAttribute("errorMessage", "SE HA ELIMINADO EL VIAJE CON EXITO");
+        return "delete_trip";
+    }
+
 
 
 }
