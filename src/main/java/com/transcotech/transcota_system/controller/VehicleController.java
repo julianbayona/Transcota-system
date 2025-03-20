@@ -64,6 +64,13 @@ public String showVehiclesList(Model model) {
     return "select_vehicle"; 
 }
 
+@GetMapping("/assigned/user")
+    public String getUserVehicles(@RequestParam String username, Model model) {
+        
+        model.addAttribute("vehicleList", vehicleService.getAllVehicles());
+        return "assigned_vehicle";
+    }
+
 @PostMapping("/select/search")
 public String searchVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, @RequestParam("vehicleId") Long id, Model model) {
  

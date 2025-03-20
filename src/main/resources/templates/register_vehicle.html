@@ -11,18 +11,22 @@
 <body>
     <div class="sidebar">
         <div class="nav-buttons">
-            <a th:href="@{/}" class="nav-btn nav-btn-danger">
+            <a th:href="@{/logout}" class="nav-btn nav-btn-danger">
                 <i class="fa-solid fa-right-from-bracket icon"></i> 
                 <b>Cerrar Sesión</b>
             </a>
-            <a th:href="@{/index}" class="nav-btn nav-btn-primary">
+            <a th:href="@{/}" class="nav-btn nav-btn-primary">
                 <i class="fa-solid fa-house icon"></i>  
                 <b>Inicio</b>
             </a>
         </div>
-        <details>
+        <form sec:authorize="hasRole('USER')" th:action="@{vehicles/assigned/user}" method="get">
+            <input type="hidden" name="username" th:value="${#authentication.name}">
+            <button type="submit" class="nav-item">Vehiculos Asignados</button>
+        </form>
+        <details sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/users/select}">
+            <a th:href="@{/users/all}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
             </a>
             <a th:href="@{/users/assigned}">
@@ -38,7 +42,7 @@
                 <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
-        <details open>
+        <details sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Vehículos</b></summary>
             <a th:href="@{/vehicles/select}">
                 <div class="nav-item"><span>Ver Vehículos</span></div>
@@ -58,13 +62,13 @@
             <a th:href="@{/trips/select}">
                 <div class="nav-item"><span>Ver Viajes</span></div>
             </a>
-            <a th:href="@{/trips/register}">
+            <a th:href="@{/trips/register}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Registrar Viaje</span></div>
             </a>
-            <a th:href="@{/trips/update}">
+            <a th:href="@{/trips/update}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Actualizar Viaje</span></div>
             </a>
-            <a th:href="@{/trips/delete}">
+            <a th:href="@{/trips/delete}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Eliminar Viaje</span></div>
             </a>
         </details>
