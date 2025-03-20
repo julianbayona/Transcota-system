@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.transcotech.transcota_system.Service.TripRegisterService;
 import com.transcotech.transcota_system.dto.TripDTO;
+import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.model.TripVehicleDTO;
+import com.transcotech.transcota_system.model.User;
+import com.transcotech.transcota_system.repositories.DriverRepositoryInterface;
+import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
 @Controller
 @RequestMapping("/trips")
@@ -21,6 +25,12 @@ public class TripRegisterController {
 
     @Autowired
     private TripRegisterService tripRegisterService;
+
+    @Autowired
+    private VehicleRepositoryInterface vehicleRepository;
+
+    @Autowired
+    private DriverRepositoryInterface driverRepository;
 
     /*@GetMapping
     public String showAllTrips(Model model){
@@ -70,7 +80,16 @@ public class TripRegisterController {
 
     @GetMapping("/register")
     public String showRegisterTrip(Model model) {
-        model.addAttribute("tripVehicleDTO", new TripVehicleDTO());
+        model.addAttribute("tripDTO", new TripDTO());
+        //System.out.println(new TripDTO().getDriverId());
+        return "register_trip";
+    }
+
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model) {
+        System.out.println(tripDTO.getDriverId());
+        //User driver = driverRepository
+        model.addAttribute("tripDTO", new TripDTO());
         return "register_trip";
     }
 
