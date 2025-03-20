@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TripDTO {
-    private long tripId;
+    private Long tripId;
     private String origin;
     private String destination;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")

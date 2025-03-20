@@ -63,7 +63,7 @@ public String searchVehicle(@RequestParam("vehicleId") Long id, Model model) {
     veic.setPlate("ABC123");
     veic.setType(null);
     veic.setVehicleId(21); // ID de prueba
-    veic.setYear(2020);
+    //veic.setYear(2020);
 
     vs.add(veic); // Agregar vehículo a la lista
 
@@ -98,7 +98,7 @@ public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO)
     veic.setPlate("ABC123");
     veic.setType(vehicleDTO.getType());
     veic.setVehicleId(21); // ID de prueba
-    veic.setYear(2020);
+    //veic.setYear(2020);
 
     vs.add(veic); // Agregar vehículo a la lista
 

@@ -87,94 +87,99 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group specialFull">
+                        <div class="form-group">
+                            <label for="id">ID:</label>
+                            <input type="number" id="id" class="form-control" placeholder="Id del viaje" th:field="*{tripId}" required readOnly>
+                        </div>
+                        <div class="form-group">
                             <label for="origen">Lugar de Origen:</label>
-                            <input type="text" id="origen" class="form-control" placeholder="Ingrese el lugar de origen" th:field="*{origin}" required>
+                            <input type="text" id="origen" class="form-control" placeholder="Lugar de origen" th:field="*{origin}" required>
                         </div>
-                        <div class="form-group specialFull">
+                        <div class="form-group">
                             <label for="destino">Lugar de Destino:</label>
-                            <input type="text" id="destino" class="form-control" placeholder="Ingrese el lugar de destino" th:field="*{destination}" required>
+                            <input type="text" id="destino" class="form-control" placeholder="Lugar de destino" th:field="*{destination}" required>
                         </div>
-                        <div class="form-group specialFull">
+                        <div class="form-group">
                             <label for="fecha-viaje">Fecha del Viaje:</label>
                             <input type="date" id="fecha-viaje" class="form-control" th:field="*{date}" required>
                         </div>
                         
-                        <div class="specialFull" style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 15px; margin-bottom: 20px;">
-                        <h4 style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">Asignar vehículo a conductor</h4>
+                        <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 15px; margin-bottom: 20px;">
+                            <h4 style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">Asignar vehículo a conductor</h4>
                             
-                        <details style="margin-bottom: 15px;">
-                            <summary style="background-color:rgb(27, 71, 136); border-radius: 0.3em"><b>Vehículo</b></summary>
-                            <div style="padding: 10px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 4px 4px;">
-            
-                                <div class="search-container">
-                                    <div class="form-group" style="margin-bottom: 15px;">
-                                        <label for="vehiculo-id">ID del Vehículo:</label>
-                                        <div style="display: flex; gap: 10px;">
-                                            <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{vehicleId}" required>
-                                            <button type="submit" th:formaction="@{/trips/update/searchVehicle}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
-                                                <i class="fa-solid fa-magnifying-glass icon"></i>
-                                                Buscar
-                                            </button>
+                            <details style="margin-bottom: 15px;">
+                                <summary style="background-color:rgb(27, 71, 136); border-radius: 0.3em"><b>Vehículo</b></summary>
+                                <div style="padding: 10px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 4px 4px;">
+                                    
+                                        <div class="search-container">
+                                            <div class="form-group" style="margin-bottom: 15px;">
+                                                <label for="vehiculo-id">ID del Vehículo:</label>
+                                                <div style="display: flex; gap: 10px;">
+                                                    <input type="number" id="vehiculo-id" class="form-control" placeholder="Id del vehiculo" th:field="*{vehicleId.vehicleId}" name="vehicleId" required>
+                                                    <button type="submit" th:formaction="@{/trips/register/search}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;" formnovalidate>
+                                                        <i class="fa-solid fa-magnifying-glass icon"></i>
+                                                        Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
                                         
-                                <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
-                                    <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Vehículo</h4>            
-                                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
-                                        
-                                        <div class="form-group" style="margin-bottom: 5px;">
-                                            <label><strong>Placa:</strong> <span id="info-vehiculo-placa" th:text="*{plate} ?: '---'">---</span></label>
-                                        </div>
+                                        <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;" >
+                                            <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Vehículo</h4>
                                             
-                                        <div class="form-group" style="margin-bottom: 5px;">
-                                            <label><strong>Modelo:</strong> <span id="info-vehiculo-modelo" th:text="*{model} ?: '---'">---</span></label>
-                                        </div>
-                                            
-                                        <div class="form-group" style="margin-bottom: 5px;">
-                                            <label><strong>Año:</strong> <span id="info-vehiculo-anio" th:text="*{year} ?: '---'">---</span></label>
-                                        </div>
+                                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
                                                 
-                                        <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                            <label><strong>Tipo de Vehículo:</strong> <span id="info-vehiculo-tipo" th:text="*{type} ?: '---'">---</span></label>
+                                                <div class="form-group" style="margin-bottom: 5px;">
+                                                    <label><strong>Placa:</strong> <span id="info-vehiculo-placa" th:text="${plate} ?: '---'">---</span></label>
+                                                </div>
+                                                
+                                                <div class="form-group" style="margin-bottom: 5px;">
+                                                    <label><strong>Modelo:</strong> <span id="info-vehiculo-modelo" th:text="${model} ?: '---'">---</span></label>
+                                                </div>
+                                                
+                                                <div class="form-group" style="margin-bottom: 5px;">
+                                                    <label><strong>Año:</strong> <span id="info-vehiculo-anio" th:text="${year} ?: '---'">---</span></label>
+                                                </div>
+                                                
+                                                <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
+                                                    <label><strong>Tipo de Vehículo:</strong> <span id="info-vehiculo-tipo" th:text="${vehicleType} ?: '---'">---</span></label>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
                                 </div>
-                            </div>
-                        </details>
+                            </details>
                             
-                        <details>
-                            <summary style="background-color:rgb(27, 71, 136); border-radius: 0.3em"><b>Conductor<b></summary>
-                            <div style="padding: 10px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 4px 4px;">
-                                
-                                <div class="search-container">
-                                    <div class="form-group" style="margin-bottom: 15px;">
-                                        <label for="conductor-id">ID del conductor:</label>
-                                        <div style="display: flex; gap: 10px;">
-                                            <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del conductor" th:field="*{personId}" required>
-                                            <button type="submit" th:formaction="@{/trips/update/searchDriver}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
-                                                <i class="fa-solid fa-magnifying-glass icon"></i>
-                                                Buscar
-                                            </button>
+                            <details>
+                                <summary style="background-color:rgb(27, 71, 136); border-radius: 0.3em"><b>Conductor<b></summary>
+                                <div style="padding: 10px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 4px 4px;">
+                                    
+                                    <div class="search-container">
+                                        <div class="form-group" style="margin-bottom: 15px;">
+                                            <label for="conductor-id">ID del conductor:</label>
+                                            <div style="display: flex; gap: 10px;">
+                                                <input type="number" id="conductor-id" class="form-control" placeholder="Id del conductor" th:field="*{driverId.personId}" required>
+                                                <button type="submit" th:formaction="@{/trips/register/searchDriver}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;"  formnovalidate>
+                                                    <i class="fa-solid fa-magnifying-glass icon"></i>
+                                                    Buscar
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                         
                                     <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
                                         <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Conductor</h4>
                                             
                                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
                                             <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Nombres:</strong> <span id="info-conductor-nombres" th:text="*{name} ?: '---'">---</span></label>
+                                                <label><strong>Nombres:</strong> <span id="info-conductor-nombres" th:text="${name} ?: '---'" >---</span></label>
                                             </div>
                                                 
                                             <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Id rol:</strong> <span id="info-conductor-rol" th:text="*{roleDTO.roleId} ?: '---'">---</span></label>
+                                                    <label><strong>Rol:</strong> <span id="info-conductor-rol" th:text="${role} ?: '---'">---</span></label>
                                             </div>
                                                 
                                             <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                                <label><strong>Email:</strong> <span id="info-conductor-email" th:text="*{email} ?: '---'">---</span></label>
+                                                <label><strong>Email:</strong> <span id="info-conductor-email" th:text="${email} ?: '---'">---</span></label>
                                             </div>
                                         </div>
                                     </div>

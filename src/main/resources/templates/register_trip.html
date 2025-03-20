@@ -99,8 +99,8 @@
                                             <div class="form-group" style="margin-bottom: 15px;">
                                                 <label for="vehiculo-id">ID del Vehículo:</label>
                                                 <div style="display: flex; gap: 10px;">
-                                                    <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{vehicleId.vehicleId}" required>
-                                                    <button type="submit" th:formaction="@{/trips/register/searchVehicle}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                                    <input type="number" id="vehiculo-id" class="form-control" placeholder="Ingrese el ID del vehículo" th:field="*{vehicleId.vehicleId}" name="vehicleId" required>
+                                                    <button type="submit" th:formaction="@{/trips/register/searchVehicle}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;" formnovalidate>
                                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                                         Buscar
                                                     </button>
@@ -108,25 +108,25 @@
                                             </div>
                                         </div>
                                         
-                                        <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
+                                        <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;" >
                                             <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Vehículo</h4>
                                             
                                             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Placa:</strong> <span id="info-vehiculo-placa">---</span></label>
+                                                    <label><strong>Placa:</strong> <span id="info-vehiculo-placa" th:text="${plate} ?: '---'">---</span></label>
                                                 </div>
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Modelo:</strong> <span id="info-vehiculo-modelo" >---</span></label>
+                                                    <label><strong>Modelo:</strong> <span id="info-vehiculo-modelo" th:text="${model} ?: '---'">---</span></label>
                                                 </div>
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Año:</strong> <span id="info-vehiculo-anio" >---</span></label>
+                                                    <label><strong>Año:</strong> <span id="info-vehiculo-anio" th:text="${year} ?: '---'">---</span></label>
                                                 </div>
                                                 
                                                 <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                                    <label><strong>Tipo de Vehículo:</strong> <span id="info-vehiculo-tipo" >---</span></label>
+                                                    <label><strong>Tipo de Vehículo:</strong> <span id="info-vehiculo-tipo" th:text="${vehicleType} ?: '---'">---</span></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -142,7 +142,7 @@
                                             <label for="conductor-id">ID del conductor:</label>
                                             <div style="display: flex; gap: 10px;">
                                                 <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del conductor" th:field="*{driverId.personId}" required>
-                                                <button type="submit" th:formaction="@{/trips/register/searchDriver}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                                <button type="submit" th:formaction="@{/trips/register/searchDriver}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;"  formnovalidate>
                                                     <i class="fa-solid fa-magnifying-glass icon"></i>
                                                     Buscar
                                                 </button>
@@ -155,15 +155,15 @@
                                             
                                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
                                             <div class="form-group" style="margin-bottom: 5px;">
-                                                <label><strong>Nombres:</strong> <span id="info-conductor-nombres" >---</span></label>
+                                                <label><strong>Nombres:</strong> <span id="info-conductor-nombres" th:text="${name} ?: '---'" >---</span></label>
                                             </div>
                                                 
                                             <div class="form-group" style="margin-bottom: 5px;">
-                                                    <label><strong>Id rol:</strong> <span id="info-conductor-rol" >---</span></label>
+                                                    <label><strong>Rol:</strong> <span id="info-conductor-rol" th:text="${role} ?: '---'">---</span></label>
                                             </div>
                                                 
                                             <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                                <label><strong>Email:</strong> <span id="info-conductor-email" >---</span></label>
+                                                <label><strong>Email:</strong> <span id="info-conductor-email" th:text="${email} ?: '---'">---</span></label>
                                             </div>
                                         </div>
                                     </div>
@@ -171,12 +171,33 @@
                             </details>
                         </div>
                         <div class="btn-container">
-                            <button type="submit" th:formaction="@{/trips/register}" class="btn btn-success">Registrar Viaje</button>
+                            <button type="submit" th:formaction="@{/trips/register}" class="btn btn-success" >Registrar Viaje</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var errorMessage = /*[[${errorMessage}]]*/ null;
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+        /*]]>*/
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll("details").forEach((detail, index) => {
+                const isOpen = localStorage.getItem("detail-" + index) === "true";
+                if (isOpen) {
+                    detail.setAttribute("open", "true");
+                }
+                detail.addEventListener("toggle", function () {
+                    localStorage.setItem("detail-" + index, detail.open);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.transcotech.transcota_system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.transcotech.transcota_system.Service.DriverService;
 import com.transcotech.transcota_system.Service.TripRegisterService;
+import com.transcotech.transcota_system.Service.VehicleService;
 import com.transcotech.transcota_system.dto.TripDTO;
+import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.model.TripVehicleDTO;
 import com.transcotech.transcota_system.model.User;
-import com.transcotech.transcota_system.repositories.DriverRepositoryInterface;
-import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
 @Controller
 @RequestMapping("/trips")
@@ -27,10 +29,10 @@ public class TripRegisterController {
     private TripRegisterService tripRegisterService;
 
     @Autowired
-    private VehicleRepositoryInterface vehicleRepository;
+    private VehicleService vehicleService;
 
     @Autowired
-    private DriverRepositoryInterface driverRepository;
+    private DriverService driverService;
 
     /*@GetMapping
     public String showAllTrips(Model model){
@@ -60,13 +62,14 @@ public class TripRegisterController {
     @GetMapping("/select/search")
     public String searchTrip(@RequestParam Long tripId, Model model) {
         TripDTO trip = tripRegisterService.searchTripRegisterById(tripId);
-        model.addAttribute("tripId",trip);
-        /*if (trip != null) {
-            model.addAttribute("tripList", List.of(trip));
+        
+        if (trip != null) {
+            model.addAttribute("tripId",trip);
+            return "select_trip";
         } else {
             model.addAttribute("tripList", List.of());
             model.addAttribute("errorMessage", "No se encontró un viaje con el ID ingresado.");
-        }*/
+        }
         return "redirect:/select_trip"; // Retorna la misma vista con el resultado de la búsqueda
     }
 
@@ -78,18 +81,62 @@ public class TripRegisterController {
         return  "register_trip";
     }
 
+    @GetMapping("/update")
+    public String showUpdateTrip(Model model) {
+        model.addAttribute("tripDTO", new TripDTO());
+        return "update_trip";
+    }
+
     @GetMapping("/register")
     public String showRegisterTrip(Model model) {
         model.addAttribute("tripDTO", new TripDTO());
-        //System.out.println(new TripDTO().getDriverId());
         return "register_trip";
     }
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model) {
-        System.out.println(tripDTO.getDriverId());
-        //User driver = driverRepository
+        UserDTO driver = driverService.searchId(tripDTO.getDriverId().getPersonId());
+        VehicleDTO vehicle = vehicleService.searchId(tripDTO.getVehicleId().getVehicleId());
+        if(vehicle == null){
+            model.addAttribute("errorMessage", "El vehiculo con ID " + tripDTO.getVehicleId().getVehicleId() + " no existe.");
+            return "register_trip";
+        }else if(driver == null){
+            model.addAttribute("errorMessage", "El conductor con ID " + tripDTO.getDriverId().getPersonId() + " no existe.");
+            return "register_trip";
+        }else{
+            tripDTO.setDriverId(driver);
+            tripDTO.setVehicleId(vehicle);
+            tripRegisterService.createTripRegister(tripDTO);    
+            model.addAttribute("SE REGISTRO EL VIAJE CORRECTAMENTE");
+        }
         model.addAttribute("tripDTO", new TripDTO());
+        return "register_trip";
+    }
+
+    @PostMapping("/register/searchVehicle")
+    public String searchVehicle(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
+        VehicleDTO vehicle = vehicleService.searchId(tripDTO.getVehicleId().getVehicleId());
+        if(vehicle == null){
+            model.addAttribute("errorMessage", "El vehiculo con ID " + tripDTO.getVehicleId().getVehicleId() + " no existe.");
+            return "register_trip";
+        }
+        model.addAttribute("plate", vehicle.getPlate());
+        model.addAttribute("model", vehicle.getModel());
+        model.addAttribute("year", vehicle.getYear());
+        model.addAttribute("vehicleType", vehicle.getType());
+        return "register_trip";
+    }
+
+    @PostMapping("/register/searchDriver")
+    public String searchDriver(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
+        UserDTO driver = driverService.searchId(tripDTO.getDriverId().getPersonId());
+        if(driver == null){
+            model.addAttribute("errorMessage", "El vehiculo con ID " + tripDTO.getDriverId().getPersonId() + " no existe.");
+            return "register_trip";
+        }
+        model.addAttribute("name", driver.getName());
+        model.addAttribute("role", driver.getRoleDTO());
+        model.addAttribute("email", driver.getEmail());
         return "register_trip";
     }
 
