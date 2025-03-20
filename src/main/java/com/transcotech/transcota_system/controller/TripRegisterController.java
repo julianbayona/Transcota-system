@@ -19,7 +19,6 @@ import com.transcotech.transcota_system.dto.TripDTO;
 import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.model.TripVehicleDTO;
-import com.transcotech.transcota_system.model.User;
 
 @Controller
 @RequestMapping("/trips")
@@ -150,12 +149,6 @@ public class TripRegisterController {
 
     @GetMapping("/register")
     public String showRegisterTrip(Model model) {
-        model.addAttribute("tripDTO", new TripDTO());
-        return "register_trip";
-    }
-
-    @GetMapping("/register")
-    public String registerTrip(Model model) {
         model.addAttribute("tripDTO", new TripDTO());
         return "register_trip";
     }

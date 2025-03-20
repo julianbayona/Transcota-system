@@ -10,18 +10,15 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
 import com.transcotech.transcota_system.Service.VehicleService;
 import com.transcotech.transcota_system.dto.VehicleDTO;
@@ -32,7 +29,7 @@ import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
 //@ExtendWith(MockitoExtension.class)
 public class VehicleServiceTest {
-/*
+
     @Mock
     private VehicleRepositoryInterface vehicleRepository;
 
@@ -52,14 +49,14 @@ public class VehicleServiceTest {
         vehicle1.setVehicleId(1L);
         vehicle1.setPlate("ABC123");
         vehicle1.setModel("Toyota Corolla");
-        vehicle1.setYear(2022);
+        vehicle1.setYear(2022L);
         vehicle1.setType(TypeVehicle.LOADING);
 
         vehicle2 = new Vehicle();
         vehicle2.setVehicleId(2L);
         vehicle2.setPlate("XYZ789");
         vehicle2.setModel("Honda Civic");
-        vehicle2.setYear(2023);
+        vehicle2.setYear(2023L);
         vehicle2.setType(TypeVehicle.PASSENGER);
 
         vehicleList = Arrays.asList(vehicle1, vehicle2);
@@ -131,7 +128,7 @@ public class VehicleServiceTest {
 
     @Test
     void createVehicleWhenVehicleDoesNotExistTrue() {
-        VehicleDTO vehicleDTO = new VehicleDTO(1L, "ABC123", "Model1", 2020, TypeVehicle.PASSENGER);
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, "ABC123", "Model1", 2020L, TypeVehicle.PASSENGER);
         Vehicle vehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
 
         when(vehicleRepository.findByPlate(vehicle.getPlate())).thenReturn(Optional.empty());
@@ -146,7 +143,7 @@ public class VehicleServiceTest {
 
     @Test
     void createVehicleWhenVehicleExistsFalse() {
-        VehicleDTO vehicleDTO = new VehicleDTO(1L, "ABC123", "Model1", 2020, TypeVehicle.LOADING);
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, "ABC123", "Model1", 2020L, TypeVehicle.LOADING);
         Vehicle newVehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
 
         when(vehicleRepository.findByPlate(newVehicle.getPlate())).thenReturn(Optional.of(newVehicle));
@@ -162,7 +159,7 @@ public class VehicleServiceTest {
     void updateVehicleWhenVehicleExistsTrue() {
 
         Long vehicleId = vehicle1.getVehicleId();
-        VehicleDTO vehicleDTO = new VehicleDTO(vehicleId, "XYZ789", "Model2", 2021, TypeVehicle.LOADING);
+        VehicleDTO vehicleDTO = new VehicleDTO(vehicleId, "XYZ789", "Model2", 2021L, TypeVehicle.LOADING);
         Vehicle updatedVehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
 
         when(vehicleRepository.findById(vehicleId)).thenReturn(Optional.of(vehicle1));
@@ -182,7 +179,7 @@ public class VehicleServiceTest {
     @Test
     void updateVehicleWhenVehicleDoesNotExistFalse() {
         Long vehicleId = 99L;
-        VehicleDTO vehicleDTO = new VehicleDTO(vehicleId, "XYZ789", "Model2", 2021, TypeVehicle.PASSENGER);
+        VehicleDTO vehicleDTO = new VehicleDTO(vehicleId, "XYZ789", "Model2", 2021L, TypeVehicle.PASSENGER);
 
         when(vehicleRepository.findById(vehicleId)).thenReturn(Optional.empty());
 
