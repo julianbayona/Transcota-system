@@ -46,9 +46,6 @@ public class VehicleService implements VehicleServiceInterface {
     @Override
     public boolean createVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
-        if (vehicleRepository.existsById(vehicle.getVehicleId())) {
-            return false;
-        }
         vehicleRepository.save(vehicle);
         return true;
     }
