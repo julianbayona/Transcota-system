@@ -1,8 +1,10 @@
 package com.transcotech.transcota_system.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,18 +69,20 @@ public class DriverService implements DriverServiceInterface{
     }
 
     @Override
-    public List<VehicleDTO> getVehiclesAssignedDriver(Long driverId) {
-        List<TripRegister> tripRegisters = tripRepository.findAll();
-        System.out.println(tripRegisters);
-        List<TripDTO> tripDTOs = tripMapper.tripsToTripDTOs(tripRegisters);
-        List<VehicleDTO> vehicleFind = new ArrayList<>();
-        for(TripDTO tripDTO: tripDTOs){
-            if(tripDTO.getDriverId().equals(driverId)){
-                vehicleFind.add(vehicleRepository.searchId(tripDTO.getVehicleId().getVehicleId()));
-            }
+public List<VehicleDTO> getVehiclesAssignedDriver(Long driverId) {
+    List<TripRegister> tripRegisters = tripRepository.findAll();
+    Set<VehicleDTO> vehicleFind = new HashSet<>();
+
+    for (TripRegister tripRegister : tripRegisters) {
+        if (tripRegister.getDriverId().getPersonId().equals(driverId)) {
+            VehicleDTO vehicle = vehicleRepository.searchId(tripRegister.getVehicleId().getVehicleId());
+            vehicleFind.add(vehicle); 
         }
-        return vehicleFind;
     }
+    
+    return new ArrayList<>(vehicleFind);
+}
+
 
     
     

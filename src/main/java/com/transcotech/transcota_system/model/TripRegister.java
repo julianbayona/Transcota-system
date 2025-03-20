@@ -12,16 +12,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Table(name = "trip_register")
 @Entity
 public class TripRegister {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "trip_id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "personId")
+    @JoinColumn(name = "driverId")
     private User driverId;
 
     @ManyToOne
