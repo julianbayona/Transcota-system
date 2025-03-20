@@ -181,7 +181,7 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
         var errorMessage = /*[[${errorMessage}]]*/ null;
-        if (errorMessage) {
+        if (errorMessage && errorMessage.trim() !== "") {
             alert(errorMessage);
         }
         /*]]>*/

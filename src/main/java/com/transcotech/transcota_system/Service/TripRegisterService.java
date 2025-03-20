@@ -1,12 +1,12 @@
 package com.transcotech.transcota_system.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transcotech.transcota_system.dto.TripDTO;
-import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.mapper.TripMapper;
 import com.transcotech.transcota_system.model.TripRegister;
@@ -29,8 +29,8 @@ public class TripRegisterService implements TripRegisterServiceInterface{
     public List<TripDTO> findAll() {
         List<TripRegister> trips = tripRegisterRepositoryInterface.findAll();
         List<TripDTO> tripDTOS = tripMapper.tripsToTripDTOs(trips);
-        /*User driver = new User();
-        driver.setUserId(1); // ID del conductor
+        /*TripRegister driver = new TripRegister();
+        driver.setTripRegisterId(1); // ID del conductor
         driver.setName("Juan Pérez"); // Nombre del conductor
         driver.setRole(Role.DRIVER);
 
@@ -75,12 +75,17 @@ public class TripRegisterService implements TripRegisterServiceInterface{
         return this.tripRegisterRepositoryInterface.save(tripRegister);
     }
 
-    public UserDTO searchDriverById(Long id){
-        return driverService.searchId(id);
+    @Override
+    public TripRegister updateTrip(Long id, TripDTO tripDTO) {
+        Optional<TripRegister> existingTripRegister = tripRegisterRepositoryInterface.findById(id);
+        if (existingTripRegister.isPresent()) {
+            TripRegister updatedTripRegister = tripMapper.tripDTOToTrip(tripDTO);
+            tripRegisterRepositoryInterface.save(updatedTripRegister);
+            return updatedTripRegister;
+        }
+        System.out.println("VIAJE actualizado");
+        return null;
     }
-
-    public VehicleDTO searchVehicleById(Long id){
-        return vehicleService.searchId(id);
-    }
+    
 
 }

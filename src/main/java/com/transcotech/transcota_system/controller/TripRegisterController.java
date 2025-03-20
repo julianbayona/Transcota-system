@@ -59,21 +59,67 @@ public class TripRegisterController {
         return tripList;
     }*/
 
-    @GetMapping("/select/search")
-    public String searchTrip(@RequestParam Long tripId, Model model) {
-        TripDTO trip = tripRegisterService.searchTripRegisterById(tripId);
-        
-        if (trip != null) {
-            model.addAttribute("tripId",trip);
-            return "select_trip";
-        } else {
-            model.addAttribute("tripList", List.of());
-            model.addAttribute("errorMessage", "No se encontró un viaje con el ID ingresado.");
+    @PostMapping("/update")
+    public String updateTrip(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model) {
+        UserDTO driver = driverService.searchId(tripDTO.getDriverId().getPersonId());
+        VehicleDTO vehicle = vehicleService.searchId(tripDTO.getVehicleId().getVehicleId());
+        if(vehicle == null){
+            model.addAttribute("errorMessage", "El vehiculo con ID " + tripDTO.getVehicleId().getVehicleId() + " no existe.");
+            return "update_trip";
+        }else if(driver == null){
+            model.addAttribute("errorMessage", "El conductor con ID " + tripDTO.getDriverId().getPersonId() + " no existe.");
+            return "update_trip";
+        }else{
+            tripDTO.setDriverId(driver);
+            tripDTO.setVehicleId(vehicle);
+            tripRegisterService.updateTrip(tripDTO.getTripId(), tripDTO);   
+            model.addAttribute("errorMessage","SE ACTUALIZO EL VIAJE CORRECTAMENTE");
         }
-        return "redirect:/select_trip"; // Retorna la misma vista con el resultado de la búsqueda
+        model.addAttribute("tripDTO", new TripDTO());
+        return "update_trip";
     }
 
+    @PostMapping("/update/search")
+    public String searchTrip(@RequestParam("tripId") Long tripId, Model model) {
+        TripDTO trip = tripRegisterService.searchTripRegisterById(tripId);
+        
+        if (trip == null) {
+            model.addAttribute("errorMessage", "No se encontró un viaje con el ID ingresado.");
+            model.addAttribute("tripDTO", new TripDTO());
+            return "update_trip";
+        } else {
+            tripRegisterService.updateTrip(tripId, trip);
+            model.addAttribute("tripDTO", trip);
+        }
+        return "update_trip";
+    }
 
+    @PostMapping("/update/searchVehicle")
+    public String searchVehicleUpdate(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
+        VehicleDTO vehicle = vehicleService.searchId(tripDTO.getVehicleId().getVehicleId());
+        if(vehicle == null){
+            model.addAttribute("errorMessage", "El vehiculo con ID " + tripDTO.getVehicleId().getVehicleId() + " no existe.");
+            return "update_trip";
+        }
+        model.addAttribute("plate", vehicle.getPlate());
+        model.addAttribute("model", vehicle.getModel());
+        model.addAttribute("year", vehicle.getYear());
+        model.addAttribute("vehicleType", vehicle.getType());
+        return "update_trip";
+    }
+
+    @PostMapping("/update/searchDriver")
+    public String searchDriverUpdate(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
+        UserDTO driver = driverService.searchId(tripDTO.getDriverId().getPersonId());
+        if(driver == null){
+            model.addAttribute("errorMessage", "El vehiculo con ID " + tripDTO.getDriverId().getPersonId() + " no existe.");
+            return "update_trip";
+        }
+        model.addAttribute("name", driver.getName());
+        model.addAttribute("role", driver.getRoleDTO());
+        model.addAttribute("email", driver.getEmail());
+        return "update_trip";
+    }
 
     @PostMapping("/create")
     public String createTrip(@ModelAttribute TripVehicleDTO tripVehicleDTO) {
@@ -107,14 +153,14 @@ public class TripRegisterController {
             tripDTO.setDriverId(driver);
             tripDTO.setVehicleId(vehicle);
             tripRegisterService.createTripRegister(tripDTO);    
-            model.addAttribute("SE REGISTRO EL VIAJE CORRECTAMENTE");
+            model.addAttribute("errorMessage","SE REGISTRO EL VIAJE CORRECTAMENTE");
         }
         model.addAttribute("tripDTO", new TripDTO());
         return "register_trip";
     }
 
     @PostMapping("/register/searchVehicle")
-    public String searchVehicle(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
+    public String searchVehicleRegister(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
         VehicleDTO vehicle = vehicleService.searchId(tripDTO.getVehicleId().getVehicleId());
         if(vehicle == null){
             model.addAttribute("errorMessage", "El vehiculo con ID " + tripDTO.getVehicleId().getVehicleId() + " no existe.");
@@ -128,7 +174,7 @@ public class TripRegisterController {
     }
 
     @PostMapping("/register/searchDriver")
-    public String searchDriver(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
+    public String searchDriverRegister(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
         UserDTO driver = driverService.searchId(tripDTO.getDriverId().getPersonId());
         if(driver == null){
             model.addAttribute("errorMessage", "El vehiculo con ID " + tripDTO.getDriverId().getPersonId() + " no existe.");
