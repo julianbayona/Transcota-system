@@ -21,7 +21,7 @@
             </a>
         </div>
         
-        <details sec:authorize="hasRole('USER')">
+        <details sec:authorize="hasRole('DRIVER')">
             <summary><b>Vehículos</b></summary>
             <a th:href="@{/users/assigned}">
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>

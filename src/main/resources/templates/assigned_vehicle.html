@@ -20,15 +20,8 @@
                 <b>Inicio</b>
             </a>
         </div>
-        
-            <form sec:authorize="hasRole('USER')" th:action="@{/vehicles/assigned/user}" method="get">
-                <input type="hidden" name="username" th:value="${#authentication.name}">
-                <button type="submit" class="nav-item user-btn">
-                    <span>Vehículos Asignados</span>
-                </button>
-            </form>
           
-        <details sec:authorize="hasRole('USER')" open>
+        <details sec:authorize="hasRole('DRIVER')" open>
             <summary><b>Vehículos</b></summary>
             <a th:href="@{/users/assigned}">
                 <div class="nav-item active"><span>Vehiculos Asignados</span></div>

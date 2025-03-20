@@ -12,7 +12,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class UserConfig {
     
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
+    public UserDetailsService userDetailsService(CustomUserDetailsService customUserDetailsService, PasswordEncoder passwordEncoder){
         UserDetails user = User.builder()
             .username("user")
             .password(passwordEncoder.encode("user"))
@@ -31,6 +31,15 @@ public class UserConfig {
             .roles(Constants.OTHER_ROLE)
             .build();
 
-        return new InMemoryUserDetailsManager(user, admin, anotherUser);
+        InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager(user, anotherUser, admin);
+
+        return username -> {
+            System.out.println("Ingreso a la validación");
+            if ("admin".equals(username)) {
+                return inMemoryUserDetailsManager.loadUserByUsername(username);
+            } else {
+                return customUserDetailsService.loadUserByUsername(username);
+            }
+        };
     }
 }

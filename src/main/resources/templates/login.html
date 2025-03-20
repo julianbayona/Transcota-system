@@ -11,7 +11,7 @@
         <h2>Iniciar Sesión</h2>
         <form th:action="@{/login}" method="post">
             <div class="input-group">
-                <label for="username">Usuario</label>
+                <label for="username">Id de usuario</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="input-group">
@@ -19,8 +19,7 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit">Ingresar</button>
-            
-            <!-- Mensajes de error y éxito estilizados -->
+
             <div class="message-container">
                 <div th:if="${param.error}" class="error-message">
                     Usuario o contraseña incorrectos
