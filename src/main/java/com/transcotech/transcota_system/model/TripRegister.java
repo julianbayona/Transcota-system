@@ -1,26 +1,50 @@
 package com.transcotech.transcota_system.model;
 
+
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Table(name = "trip_register")
+@Entity
 public class TripRegister {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "trip_id")
     private Long id;
-    private User driver;
-    private Vehicle vehicle;
-    private LocalDate date;
-    private String status;
-    private Ubication destinationUbication;
-    private Ubication originUbication;
 
-    public TripRegister(Long id, User driver, Vehicle vehicle, LocalDate date, String status, Ubication destinationUbication, Ubication originUbication) {
-        this.id = id;
-        this.driver = driver;
-        this.vehicle = vehicle;
-        this.date = date;
-        this.status = status;
-        this.destinationUbication = destinationUbication;
-        this.originUbication = originUbication;
+    @ManyToOne
+    @JoinColumn(name = "driverId")
+    private User driverId;
+
+    @ManyToOne
+    @JoinColumn(name = "vehicleId")
+    private Vehicle vehicleId;
+
+    @Column(name="destino")
+    private String destinationUbication;
+
+    @Column(name="origen")
+    private String originUbication;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private LocalDate date;
+
+
+    public TripRegister(){
+
     }
+
 
     public Long getId() {
         return id;
@@ -30,20 +54,20 @@ public class TripRegister {
         this.id = id;
     }
 
-    public User getDriver() {
-        return driver;
+    public User getDriverId() {
+        return driverId;
     }
 
-    public void setDriver(User driver) {
-        this.driver = driver;
+    public void setDriverId(User personId) {
+        this.driverId = personId;
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+    public Vehicle getVehicleId() {
+        return vehicleId;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setVehicleId(Vehicle vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public LocalDate getDate() {
@@ -54,27 +78,20 @@ public class TripRegister {
         this.date = date;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Ubication getDestinationUbication() {
+    public String getDestinationUbication() {
         return destinationUbication;
     }
 
-    public void setDestinationUbication(Ubication destinationUbication) {
+    public void setDestinationUbication(String destinationUbication) {
         this.destinationUbication = destinationUbication;
     }
 
-    public Ubication getOriginUbication() {
+    public String getOriginUbication() {
         return originUbication;
     }
 
-    public void setOriginUbication(Ubication originUbication) {
+    public void setOriginUbication(String originUbication) {
         this.originUbication = originUbication;
     }
+    
 }

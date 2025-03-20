@@ -1,17 +1,28 @@
 package com.transcotech.transcota_system.model;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 
+
+
+@MappedSuperclass
 public abstract class Person {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long personId;
+
     private String name;
+
     private String email;
 
-    public int getId() {
-        return id;
+    public Long getPersonId() {
+        return personId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 
     public String getName() {

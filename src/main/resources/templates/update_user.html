@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Transporte</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="nav-buttons">
+            <a th:href="@{/}" class="nav-btn nav-btn-danger">
+                <i class="fa-solid fa-right-from-bracket icon"></i> 
+                <b>Cerrar Sesión</b>
+            </a>
+            <a th:href="@{/index}" class="nav-btn nav-btn-primary">
+                <i class="fa-solid fa-house icon"></i>  
+                <b>Inicio</b>
+            </a>
+        </div>
+        <details open>
+            <summary><b>Gestión de Usuarios</b></summary>
+            <a th:href="@{/users/select}">
+                <div class="nav-item"><span>Ver Usuarios</span></div>
+            </a>
+            <a th:href="@{/users/assigned}">
+                <div class="nav-item"><span>Vehiculos Asignados</span></div>
+            </a>
+            <a th:href="@{/users/register}">
+                <div class="nav-item"><span>Registrar Usuario</span></div>
+            </a>
+            <a th:href="@{/users/update}">
+                <div class="nav-item active"><span>Actualizar Usuario</span></div>
+            </a>
+            <a th:href="@{/users/delete}">
+                <div class="nav-item"><span>Eliminar Usuario</span></div>
+            </a>
+        </details>
+        <details>
+            <summary><b>Gestión de Vehículos</b></summary>
+            <a th:href="@{/vehicles/select}">
+                <div class="nav-item"><span>Ver Vehículos</span></div>
+            </a>
+            <a th:href="@{/vehicles/register}">
+                <div class="nav-item"><span>Registrar Vehículo</span></div>
+            </a>
+            <a th:href="@{/vehicles/update}">
+                <div class="nav-item"><span>Actualizar Vehículo</span></div>
+            </a>
+            <a th:href="@{/vehicles/delete}">
+                <div class="nav-item"><span>Eliminar Vehículo</span></div>
+            </a>
+        </details>            
+        <details>
+            <summary><b>Gestión de Viajes</b></summary>
+            <a th:href="@{/trips/select}">
+                <div class="nav-item"><span>Ver Viajes</span></div>
+            </a>
+            <a th:href="@{/trips/register}">
+                <div class="nav-item"><span>Registrar Viaje</span></div>
+            </a>
+            <a th:href="@{/trips/update}">
+                <div class="nav-item"><span>Actualizar Viaje</span></div>
+            </a>
+            <a th:href="@{/trips/delete}">
+                <div class="nav-item"><span>Eliminar Viaje</span></div>
+            </a>
+        </details>
+    </div>
+    <div class="container">
+        <div class="content-container">
+            <div class="main-content">
+                <div class="tab-content">
+                    <h2 id="main-title">Actualizar Usuario</h2>
+                    <form id="form-type" th:action="@{/users/update/search}" th:object="${userDTO}" method="POST">
+                        <div class="search-container">
+                            <div class="form-group" style="flex: 1; margin-bottom: 20px;">
+                                <label for="usuario-id">ID del usuario:</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="number" id="usuario-id" class="form-control" placeholder="Ingrese el ID" th:field="*{personId}" required>
+                                    <button type="submit" th:formaction="@{/users/update/search}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                        <i class="fa-solid fa-magnifying-glass icon"></i>
+                                        Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="form-type" th:action="@{/users/update}" method="POST" th:object="${userDTO}">
+                        <div class="form-group">
+                            <label for="id">ID:</label>
+                            <input type="number" id="id" class="form-control" placeholder="Id del usuario" th:field="*{personId}" required readOnly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nombres">Nombres:</label>
+                            <input type="text" id="nombres" class="form-control" placeholder="Nombres del usuario" th:field="*{name}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" class="form-control" placeholder="Email" th:field="*{email}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rol">Rol:</label>
+                            <select id="rol" class="form-control" th:field="*{roleDTO}" required>
+                                <option value="" readOnly selected>Seleccione un rol</option>
+                                <option value="ADMIN">Administrador</option>
+                                <option value="DRIVER">Conductor</option>
+                            </select>
+                        </div>
+                        <div class="btn-container">
+                        <button type="submit" th:formaction="@{/users/update}" class="btn btn-success">Actualizar Usuario</button>
+                        <button type="submit" th:formaction="@{/users/update/clear}" class="btn btn-warning">Limpiar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var errorMessage = /*[[${errorMessage}]]*/ null;
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+        /*]]>*/
+    </script>
+</body>
+</html>

@@ -1,18 +1,28 @@
 package com.transcotech.transcota_system.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 
-public class User extends Person{
+@Entity
+@Table(name="userSystem")
+public class User extends Person {
 
-    private List<Role> roles;
+    @Enumerated(EnumType.STRING)
+    @Column(name= "role")
+    private Role role;
 
-    public User(Role role,int id, String name, String email){
-        roles =  new ArrayList<Role>();
-        roles.add(role);
-        super.setId(id);
-        super.setName(name);
-        super.setEmail(email);
+    public User(){
+
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
