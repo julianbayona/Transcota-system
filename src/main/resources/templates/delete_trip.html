@@ -20,13 +20,16 @@
                 <b>Inicio</b>
             </a>
         </div>
-        <form sec:authorize="hasRole('USER')" th:action="@{vehicles/assigned/user}" method="get">
-            <input type="hidden" name="username" th:value="${#authentication.name}">
-            <button type="submit" class="nav-item">Vehiculos Asignados</button>
-        </form>
+        
+        <details sec:authorize="hasRole('USER')">
+            <summary><b>Vehículos</b></summary>
+            <a th:href="@{/users/assigned}">
+                <div class="nav-item"><span>Vehiculos Asignados</span></div>
+            </a>
+        </details>
         <details sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/users/all}">
+            <a th:href="@{/users/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
             </a>
             <a th:href="@{/users/assigned}">
@@ -57,7 +60,7 @@
                 <div class="nav-item"><span>Eliminar Vehículo</span></div>
             </a>
         </details>            
-        <details>
+        <details open>
             <summary><b>Gestión de Viajes</b></summary>
             <a th:href="@{/trips/select}">
                 <div class="nav-item"><span>Ver Viajes</span></div>

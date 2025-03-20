@@ -20,13 +20,24 @@
                 <b>Inicio</b>
             </a>
         </div>
-        <form sec:authorize="hasRole('USER')" th:action="@{vehicles/assigned/user}" method="get">
-            <input type="hidden" name="username" th:value="${#authentication.name}">
-            <button type="submit" class="nav-item">Vehiculos Asignados</button>
-        </form>
-        <details sec:authorize="hasRole('ADMIN')">
+        
+            <form sec:authorize="hasRole('USER')" th:action="@{/vehicles/assigned/user}" method="get">
+                <input type="hidden" name="username" th:value="${#authentication.name}">
+                <button type="submit" class="nav-item user-btn">
+                    <span>Vehículos Asignados</span>
+                </button>
+            </form>
+          
+        <details sec:authorize="hasRole('USER')" open>
+            <summary><b>Vehículos</b></summary>
+            <a th:href="@{/users/assigned}">
+                <div class="nav-item active"><span>Vehiculos Asignados</span></div>
+            </a>
+        </details>
+        
+        <details sec:authorize="hasRole('ADMIN')" open>
             <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/users/all}">
+            <a th:href="@{/users/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
             </a>
             <a th:href="@{/users/assigned}">
@@ -78,7 +89,7 @@
             <div class="main-content">
                 <h2 id="main-title">Ver vehiculos asignados a un conductor</h2>  
                 <div class="tab-content">
-                    <form sec:authorize="hasRole('ADMIN')" id="form-type" th:action="@{/users/assigned/search}" th:object="${userDTO}" method="POST">
+                    <form id="form-type" th:action="@{/users/assigned/search}" th:object="${userDTO}" method="POST">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="conductor-id">ID del conductor:</label>

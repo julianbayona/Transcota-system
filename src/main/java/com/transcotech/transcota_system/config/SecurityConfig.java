@@ -31,6 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").hasAuthority("ROLE_" + Constants.USER_ROLE)
                         .anyRequest().authenticated())
                 .formLogin(login -> login
+                        .loginPage("/login")
                         .successHandler((request, response, authentication) -> {
                             String role = authentication.getAuthorities().toString();
                             if (role.contains("ROLE_" + Constants.ADMIN_ROLE)) {
