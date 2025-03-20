@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 
 @Table(name = "trip_register")
 @Entity
+@Table(name="trip_register")
 public class TripRegister {
 
     @Id

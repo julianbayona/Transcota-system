@@ -30,6 +30,9 @@ public class User extends Person implements UserDetails{
     public User(){
 
     }
+    public void setUserId(long id){
+        super.setPersonId(id);
+    }
 
     public Role getRole() {
         return role;

@@ -17,11 +17,11 @@ public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long vehicleId;
+    private Long vehicleId;
     @Column(nullable = false, unique = true)
     private String plate;
     private String model;
-    private int year;
+    private Long year;
     @Enumerated(EnumType.STRING)
     private TypeVehicle type;
 
@@ -32,7 +32,7 @@ public class Vehicle {
         
     }
 
-    public Vehicle(String model, String plate, TypeVehicle type, int year) {
+    public Vehicle(String model, String plate, TypeVehicle type, Long year) {
         this.model = model;
         this.plate = plate;
         this.type = type;
@@ -48,11 +48,11 @@ public class Vehicle {
         this.model = model;
     }
 
-    public int getYear() {
+    public Long getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Long year) {
         this.year = year;
     }
 

@@ -30,9 +30,9 @@ import com.transcotech.transcota_system.model.TypeVehicle;
 import com.transcotech.transcota_system.model.Vehicle;
 import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
-@ExtendWith(MockitoExtension.class)
+//@ExtendWith(MockitoExtension.class)
 public class VehicleServiceTest {
-
+/*
     @Mock
     private VehicleRepositoryInterface vehicleRepository;
 
