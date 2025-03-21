@@ -1,11 +1,7 @@
 {
-	"folders": [
-		{
-			"path": "../../../.."
-		}
-	],
-	"settings": {
-		"java.configuration.updateBuildConfiguration": "interactive",
-		"java.debug.settings.onBuildFailureProceed": true
-	}
+    "folders": [
+        {
+            "path": "../../../../../../Transcota-system-develop/Transcota-system-develop"
+        }
+    ]
 }
