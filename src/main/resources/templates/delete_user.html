@@ -80,7 +80,7 @@
         <div class="content-container">
             <div class="main-content">
                 <div class="tab-content">
-                    <h2 id="main-title">Eliminar Conductor</h2>
+                    <h2 id="main-title">Eliminar Usuario</h2>
                     <form id="form-type" th:object="${userDTO}" method="POST">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
@@ -96,13 +96,13 @@
                         </div>
                     </form>
                         <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 20px; margin-bottom: 15px; font-size: 1em; width: 100%; max-width: 700px;">
-                            <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1.2em;">Información del Vehículo</h4>
+                            <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1.2em;">Información del Usuario</h4>
                             
                             <table style="width: 100%; border-collapse: collapse;">
                                
                                 <tr>
                                     <td style="padding: 8px;"><strong>Id usuario:</strong></td>
-                                    <td style="padding: 8px;" th:text="${userDTO != null and userDTO.personId != null ? userDTO.personId : '0'}">---</td>
+                                    <td style="padding: 8px;" th:text="${userDTO != null and userDTO.personId != null ? userDTO.personId : '---'}">---</td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 8px;"><strong>Nombre:</strong></td>
@@ -122,7 +122,7 @@
                         <form id="delete-form" th:action="@{/users/delete}" method="POST">
                             <input type="hidden" name="userId" th:value="${userDTO != null and userDTO.personId != null ? userDTO.personId : '0'}">
                             <div class="btn-container">
-                                <button type="submit" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Vehículo</button>
+                                <button type="submit" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Usuario</button>
                             </div>
                         </form>
                 </div>
@@ -130,12 +130,20 @@
         </div>
     </div>
     <script th:inline="javascript">
-        /*<![CDATA[*/
-        var errorMessage = /*[[${errorMessage}]]*/ null;
-        if (errorMessage) {
-            alert(errorMessage);
-        }
-        /*]]>*/
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            var alertType = /*[[${alertType}]]*/ null;
+            if (message) {
+                if(alertType === "error" ){
+                    alert("❌ " + message);
+                }else if(alertType === "info"){
+                    alert("ℹ️ " + message);
+                }
+                else if (alertType === "success") {
+                    alert("✅ " + message);
+                }
+            }
+        };
     </script>
 </body>
 </html>

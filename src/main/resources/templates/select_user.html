@@ -109,10 +109,12 @@
     </div>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var errorMessage = /*[[${errorMessage}]]*/ null;
-        if (errorMessage) {
-            alert(errorMessage);
-        }
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            if (message) {
+                alert("ℹ️ " + message);
+            }
+        };
         /*]]>*/
     </script>
 </body>
