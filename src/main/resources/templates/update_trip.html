@@ -60,7 +60,7 @@
                 <div class="nav-item"><span>Eliminar Vehículo</span></div>
             </a>
         </details>            
-        <details>
+        <details open>
             <summary open class="nav-details"><b>Gestión de Viajes</b></summary>
             <a th:href="@{/trips/select}">
                 <div class="nav-item"><span>Ver Viajes</span></div>
@@ -197,7 +197,7 @@
                         
                         <div class="btn-container">
                             <button type="submit" th:formaction="@{/trips/update}" class="btn btn-success">Actualizar Viaje</button>
-                            <button type="submit" th:formaction="@{/trips/update/clean}" class="btn btn-warning" formnovalidate>Limpiar</button>
+                            <button type="submit" th:formaction="@{/trips/update/clear}" class="btn btn-warning" formnovalidate>Limpiar</button>
                         </div>
                     </form>
                 </div>

@@ -126,7 +126,7 @@
                         </div>
                     </form>
                         <form id="delete-form" th:action="@{/trips/delete}" method="POST">
-                            <input type="hidden" name="tripId" th:value="${tripDTO != null and tripDTO.driverId.personId != null and tripDTO.vehicleId.vehicleId != null ? tripDTO.tripId : '0'}">
+                            <input type="hidden" name="tripId" th:value="${tripDTO != null and tripDTO.driverId.personId != null and tripDTO.vehicleId.vehicleId != null ? tripDTO.tripId : null}">
                             <div class="btn-container">
                                 <button type="submit" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
                             </div>
