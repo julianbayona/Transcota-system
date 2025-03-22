@@ -47,10 +47,10 @@ public class VehicleService implements VehicleServiceInterface {
         Vehicle vehicle = vehicleMapper.vehicleDTOToVehicle(vehicleDTO);
         Optional<Vehicle> existingVehicle = vehicleRepository.findByPlate(vehicle.getPlate());
         if (existingVehicle.isPresent()) {
-            return false; // La placa ya existe
+            return false;
         }
         vehicleRepository.save(vehicle);
-        return true; // Registro exitoso
+        return true; 
     }
 
     public VehicleDTO searchPlate(VehicleDTO vehicleDTO) {
@@ -63,11 +63,6 @@ public class VehicleService implements VehicleServiceInterface {
 
     public List<Vehicle> getAllVehicles() {
         return vehicleRepository.findAll();
-    }
-
-    private void mostrarListaVehiculos() {
-        System.out.println("Lista actualizada de vehículos:");
-        vehicleRepository.findAll().forEach(System.out::println);
     }
 
     public List<Vehicle> getVehiclesList() {
@@ -83,15 +78,15 @@ public class VehicleService implements VehicleServiceInterface {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElse(null);
 
         if (vehicle == null) {
-            return "vehiculoInexistente"; } //No encontró el vehículo 
+            return "vehiculoInexistente"; }
 
             Optional<Vehicle> existingVehicle = vehicleRepository.findByPlate(vehicleDTO.getPlate());
 
-            // Verifica si la placa ya existe y no pertenece al mismo vehículo
+            
             if (existingVehicle.isPresent() && existingVehicle.get().getVehicleId() != vehicleId) {
                 return "placaOcupada";
             }
-        // Actualizar los atributos
+        
         vehicle.setPlate(vehicleDTO.getPlate());
         vehicle.setModel(vehicleDTO.getModel());
         vehicle.setYear(vehicleDTO.getYear());
