@@ -155,7 +155,12 @@ public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO,
 
     @PostMapping("/delete")
     public String deleteVehicle(@RequestParam("vehicleId") Long vehicleId, Model model) {
-        if(vehicleService.deleteVehicle(vehicleId)){
+        if (vehicleService.hasRelatedTrips(vehicleId)) {
+            model.addAttribute("message","No se puede eliminar el vehiculo porque tiene viajes asignados");
+            model.addAttribute("alertType", "info");
+            model.addAttribute("vehicleDTO", new VehicleDTO());
+            return "delete_vehicle";
+        } else if(vehicleService.deleteVehicle(vehicleId)){
             model.addAttribute("message","VEHICULO ELIMINADO CORRECTAMENTE");
             model.addAttribute("alertType", "success");
             model.addAttribute("vehicleDTO", new VehicleDTO());

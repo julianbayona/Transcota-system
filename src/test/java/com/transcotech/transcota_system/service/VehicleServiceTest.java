@@ -188,6 +188,5 @@ public class VehicleServiceTest {
         assertEquals("vehiculoInexistente", result);
         verify(vehicleRepository, times(1)).findById(vehicleId);
         verify(vehicleRepository, never()).save(any());
-    }*/
-
+    }
 }

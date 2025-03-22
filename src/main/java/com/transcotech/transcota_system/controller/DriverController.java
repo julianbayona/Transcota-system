@@ -23,6 +23,7 @@ public class DriverController {
     @Autowired
     private DriverService driverService;
 
+
     @GetMapping("/register")
     public String registerVehicle(Model model) {
         model.addAttribute("userDTO", new UserDTO());
@@ -136,8 +137,12 @@ public class DriverController {
             model.addAttribute("alertType", "info");
             model.addAttribute("userDTO", new UserDTO());
             return "delete_user";
+        }else if (!driverService.deleteUser(personId)) {
+            model.addAttribute("message", "No se puede eliminar porque el conductor tiene viajes asignados");
+            model.addAttribute("alertType", "info");
+            model.addAttribute("userDTO", new UserDTO());
+            return "delete_user";
         }
-        driverService.deleteUser(personId);
         return "redirect:/users/delete/message";
     }
 

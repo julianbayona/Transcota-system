@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.transcotech.transcota_system.dto.VehicleDTO;
 import com.transcotech.transcota_system.mapper.VehicleMapper;
+import com.transcotech.transcota_system.model.TripRegister;
 import com.transcotech.transcota_system.model.Vehicle;
+import com.transcotech.transcota_system.repositories.TripRegisterRepositoryInterface;
 import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
 @Service
@@ -21,6 +23,8 @@ public class VehicleService implements VehicleServiceInterface {
 
     @Autowired
     private VehicleRepositoryInterface vehicleRepository;
+    @Autowired
+    private TripRegisterRepositoryInterface tripRepository;
 
     @Override
     public List<VehicleDTO> findAll() {
@@ -38,6 +42,16 @@ public class VehicleService implements VehicleServiceInterface {
         if (vehicleRepository.existsById(id)) {
             vehicleRepository.deleteById(id);
             return true;
+        }
+        return false;
+    }
+
+    public boolean hasRelatedTrips(Long id){
+        List<TripRegister> trips = tripRepository.findAll();
+        for (TripRegister tripRegister : trips) {
+            if(tripRegister.getVehicleId().getVehicleId() == id){
+                return true;
+            };
         }
         return false;
     }

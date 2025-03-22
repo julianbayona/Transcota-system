@@ -41,8 +41,15 @@ public class DriverService implements DriverServiceInterface{
     }
 
     @Override
-    public void deleteUser(Long id){
+    public boolean deleteUser(Long id){
+        List<TripRegister> trips = tripRepository.findAll();
+        for (TripRegister tripRegister : trips) {
+            if(tripRegister.getDriverId().getPersonId() == id){
+                return false;
+            };
+        }
         this.driverRepository.deleteById(id);
+        return true;
     }
 
     @Override

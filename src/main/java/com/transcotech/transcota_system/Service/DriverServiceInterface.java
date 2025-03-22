@@ -10,7 +10,7 @@ public interface DriverServiceInterface {
 
     public List<UserDTO> findAll();
     public UserDTO searchId(Long id);
-    public void deleteUser(Long id);
+    public boolean deleteUser(Long id);
     public User createDriver(UserDTO userDTO);
     public User updateDriver(Long id, UserDTO userDTO);
     public List<VehicleDTO> getVehiclesAssignedDriver(Long drivedId); 
