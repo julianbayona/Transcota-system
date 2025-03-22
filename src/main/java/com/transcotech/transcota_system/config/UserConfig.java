@@ -34,7 +34,6 @@ public class UserConfig {
         InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager(user, anotherUser, admin);
 
         return username -> {
-            System.out.println("Ingreso a la validación");
             if ("admin".equals(username)) {
                 return inMemoryUserDetailsManager.loadUserByUsername(username);
             } else {
