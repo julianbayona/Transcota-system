@@ -125,7 +125,7 @@
                         </div>
                         <div class="btn-container">
                         <button type="submit" th:formaction="@{/users/update}" class="btn btn-success">Actualizar Usuario</button>
-                        <button type="submit" th:formaction="@{/users/update/clear}" class="btn btn-warning">Limpiar</button>
+                        <button type="submit" th:formaction="@{/users/update/clear}" class="btn btn-warning"  formnovalidate>Limpiar</button>
                         </div>
                     </form>
                 </div>
@@ -134,10 +134,20 @@
     </div>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var errorMessage = /*[[${errorMessage}]]*/ null;
-        if (errorMessage) {
-            alert(errorMessage);
-        }
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            var alertType = /*[[${alertType}]]*/ null;
+            if (message) {
+                if(alertType === "error" ){
+                    alert("❌ " + message);
+                }else if(alertType === "info"){
+                    alert("ℹ️ " + message);
+                }
+                else if (alertType === "success") {
+                    alert("✅ " + message);
+                }
+            }
+        };
         /*]]>*/
     </script>
 </body>

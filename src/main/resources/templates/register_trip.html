@@ -27,7 +27,7 @@
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
         </details>
-        <details sec:authorize="hasRole('ADMIN')">
+        <details class="nav-details" sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Usuarios</b></summary>
             <a th:href="@{/users/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
@@ -45,7 +45,7 @@
                 <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
-        <details sec:authorize="hasRole('ADMIN')">
+        <details class="nav-details" sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Vehículos</b></summary>
             <a th:href="@{/vehicles/select}">
                 <div class="nav-item"><span>Ver Vehículos</span></div>
@@ -61,7 +61,7 @@
             </a>
         </details>            
         <details open>
-            <summary><b>Gestión de Viajes</b></summary>
+            <summary open><b>Gestión de Viajes</b></summary>
             <a th:href="@{/trips/select}">
                 <div class="nav-item"><span>Ver Viajes</span></div>
             </a>
@@ -179,6 +179,7 @@
                         </div>
                         <div class="btn-container">
                             <button type="submit" th:formaction="@{/trips/register}" class="btn btn-success" >Registrar Viaje</button>
+                            <button type="submit" th:formaction="@{/trips/register/clear}" class="btn btn-warning" formnovalidate>Limpiar</button>
                         </div>
                     </form>
                 </div>
@@ -187,15 +188,25 @@
     </div>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var errorMessage = /*[[${errorMessage}]]*/ null;
-        if (errorMessage && errorMessage.trim() !== "") {
-            alert(errorMessage);
-        }
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            var alertType = /*[[${alertType}]]*/ null;
+            if (message) {
+                if(alertType === "error" ){
+                    alert("❌ " + message);
+                }else if(alertType === "info"){
+                    alert("ℹ️ " + message);
+                }
+                else if (alertType === "success") {
+                    alert("✅ " + message);
+                }
+            }
+        };
         /*]]>*/
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll("details").forEach((detail, index) => {
+            document.querySelectorAll("details:not(.nav-details)").forEach((detail, index) => {
                 const isOpen = localStorage.getItem("detail-" + index) === "true";
                 if (isOpen) {
                     detail.setAttribute("open", "true");

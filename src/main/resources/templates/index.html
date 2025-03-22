@@ -89,9 +89,9 @@
                     <div th:each="trip : ${tripList}" class="trip-container">
                         <p class="date"><strong>Fecha:</strong> <span th:text="${trip.date}"></span></p>
                         <p><strong>Origen:</strong> <span th:text="${trip.origin}"></span></p>
-                        <p class="assignSpecial"><strong>ID del conductor:</strong> <span th:text="${trip.driverDTO.personId}"></span></p>
+                        <p class="assignSpecial"><strong>ID del conductor:</strong> <span th:text="${trip.driverId.personId}"></span></p>
                         <p><strong>Destino:</strong> <span th:text="${trip.destination}"></span></p>
-                        <p class="assignSpecial"><strong>ID del vehículo:</strong> <span th:text="${trip.vehicleDTO.vehicleId}"></span></p>
+                        <p class="assignSpecial"><strong>ID del vehículo:</strong> <span th:text="${trip.vehicleId.vehicleId}"></span></p>
                     </div>
                 </div>
             </div>

@@ -69,10 +69,10 @@
                 <div class="nav-item"><span>Registrar Viaje</span></div>
             </a>
             <a th:href="@{/trips/update}" sec:authorize="hasRole('ADMIN')">
-                <div class="nav-item active"><span>Actualizar Viaje</span></div>
+                <div class="nav-item"><span>Actualizar Viaje</span></div>
             </a>
             <a th:href="@{/trips/delete}" sec:authorize="hasRole('ADMIN')">
-                <div class="nav-item"><span>Eliminar Viaje</span></div>
+                <div class="nav-item active"><span>Eliminar Viaje</span></div>
             </a>
         </details>
     </div>
@@ -86,7 +86,7 @@
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="conductor-id">ID del viaje:</label>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="number" name="tripId" id="conductor-id" class="form-control" placeholder="Ingrese el ID" required>
+                                    <input type="number" id="conductor-id" class="form-control" th:field="*{tripId}" placeholder="Ingrese el ID" required>
                                     <button type="submit"  class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                         </div>
-
+                    
                         <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
                             <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Viaje</h4>
                             
@@ -124,26 +124,32 @@
                                 </div>
                             </div>
                         </div>
-    
-                        <div class="btn-container">
-                            <button type="submit"  th:formaction="@{/trips/delete}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
-                        </div>
-                        
                     </form>
-
-                    
-                    
+                        <form id="delete-form" th:action="@{/trips/delete}" method="POST">
+                            <input type="hidden" name="tripId" th:value="${tripDTO != null and tripDTO.driverId.personId != null and tripDTO.vehicleId.vehicleId != null ? tripDTO.tripId : null}">
+                            <div class="btn-container">
+                                <button type="submit" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
+                            </div>
+                        </form>
                 </div>
             </div>
         </div>
     </div>
     <script th:inline="javascript">
-        /*<![CDATA[*/
-        var errorMessage = /*[[${errorMessage}]]*/ null;
-        if (errorMessage && errorMessage.trim() !== "") {
-            alert(errorMessage);
-        }
-        /*]]>*/
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            var alertType = /*[[${alertType}]]*/ null;
+            if (message) {
+                if(alertType === "error" ){
+                    alert("❌ " + message);
+                }else if(alertType === "info"){
+                    alert("ℹ️ " + message);
+                }
+                else if (alertType === "success") {
+                    alert("✅ " + message);
+                }
+            }
+        };
     </script>
 </body>
 </html>

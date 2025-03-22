@@ -27,7 +27,7 @@
                 <div class="nav-item"><span>Vehiculos Asignados</span></div>
             </a>
         </details>
-        <details sec:authorize="hasRole('ADMIN')" open>
+        <details class="nav-details" sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Usuarios</b></summary>
             <a th:href="@{/users/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
@@ -39,13 +39,13 @@
                 <div class="nav-item"><span>Registrar Usuario</span></div>
             </a>
             <a th:href="@{/users/update}">
-                <div class="nav-item active"><span>Actualizar Usuario</span></div>
+                <div class="nav-item"><span>Actualizar Usuario</span></div>
             </a>
             <a th:href="@{/users/delete}">
                 <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
-        <details sec:authorize="hasRole('ADMIN')">
+        <details class="nav-details" sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Vehículos</b></summary>
             <a th:href="@{/vehicles/select}">
                 <div class="nav-item"><span>Ver Vehículos</span></div>
@@ -60,8 +60,8 @@
                 <div class="nav-item"><span>Eliminar Vehículo</span></div>
             </a>
         </details>            
-        <details>
-            <summary><b>Gestión de Viajes</b></summary>
+        <details open>
+            <summary open class="nav-details"><b>Gestión de Viajes</b></summary>
             <a th:href="@{/trips/select}">
                 <div class="nav-item"><span>Ver Viajes</span></div>
             </a>
@@ -69,7 +69,7 @@
                 <div class="nav-item"><span>Registrar Viaje</span></div>
             </a>
             <a th:href="@{/trips/update}" sec:authorize="hasRole('ADMIN')">
-                <div class="nav-item"><span>Actualizar Viaje</span></div>
+                <div class="nav-item active"><span>Actualizar Viaje</span></div>
             </a>
             <a th:href="@{/trips/delete}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Eliminar Viaje</span></div>
@@ -186,7 +186,6 @@
                                             <div class="form-group" style="margin-bottom: 5px;">
                                                     <label><strong>Rol:</strong> <span id="info-conductor-rol" th:text="${role} ?: '---'">---</span></label>
                                             </div>
-                                            <p>Error Message: <span th:text="${errorMessage}">No hay mensaje</span></p>
                                             <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
                                                 <label><strong>Email:</strong> <span id="info-conductor-email" th:text="${email} ?: '---'">---</span></label>
                                             </div>
@@ -198,7 +197,7 @@
                         
                         <div class="btn-container">
                             <button type="submit" th:formaction="@{/trips/update}" class="btn btn-success">Actualizar Viaje</button>
-                            <button type="submit" th:formaction="@{/vehicles/update/clean}" class="btn btn-warning">Limpiar</button>
+                            <button type="submit" th:formaction="@{/trips/update/clear}" class="btn btn-warning" formnovalidate>Limpiar</button>
                         </div>
                     </form>
                 </div>
@@ -207,16 +206,26 @@
     </div>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var errorMessage = /*[[${errorMessage}]]*/ null;
-        if (errorMessage && errorMessage.trim() !== "") {
-            alert(errorMessage);
-        }
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            var alertType = /*[[${alertType}]]*/ null;
+            if (message) {
+                if(alertType === "error" ){
+                    alert("❌ " + message);
+                }else if(alertType === "info"){
+                    alert("ℹ️ " + message);
+                }
+                else if (alertType === "success") {
+                    alert("✅ " + message);
+                }
+            }
+        };
         /*]]>*/
     </script>
     
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll("details").forEach((detail, index) => {
+            document.querySelectorAll("details:not(.nav-details)").forEach((detail, index) => {
                 const isOpen = localStorage.getItem("detail-" + index) === "true";
                 if (isOpen) {
                     detail.setAttribute("open", "true");

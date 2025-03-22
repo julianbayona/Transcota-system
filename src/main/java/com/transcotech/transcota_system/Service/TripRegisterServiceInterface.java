@@ -12,4 +12,5 @@ public interface TripRegisterServiceInterface {
     public void deleteTripRegister(Long id);
     public TripRegister createTripRegister(TripDTO tripDTO);
     public TripRegister updateTrip(Long id, TripDTO tripDTO);
+    public List<TripDTO> searchUpcomingFive();
 }

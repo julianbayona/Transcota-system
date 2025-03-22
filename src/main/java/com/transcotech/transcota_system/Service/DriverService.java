@@ -9,13 +9,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transcotech.transcota_system.dto.TripDTO;
 import com.transcotech.transcota_system.dto.UserDTO;
 import com.transcotech.transcota_system.dto.VehicleDTO;
-import com.transcotech.transcota_system.mapper.TripMapper;
 import com.transcotech.transcota_system.mapper.UserMapper;
 import com.transcotech.transcota_system.model.TripRegister;
-import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.model.User;
 import com.transcotech.transcota_system.repositories.DriverRepositoryInterface;
 import com.transcotech.transcota_system.repositories.TripRegisterRepositoryInterface;
@@ -24,7 +21,6 @@ import com.transcotech.transcota_system.repositories.TripRegisterRepositoryInter
 public class DriverService implements DriverServiceInterface{
 
     private final UserMapper userMapper = UserMapper.INSTANCE;
-    private final TripMapper tripMapper = TripMapper.INSTANCE;
 
     @Autowired
     private DriverRepositoryInterface driverRepository;

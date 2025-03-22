@@ -87,7 +87,7 @@
                         </div>
                         <div class="form-group">
                             <label for="nombres">Contraseña:</label>
-                            <input type="text" id="nombres" class="form-control" placeholder="Ingrese la contraseña" th:field="*{password}" required>
+                            <input type="password" id="nombres" class="form-control" placeholder="Ingrese la contraseña" th:field="*{password}" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email:</label>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="btn-container">
                             <button type="submit" th:formaction="@{/users/register}" class="btn btn-success">Registrar Usuario</button>
-                            <button type="submit" th:formaction="@{/users/register/clear}" class="btn btn-warning">Limpiar</button>
+                            <button type="submit" th:formaction="@{/users/register/clear}" class="btn btn-warning"  formnovalidate>Limpiar</button>
                         </div>
                     </form>
                 </div>
@@ -112,10 +112,13 @@
     </div>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var errorMessage = /*[[${errorMessage}]]*/ null;
-        if (errorMessage) {
-            alert(errorMessage);
-        }
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            var alertType = /*[[${alertType}]]*/ null;
+            if (message) {
+                alert((alertType === "success" ? "✅ " : "❌ ") + message);
+            }
+        };
         /*]]>*/
     </script>
 </body>

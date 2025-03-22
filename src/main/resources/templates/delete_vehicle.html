@@ -81,15 +81,14 @@
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Eliminar Vehículo</h2>
-
-                    <form id="search-form" th:action="@{/vehicles/delete/search}" method="POST">
+                    <form id="search-form" th:action="@{/vehicles/delete/search}" th:object="${vehicleDTO}" method="POST"  style="width:100%;">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="vehiculo-id">ID del Vehículo:</label>
                                 <div style="display: flex; gap: 10px;">
                                     <input type="number" name="id" id="vehiculo-id" class="form-control"
                                            placeholder="Ingrese el ID del vehículo"
-                                           th:value="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '0'}"
+                                           th:field="*{vehicleId}"
                                            required>
                                     <button type="submit" class="btn nav-primary" 
                                             style="display: flex; align-items: center; justify-content: center; height: 42px;">
@@ -107,7 +106,7 @@
                            
                             <tr>
                                 <td style="padding: 8px;"><strong>Id vehículo:</strong></td>
-                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '0'}">0</td>
+                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '---'}">0</td>
                             </tr>
                             <tr>
                                 <td style="padding: 8px;"><strong>Placa:</strong></td>
@@ -119,7 +118,7 @@
                             </tr>
                             <tr>
                                 <td style="padding: 8px;"><strong>Año:</strong></td>
-                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.year != null ? vehicleDTO.year : '0'}">0</td>
+                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.year != null ? vehicleDTO.year : '---'}">0</td>
                             </tr>
                             <tr>
                                 <td style="padding: 8px;"><strong>Tipo de Vehículo:</strong></td>
@@ -128,13 +127,14 @@
                         </table>
                     </div>
 
-                    <form id="delete-form" th:action="@{/vehicles/delete}" method="POST">
+                    <form id="delete-form" th:action="@{/vehicles/delete}" th:object="${vehicleDTO}" method="POST">
                         <input type="hidden" name="vehicleId" th:value="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '0'}">
                         <div class="btn-container">
                             <button type="submit" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Vehículo</button>
                         </div>
                     </form>
                 </div>
+                
             </div>
         </div>
     </div>
