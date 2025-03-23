@@ -93,6 +93,10 @@ public class TripRegisterController {
 
     @PostMapping("/update/searchVehicle")
     public String searchVehicleUpdate(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
+        if (tripDTO.getVehicleId().getVehicleId() == null) {
+            addAtributeToModel(model, "Debe ingresar primero el id de un vehiculo", "info");
+            return "update_trip";
+        }
         VehicleDTO vehicle = vehicleService.searchId(tripDTO.getVehicleId().getVehicleId());
         if(vehicle == null){
             addAtributeToModel(model, "El vehiculo con ID " + tripDTO.getVehicleId().getVehicleId() + " no existe.", "error");
@@ -106,6 +110,10 @@ public class TripRegisterController {
 
     @PostMapping("/update/searchDriver")
     public String searchDriverUpdate(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
+        if (tripDTO.getDriverId().getPersonId() == null) {
+            addAtributeToModel(model, "Debe ingresar primero el id de un coductor", "info");
+            return "update_trip";
+        }
         UserDTO driver = driverService.searchId(tripDTO.getDriverId().getPersonId());
         if(driver == null){
             addAtributeToModel(model, "El vehiculo con ID " + tripDTO.getDriverId().getPersonId() + " no existe.", "error");
@@ -154,6 +162,10 @@ public class TripRegisterController {
 
     @PostMapping("/register/searchVehicle")
     public String searchVehicleRegister(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
+        if (tripDTO.getVehicleId().getVehicleId() == null) {
+            addAtributeToModel(model, "Debe ingresar primero el id de un vehiculo", "info");
+            return "register_trip";
+        }
         VehicleDTO vehicle = vehicleService.searchId(tripDTO.getVehicleId().getVehicleId());
         if(vehicle == null){
             addAtributeToModel(model, "El vehiculo con ID " + tripDTO.getVehicleId().getVehicleId() + " no existe.", "info");
@@ -172,6 +184,10 @@ public class TripRegisterController {
 
     @PostMapping("/register/searchDriver")
     public String searchDriverRegister(@ModelAttribute("tripDTO") TripDTO tripDTO, Model model){
+        if (tripDTO.getDriverId().getPersonId() == null) {
+            addAtributeToModel(model, "Debe ingresar primero el id de un coductor", "info");
+            return "register_trip";
+        }
         UserDTO driver = driverService.searchId(tripDTO.getDriverId().getPersonId());
         if(driver == null){
             addAtributeToModel(model, "El vehiculo con ID " + tripDTO.getDriverId().getPersonId() + " no existe.", "info");
