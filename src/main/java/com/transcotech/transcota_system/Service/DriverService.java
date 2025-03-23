@@ -56,7 +56,6 @@ public class DriverService implements DriverServiceInterface{
     public User createDriver(UserDTO userDTO) {
         User user = UserMapper.INSTANCE.userDTOToUser(userDTO);
         return this.driverRepository.save(user);
-        
     }
 
     @Override

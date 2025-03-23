@@ -28,7 +28,7 @@ public interface UserMapper {
         @Mapping(source = "personId", target = "personId"),
         @Mapping(source = "name", target = "name"),
         @Mapping(source = "email", target = "email"),
-        @Mapping(source = "password", target = "password", qualifiedByName = "encodePassword") // ✅ Aplica la encriptación correctamente
+        @Mapping(source = "password", target = "password", qualifiedByName = "encodePassword")
     })
     User userDTOToUser(UserDTO userDTO);
 
