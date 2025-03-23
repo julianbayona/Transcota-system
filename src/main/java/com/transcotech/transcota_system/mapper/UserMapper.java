@@ -12,8 +12,6 @@ import com.transcotech.transcota_system.model.User;
 
 @Mapper(componentModel = "spring", uses = PasswordEncoderMapper.class)
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
     @Mappings({
         @Mapping(source = "role", target = "roleDTO"),
         @Mapping(source = "personId", target = "personId"),

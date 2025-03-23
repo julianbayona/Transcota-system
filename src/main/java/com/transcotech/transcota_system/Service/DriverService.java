@@ -20,7 +20,12 @@ import com.transcotech.transcota_system.repositories.TripRegisterRepositoryInter
 @Service
 public class DriverService implements DriverServiceInterface{
 
-    private final UserMapper userMapper = UserMapper.INSTANCE;
+    private UserMapper userMapper;
+
+    @Autowired
+    public DriverService(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Autowired
     private DriverRepositoryInterface driverRepository;
@@ -54,7 +59,7 @@ public class DriverService implements DriverServiceInterface{
 
     @Override
     public User createDriver(UserDTO userDTO) {
-        User user = UserMapper.INSTANCE.userDTOToUser(userDTO);
+        User user = userMapper.userDTOToUser(userDTO);
         return this.driverRepository.save(user);
     }
 
