@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -191,4 +190,5 @@ public class VehicleServiceTest {
         verify(vehicleRepository, times(1)).findById(vehicleId);
         verify(vehicleRepository, never()).save(any());
     }
+
 }
