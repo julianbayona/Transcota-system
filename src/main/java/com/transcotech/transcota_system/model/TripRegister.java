@@ -14,8 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Table(name = "trip_register")
 @Entity
+@Table(name="trip_register")
 public class TripRegister {
 
     @Id
@@ -24,11 +24,11 @@ public class TripRegister {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "driverId")
+    @JoinColumn(name = "driver_id")
     private User driverId;
 
     @ManyToOne
-    @JoinColumn(name = "vehicleId")
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicleId;
 
     @Column(name="destino")

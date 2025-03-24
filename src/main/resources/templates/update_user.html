@@ -11,16 +11,23 @@
 <body>
     <div class="sidebar">
         <div class="nav-buttons">
-            <a th:href="@{/}" class="nav-btn nav-btn-danger">
+            <a th:href="@{/logout}" class="nav-btn nav-btn-danger">
                 <i class="fa-solid fa-right-from-bracket icon"></i> 
                 <b>Cerrar Sesión</b>
             </a>
-            <a th:href="@{/index}" class="nav-btn nav-btn-primary">
+            <a th:href="@{/}" class="nav-btn nav-btn-primary">
                 <i class="fa-solid fa-house icon"></i>  
                 <b>Inicio</b>
             </a>
         </div>
-        <details open>
+        
+        <details sec:authorize="hasRole('DRIVER')">
+            <summary><b>Vehículos</b></summary>
+            <a th:href="@{/users/assigned}">
+                <div class="nav-item"><span>Vehiculos Asignados</span></div>
+            </a>
+        </details>
+        <details sec:authorize="hasRole('ADMIN')" open>
             <summary><b>Gestión de Usuarios</b></summary>
             <a th:href="@{/users/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
@@ -38,7 +45,7 @@
                 <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
-        <details>
+        <details sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Vehículos</b></summary>
             <a th:href="@{/vehicles/select}">
                 <div class="nav-item"><span>Ver Vehículos</span></div>
@@ -58,13 +65,13 @@
             <a th:href="@{/trips/select}">
                 <div class="nav-item"><span>Ver Viajes</span></div>
             </a>
-            <a th:href="@{/trips/register}">
+            <a th:href="@{/trips/register}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Registrar Viaje</span></div>
             </a>
-            <a th:href="@{/trips/update}">
+            <a th:href="@{/trips/update}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Actualizar Viaje</span></div>
             </a>
-            <a th:href="@{/trips/delete}">
+            <a th:href="@{/trips/delete}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Eliminar Viaje</span></div>
             </a>
         </details>
@@ -98,6 +105,12 @@
                             <label for="nombres">Nombres:</label>
                             <input type="text" id="nombres" class="form-control" placeholder="Nombres del usuario" th:field="*{name}" required>
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="nombres">Contraseña:</label>
+                            <input type="password" id="nombres" class="form-control" placeholder="Contraseña del usuario" th:field="*{password}" required>
+                        </div>
+
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" id="email" class="form-control" placeholder="Email" th:field="*{email}" required>
@@ -112,7 +125,7 @@
                         </div>
                         <div class="btn-container">
                         <button type="submit" th:formaction="@{/users/update}" class="btn btn-success">Actualizar Usuario</button>
-                        <button type="submit" th:formaction="@{/users/update/clear}" class="btn btn-warning">Limpiar</button>
+                        <button type="submit" th:formaction="@{/users/update/clear}" class="btn btn-warning"  formnovalidate>Limpiar</button>
                         </div>
                     </form>
                 </div>
@@ -121,10 +134,20 @@
     </div>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var errorMessage = /*[[${errorMessage}]]*/ null;
-        if (errorMessage) {
-            alert(errorMessage);
-        }
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            var alertType = /*[[${alertType}]]*/ null;
+            if (message) {
+                if(alertType === "error" ){
+                    alert("❌ " + message);
+                }else if(alertType === "info"){
+                    alert("ℹ️ " + message);
+                }
+                else if (alertType === "success") {
+                    alert("✅ " + message);
+                }
+            }
+        };
         /*]]>*/
     </script>
 </body>

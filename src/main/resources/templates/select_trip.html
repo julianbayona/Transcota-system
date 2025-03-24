@@ -5,22 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestión de Transporte</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <!--<link rel="stylesheet" href="../static/css/styles.css">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <div class="sidebar">
         <div class="nav-buttons">
-            <a th:href="@{/}" class="nav-btn nav-btn-danger">
+            <a th:href="@{/logout}" class="nav-btn nav-btn-danger">
                 <i class="fa-solid fa-right-from-bracket icon"></i> 
                 <b>Cerrar Sesión</b>
             </a>
-            <a th:href="@{/index}" class="nav-btn nav-btn-primary">
+            <a th:href="@{/}" class="nav-btn nav-btn-primary">
                 <i class="fa-solid fa-house icon"></i>  
                 <b>Inicio</b>
             </a>
         </div>
-        <details>
+        
+        <details sec:authorize="hasRole('DRIVER')">
+            <summary><b>Vehículos</b></summary>
+            <a th:href="@{/users/assigned}">
+                <div class="nav-item"><span>Vehiculos Asignados</span></div>
+            </a>
+        </details>
+        <details sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Usuarios</b></summary>
             <a th:href="@{/users/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
@@ -38,7 +45,7 @@
                 <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
-        <details>
+        <details sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Vehículos</b></summary>
             <a th:href="@{/vehicles/select}">
                 <div class="nav-item"><span>Ver Vehículos</span></div>
@@ -58,13 +65,13 @@
             <a th:href="@{/trips/select}">
                 <div class="nav-item active"><span>Ver Viajes</span></div>
             </a>
-            <a th:href="@{/trips/register}">
+            <a th:href="@{/trips/register}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Registrar Viaje</span></div>
             </a>
-            <a th:href="@{/trips/update}">
+            <a th:href="@{/trips/update}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Actualizar Viaje</span></div>
             </a>
-            <a th:href="@{/trips/delete}">
+            <a th:href="@{/trips/delete}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Eliminar Viaje</span></div>
             </a>
         </details>
@@ -79,7 +86,7 @@
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="conductor-id">ID del viaje:</label>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID del viaje" th:field="*{tripId}" required>
+                                    <input type="number" name = "tripId" id="conductor-id" class="form-control" placeholder="Ingrese el ID del viaje" required>
                                     <button type="submit" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
@@ -90,17 +97,27 @@
                     </form>
                     
                     <h2>Estos son los viajes registrados...</h2> 
-                    <div th:each="trip : ${tripList}" class="trip-full-container">
-                        <p class="assignSpecial"><strong>ID:</strong> <span th:text="${trip.tripId}"></span></p>
-                        <p><strong>Fecha:</strong> <span th:text="${trip.date}"></span></p>
-                        <p><strong>Origen:</strong> <span th:text="${trip.origin}"></span></p>
-                        <p class="assignSpecial"><strong>ID del conductor:</strong> <span th:text="${trip.driverDTO.personId}"></span></p>
-                        <p><strong>Destino:</strong> <span th:text="${trip.destination}"></span></p>
-                        <p class="assignSpecial"><strong>ID del vehículo:</strong> <span th:text="${trip.vehicleDTO.vehicleId}"></span></p>
+                    <div th:each="tripDTO : ${tripList}" class="trip-full-container">
+                        <p class="assignSpecial"><strong>ID:</strong> <span th:text="${tripDTO.tripId}"></span></p>
+                        <p><strong>Fecha:</strong> <span th:text="${tripDTO.date}"></span></p>
+                        <p><strong>Origen:</strong> <span th:text="${tripDTO.origin}"></span></p>
+                        <p class="assignSpecial"><strong>ID del conductor:</strong> <span th:text="${tripDTO.driverId.personId}"></span></p>
+                        <p><strong>Destino:</strong> <span th:text="${tripDTO.destination}"></span></p>
+                        <p class="assignSpecial"><strong>ID del vehículo:</strong> <span th:text="${tripDTO.vehicleId.vehicleId}"></span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            if (message) {
+                alert("ℹ️ " + message);
+            }
+        };
+        /*]]>*/
+    </script>
 </body>
 </html>

@@ -10,36 +10,69 @@
 <body>
     <div class="sidebar">
         <div class="nav-buttons">
-            <a th:href="@{/}" class="nav-btn nav-btn-danger">
+            <a th:href="@{/logout}" class="nav-btn nav-btn-danger">
                 <i class="fa-solid fa-right-from-bracket icon"></i> 
                 <b>Cerrar Sesión</b>
             </a>
-            <a th:href="@{/index}" class="nav-btn nav-btn-primary">
+            <a th:href="@{/}" class="nav-btn nav-btn-primary">
                 <i class="fa-solid fa-house icon"></i>  
                 <b>Inicio</b>
             </a>
         </div>
-        <details>
-            <summary><b>Gestión de Usuarios</b></summary>
-            <a th:href="@{/users/select}"><div class="nav-item"><span>Ver Usuarios</span></div></a>
-            <a th:href="@{/users/assigned}"><div class="nav-item"><span>Vehículos Asignados</span></div></a>
-            <a th:href="@{/users/register}"><div class="nav-item"><span>Registrar Usuario</span></div></a>
-            <a th:href="@{/users/update}"><div class="nav-item"><span>Actualizar Usuario</span></div></a>
-            <a th:href="@{/users/delete}"><div class="nav-item"><span>Eliminar Usuario</span></div></a>
+        
+        <details sec:authorize="hasRole('DRIVER')">
+            <summary><b>Vehículos</b></summary>
+            <a th:href="@{/users/assigned}">
+                <div class="nav-item"><span>Vehiculos Asignados</span></div>
+            </a>
         </details>
-        <details open>
+        <details sec:authorize="hasRole('ADMIN')">
+            <summary><b>Gestión de Usuarios</b></summary>
+            <a th:href="@{/users/select}">
+                <div class="nav-item"><span>Ver Usuarios</span></div>
+            </a>
+            <a th:href="@{/users/assigned}">
+                <div class="nav-item"><span>Vehiculos Asignados</span></div>
+            </a>
+            <a th:href="@{/users/register}">
+                <div class="nav-item"><span>Registrar Usuario</span></div>
+            </a>
+            <a th:href="@{/users/update}">
+                <div class="nav-item"><span>Actualizar Usuario</span></div>
+            </a>
+            <a th:href="@{/users/delete}">
+                <div class="nav-item"><span>Eliminar Usuario</span></div>
+            </a>
+        </details>
+        <details sec:authorize="hasRole('ADMIN')" open>
             <summary><b>Gestión de Vehículos</b></summary>
-            <a th:href="@{/vehicles/select}"><div class="nav-item"><span>Ver Vehículos</span></div></a>
-            <a th:href="@{/vehicles/register}"><div class="nav-item"><span>Registrar Vehículo</span></div></a>
-            <a th:href="@{/vehicles/update}"><div class="nav-item"><span>Actualizar Vehículo</span></div></a>
-            <a th:href="@{/vehicles/delete}"><div class="nav-item active"><span>Eliminar Vehículo</span></div></a>
+            <a th:href="@{/vehicles/select}">
+                <div class="nav-item"><span>Ver Vehículos</span></div>
+            </a>
+            <a th:href="@{/vehicles/register}">
+                <div class="nav-item"><span>Registrar Vehículo</span></div>
+            </a>
+            <a th:href="@{/vehicles/update}">
+                <div class="nav-item"><span>Actualizar Vehículo</span></div>
+            </a>
+            <a th:href="@{/vehicles/delete}">
+                <div class="nav-item active"><span>Eliminar Vehículo</span></div>
+            </a>
         </details>            
         <details>
             <summary><b>Gestión de Viajes</b></summary>
-            <a th:href="@{/trips/select}"><div class="nav-item"><span>Ver Viajes</span></div></a>
-            <a th:href="@{/trips/register}"><div class="nav-item"><span>Registrar Viaje</span></div></a>
-            <a th:href="@{/trips/update}"><div class="nav-item"><span>Actualizar Viaje</span></div></a>
-            <a th:href="@{/trips/delete}"><div class="nav-item"><span>Eliminar Viaje</span></div></a>
+            <a th:href="@{/trips/select}">
+                <div class="nav-item"><span>Ver Viajes</span></div>
+            </a>
+            <a th:href="@{/trips/register}" sec:authorize="hasRole('ADMIN')">
+                <div class="nav-item"><span>Registrar Viaje</span></div>
+            </a>
+            <a th:href="@{/trips/update}" sec:authorize="hasRole('ADMIN')">
+                <div class="nav-item"><span>Actualizar Viaje</span></div>
+            </a>
+            <a th:href="@{/trips/delete}" sec:authorize="hasRole('ADMIN')">
+                <div class="nav-item"><span>Eliminar Viaje</span></div>
+            </a>
         </details>
     </div>
     
@@ -48,15 +81,14 @@
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Eliminar Vehículo</h2>
-
-                    <form id="search-form" th:action="@{/vehicles/delete/search}" method="POST">
+                    <form id="search-form" th:action="@{/vehicles/delete/search}" th:object="${vehicleDTO}" method="POST"  style="width:100%;">
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="vehiculo-id">ID del Vehículo:</label>
                                 <div style="display: flex; gap: 10px;">
                                     <input type="number" name="id" id="vehiculo-id" class="form-control"
                                            placeholder="Ingrese el ID del vehículo"
-                                           th:value="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '0'}"
+                                           th:field="*{vehicleId}"
                                            required>
                                     <button type="submit" class="btn nav-primary" 
                                             style="display: flex; align-items: center; justify-content: center; height: 42px;">
@@ -74,7 +106,7 @@
                            
                             <tr>
                                 <td style="padding: 8px;"><strong>Id vehículo:</strong></td>
-                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '0'}">0</td>
+                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '---'}">0</td>
                             </tr>
                             <tr>
                                 <td style="padding: 8px;"><strong>Placa:</strong></td>
@@ -86,7 +118,7 @@
                             </tr>
                             <tr>
                                 <td style="padding: 8px;"><strong>Año:</strong></td>
-                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.year != null ? vehicleDTO.year : '0'}">0</td>
+                                <td style="padding: 8px;" th:text="${vehicleDTO != null and vehicleDTO.year != null ? vehicleDTO.year : '---'}">0</td>
                             </tr>
                             <tr>
                                 <td style="padding: 8px;"><strong>Tipo de Vehículo:</strong></td>
@@ -95,13 +127,14 @@
                         </table>
                     </div>
 
-                    <form id="delete-form" th:action="@{/vehicles/delete}" method="POST">
+                    <form id="delete-form" th:action="@{/vehicles/delete}" th:object="${vehicleDTO}" method="POST">
                         <input type="hidden" name="vehicleId" th:value="${vehicleDTO != null and vehicleDTO.vehicleId != null ? vehicleDTO.vehicleId : '0'}">
                         <div class="btn-container">
                             <button type="submit" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Vehículo</button>
                         </div>
                     </form>
                 </div>
+                
             </div>
         </div>
     </div>

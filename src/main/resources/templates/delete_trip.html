@@ -11,16 +11,23 @@
 <body>
     <div class="sidebar">
         <div class="nav-buttons">
-            <a th:href="@{/}" class="nav-btn nav-btn-danger">
+            <a th:href="@{/logout}" class="nav-btn nav-btn-danger">
                 <i class="fa-solid fa-right-from-bracket icon"></i> 
                 <b>Cerrar Sesión</b>
             </a>
-            <a th:href="@{/index}" class="nav-btn nav-btn-primary">
+            <a th:href="@{/}" class="nav-btn nav-btn-primary">
                 <i class="fa-solid fa-house icon"></i>  
                 <b>Inicio</b>
             </a>
         </div>
-        <details>
+        
+        <details sec:authorize="hasRole('DRIVER')">
+            <summary><b>Vehículos</b></summary>
+            <a th:href="@{/users/assigned}">
+                <div class="nav-item"><span>Vehiculos Asignados</span></div>
+            </a>
+        </details>
+        <details sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Usuarios</b></summary>
             <a th:href="@{/users/select}">
                 <div class="nav-item"><span>Ver Usuarios</span></div>
@@ -38,7 +45,7 @@
                 <div class="nav-item"><span>Eliminar Usuario</span></div>
             </a>
         </details>
-        <details>
+        <details sec:authorize="hasRole('ADMIN')">
             <summary><b>Gestión de Vehículos</b></summary>
             <a th:href="@{/vehicles/select}">
                 <div class="nav-item"><span>Ver Vehículos</span></div>
@@ -58,13 +65,13 @@
             <a th:href="@{/trips/select}">
                 <div class="nav-item"><span>Ver Viajes</span></div>
             </a>
-            <a th:href="@{/trips/register}">
+            <a th:href="@{/trips/register}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Registrar Viaje</span></div>
             </a>
-            <a th:href="@{/trips/update}">
+            <a th:href="@{/trips/update}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item"><span>Actualizar Viaje</span></div>
             </a>
-            <a th:href="@{/trips/delete}">
+            <a th:href="@{/trips/delete}" sec:authorize="hasRole('ADMIN')">
                 <div class="nav-item active"><span>Eliminar Viaje</span></div>
             </a>
         </details>
@@ -74,19 +81,20 @@
             <div class="main-content">
                 <div class="tab-content">
                     <h2 id="main-title">Eliminar Viaje</h2>
-                    <form id="form-type" th:object="${tripDTO}" method="POST">
+                    <form id="form-type" th:object="${tripDTO}" th:action="@{/trips/delete/search}" method="POST" >
                         <div class="search-container">
                             <div class="form-group" style="flex: 1; margin-bottom: 20px;">
                                 <label for="conductor-id">ID del viaje:</label>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="number" id="conductor-id" class="form-control" placeholder="Ingrese el ID" th:field="*{tripId}" required>
-                                    <button type="submit" th:formaction="@{/trips/delete/search}" class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
+                                    <input type="number" id="conductor-id" class="form-control" th:field="*{tripId}" placeholder="Ingrese el ID" required>
+                                    <button type="submit"  class="btn nav-primary" style="display: flex; align-items: center; justify-content: center; height: 42px;">
                                         <i class="fa-solid fa-magnifying-glass icon"></i>
                                         Buscar
                                     </button>
                                 </div>
                             </div>
                         </div>
+                    
                         <div style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; padding: 12px; margin-bottom: 15px; font-size: 0.9em;">
                             <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 1em;">Información del Viaje</h4>
                             
@@ -94,7 +102,7 @@
                                 <div class="form-group" style="margin-bottom: 5px;">
                                     <label><strong>Id del viaje: </strong> <span id="info-lugar-origen" th:text="*{tripId} ?: '---'">---</span></label>
                                 </div>
-
+    
                                 <div class="form-group" style="margin-bottom: 5px;">
                                     <label><strong>Lugar de Origen: </strong> <span id="info-lugar-origen" th:text="*{origin} ?: '---'">---</span></label>
                                 </div>
@@ -108,22 +116,40 @@
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom: 5px;">
-                                    <label><strong>ID Conductor: </strong> <span id="info-id-conductor" th:text="*{driverDTO.personId} ?: '---'">---</span></label>
+                                    <label><strong>ID Conductor: </strong> <span id="info-id-conductor" th:text="*{driverId.personId} ?: '---'">---</span></label>
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom: 5px; grid-column: span 2;">
-                                    <label><strong>ID Vehiculo: </strong> <span id="info-id-vehiculo" th:text="*{vehicleDTO.vehicleId} ?: '---'">---</span></label>
+                                    <label><strong>ID Vehiculo: </strong> <span id="info-id-vehiculo" th:text="*{vehicleId.vehicleId} ?: '---'">---</span></label>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="btn-container">
-                            <button type="submit"  th:formaction="@{/trips/delete/{tripId}}" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
-                        </div>
                     </form>
+                        <form id="delete-form" th:action="@{/trips/delete}" method="POST">
+                            <input type="hidden" name="tripId" th:value="${tripDTO != null and tripDTO.driverId.personId != null and tripDTO.vehicleId.vehicleId != null ? tripDTO.tripId : null}">
+                            <div class="btn-container">
+                                <button type="submit" class="btn btn-danger" style="background-color: #e74c3c;">Eliminar Viaje</button>
+                            </div>
+                        </form>
                 </div>
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        window.onload = function() {
+            var message = /*[[${message}]]*/ null;
+            var alertType = /*[[${alertType}]]*/ null;
+            if (message) {
+                if(alertType === "error" ){
+                    alert("❌ " + message);
+                }else if(alertType === "info"){
+                    alert("ℹ️ " + message);
+                }
+                else if (alertType === "success") {
+                    alert("✅ " + message);
+                }
+            }
+        };
+    </script>
 </body>
 </html>
