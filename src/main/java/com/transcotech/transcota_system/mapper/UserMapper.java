@@ -12,8 +12,6 @@ import com.transcotech.transcota_system.model.User;
 
 @Mapper(componentModel = "spring", uses = PasswordEncoderMapper.class)
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
     @Mappings({
         @Mapping(source = "role", target = "roleDTO"),
         @Mapping(source = "personId", target = "personId"),
@@ -28,7 +26,7 @@ public interface UserMapper {
         @Mapping(source = "personId", target = "personId"),
         @Mapping(source = "name", target = "name"),
         @Mapping(source = "email", target = "email"),
-        @Mapping(source = "password", target = "password", qualifiedByName = "encodePassword") // ✅ Aplica la encriptación correctamente
+        @Mapping(source = "password", target = "password", qualifiedByName = "encodePassword")
     })
     User userDTOToUser(UserDTO userDTO);
 

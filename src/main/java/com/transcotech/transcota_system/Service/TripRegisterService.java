@@ -65,7 +65,7 @@ public class TripRegisterService implements TripRegisterServiceInterface{
 
     @Override
     public List<TripDTO> searchUpcomingFive() {
-    List<TripRegister> trips = tripRegisterRepositoryInterface.findAll(); // Obtener todos los viajes
+    List<TripRegister> trips = tripRegisterRepositoryInterface.findAll(); 
 
     return trips.stream()
             .filter(t -> t.getDate().isAfter(LocalDate.now()))

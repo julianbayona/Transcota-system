@@ -20,7 +20,12 @@ import com.transcotech.transcota_system.repositories.TripRegisterRepositoryInter
 @Service
 public class DriverService implements DriverServiceInterface{
 
-    private final UserMapper userMapper = UserMapper.INSTANCE;
+    private UserMapper userMapper;
+
+    @Autowired
+    public DriverService(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Autowired
     private DriverRepositoryInterface driverRepository;
@@ -41,15 +46,21 @@ public class DriverService implements DriverServiceInterface{
     }
 
     @Override
-    public void deleteUser(Long id){
+    public boolean deleteUser(Long id){
+        List<TripRegister> trips = tripRepository.findAll();
+        for (TripRegister tripRegister : trips) {
+            if(tripRegister.getDriverId().getPersonId() == id){
+                return false;
+            };
+        }
         this.driverRepository.deleteById(id);
+        return true;
     }
 
     @Override
     public User createDriver(UserDTO userDTO) {
-        User user = UserMapper.INSTANCE.userDTOToUser(userDTO);
+        User user = userMapper.userDTOToUser(userDTO);
         return this.driverRepository.save(user);
-        
     }
 
     @Override

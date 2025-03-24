@@ -28,8 +28,7 @@ public class VehicleController {
         return "all-vehicles";
     }
 
-
-    //REGISTRAR--------------------------------------------------------------------
+    // REGISTRAR--------------------------------------------------------------------
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
@@ -38,50 +37,42 @@ public class VehicleController {
     }
 
     @PostMapping("/register")
-public String register(@ModelAttribute VehicleDTO vehicleDTO, Model model) {
-    boolean isCreated = vehicleService.createVehicle(vehicleDTO);
-    if (isCreated) {
-        model.addAttribute("message", "VEHICULO REGISTRADO CORRECTAMENTE");
-        model.addAttribute("alertType", "success");
-        model.addAttribute("vehicleDTO", new VehicleDTO());
+    public String register(@ModelAttribute VehicleDTO vehicleDTO, Model model) {
+        boolean isCreated = vehicleService.createVehicle(vehicleDTO);
+        if (isCreated) {
+            addMessageToModel(model, "VEHICULO REGISTRADO CORRECTAMENTE", "success");
+            model.addAttribute("vehicleDTO", new VehicleDTO());
+            return "register_vehicle";
+        } else {
+            addMessageToModel(model, "Error: La placa ya está registrada.", "error");
+        }
         return "register_vehicle";
-    } else {
-        model.addAttribute("message", "Error: La placa ya está registrada.");
-        model.addAttribute("alertType", "error");
     }
-
-    return "register_vehicle";
-}
 
     @GetMapping("/select")
     public String showVehiclesList(Model model) {
-
         model.addAttribute("vehicleDTO", new VehicleDTO());
         model.addAttribute("vehicleList", vehicleService.getAllVehicles());
-        return "select_vehicle"; 
+        return "select_vehicle";
     }
 
     @GetMapping("/assigned/user")
-        public String getUserVehicles(@RequestParam String username, Model model) {
-            
-            model.addAttribute("vehicleList", vehicleService.getAllVehicles());
-            return "assigned_vehicle";
-        }
+    public String getUserVehicles(@RequestParam String username, Model model) {
+        model.addAttribute("vehicleList", vehicleService.getAllVehicles());
+        return "assigned_vehicle";
+    }
 
     @PostMapping("/select/search")
-    public String searchVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, @RequestParam("vehicleId") Long id, Model model) {
-    
+    public String searchVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, @RequestParam("vehicleId") Long id,
+            Model model) {
         VehicleDTO vehicle = vehicleService.searchId(id);
-        if(vehicle == null){
-            model.addAttribute("message", "El vehículo con ID " + id + " no existe.");
-            model.addAttribute("alertType", "info");
+        if (vehicle == null) {
+            addMessageToModel(model, "El vehículo con ID " + id + " no existe.", "info");
             model.addAttribute("vehicleList", vehicleService.getAllVehicles());
             return "select_vehicle";
         }
-        
         List<VehicleDTO> vehicleFound = new ArrayList<>();
         vehicleFound.add(vehicle);
-
         model.addAttribute("vehicleList", vehicleFound);
         return "select_vehicle";
     }
@@ -94,52 +85,47 @@ public String register(@ModelAttribute VehicleDTO vehicleDTO, Model model) {
 
     @PostMapping("/update/search")
     public String searchVehicle(@RequestParam("vehicleId") Long id, Model model) {
-    
-    VehicleDTO foundVehicle = vehicleService.searchId(id);
-
-    if (foundVehicle == null) {
-        model.addAttribute("message", "El vehículo con ID " + id + " no existe.");
-        model.addAttribute("alertType", "info");
-        model.addAttribute("vehicleDTO", new VehicleDTO());
-        return "update_vehicle";  
-    }
-
-    model.addAttribute("vehicleDTO", foundVehicle);
-    return "update_vehicle"; 
-}
-
-
-@PostMapping("/update")
-public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, @RequestParam("vehicleId") Long id, Model model) {
-    String operation =vehicleService.updateVehicle(id, vehicleDTO);
-
-    if (operation.equals("vehiculoInexistente")){
-        model.addAttribute("message", "El vehículo con ID " + id + " no existe.");
-        model.addAttribute("alertType", "error");
-        model.addAttribute("vehicleDTO", new VehicleDTO());
-        return "update_vehicle";  
-    }
-    if (operation.equals("placaOcupada")){
-        Long idPlate = vehicleService.searchPlate(vehicleDTO).getVehicleId();
-        model.addAttribute("message", "la placa " + vehicleDTO.getPlate() + " ya esta en uso por el vehiculo con ID: " + idPlate);
-        model.addAttribute("alertType", "error");
-        model.addAttribute("vehicleDTO", vehicleDTO);
+        VehicleDTO foundVehicle = vehicleService.searchId(id);
+        if (foundVehicle == null) {
+            addMessageToModel(model, "El vehículo con ID " + id + " no existe.", "info");
+            model.addAttribute("vehicleDTO", new VehicleDTO());
+            return "update_vehicle";
+        }
+        model.addAttribute("vehicleDTO", foundVehicle);
         return "update_vehicle";
     }
 
-    vehicleService.updateVehicle(id, vehicleDTO);
-    model.addAttribute("message","VEHICULO ACTUALIZADO CORRECTAMENTE");
-    model.addAttribute("alertType", "success");
-    model.addAttribute("vehicleDTO", vehicleDTO);
-    return "update_vehicle";
-}
+    @PostMapping("/update")
+    public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO, @RequestParam("vehicleId") Long id,
+            Model model) {
+        String operation = vehicleService.updateVehicle(id, vehicleDTO);
+
+        if (operation.equals("vehiculoInexistente")) {
+            addMessageToModel(model, "El vehículo con ID " + id + " no existe.", "error");
+            model.addAttribute("vehicleDTO", new VehicleDTO());
+            return "update_vehicle";
+        }
+        if (operation.equals("placaOcupada")) {
+            Long idPlate = vehicleService.searchPlate(vehicleDTO).getVehicleId();
+            addMessageToModel(model,
+                    "la placa " + vehicleDTO.getPlate() + " ya esta en uso por el vehiculo con ID: " + idPlate,
+                    "error");
+            model.addAttribute("vehicleDTO", vehicleDTO);
+            return "update_vehicle";
+        }
+
+        vehicleService.updateVehicle(id, vehicleDTO);
+        addMessageToModel(model, "VEHICULO ACTUALIZADO CORRECTAMENTE", "success");
+        model.addAttribute("vehicleDTO", vehicleDTO);
+        return "update_vehicle";
+    }
 
     @GetMapping("/delete")
     public String showDeleteForm(Model model) {
         model.addAttribute("vehicleDTO", new VehicleDTO());
         return "delete_vehicle";
     }
-    
+
     @PostMapping("/delete/search")
     public String searchVehicleForDelete(@RequestParam("vehicleId") Long id, Model model) {
         VehicleDTO vehicle = vehicleService.searchId(id);
@@ -147,37 +133,42 @@ public String updateVehicle(@ModelAttribute("vehicleDTO") VehicleDTO vehicleDTO,
         if (vehicle != null) {
             model.addAttribute("vehicleDTO", vehicle);
         } else {
-            model.addAttribute("message","El vehículo con ID " + id + " no existe.");
-            model.addAttribute("alertType", "info");
+            addMessageToModel(model, "El vehículo con ID " + id + " no existe.", "info");
         }
         return "delete_vehicle";
     }
 
     @PostMapping("/delete")
     public String deleteVehicle(@RequestParam("vehicleId") Long vehicleId, Model model) {
-        if(vehicleService.deleteVehicle(vehicleId)){
-            model.addAttribute("message","VEHICULO ELIMINADO CORRECTAMENTE");
-            model.addAttribute("alertType", "success");
+        if (vehicleService.hasRelatedTrips(vehicleId)) {
+            addMessageToModel(model, "No se puede eliminar el vehiculo porque tiene viajes asignados", "info");
+            model.addAttribute("vehicleDTO", new VehicleDTO());
+            return "delete_vehicle";
+        } else if (vehicleService.deleteVehicle(vehicleId)) {
+            addMessageToModel(model, "VEHICULO ELIMINADO CORRECTAMENTE", "success");
             model.addAttribute("vehicleDTO", new VehicleDTO());
             return "delete_vehicle";
         }
-        model.addAttribute("message","Debe buscar y verificar primero el vehiculo");
-        model.addAttribute("alertType", "info");
+        addMessageToModel(model, "Debe buscar y verificar primero el vehiculo", "info");
         model.addAttribute("vehicleDTO", new VehicleDTO());
         return "delete_vehicle";
     }
 
+    private void addMessageToModel(Model model, String message, String alertType) {
+        model.addAttribute("message", message);
+        model.addAttribute("alertType", alertType);
+    }
+
     @PostMapping("register/clear")
-    public String clearRegister(Model model){
+    public String clearRegister(Model model) {
         model.addAttribute("vehicleDTO", new VehicleDTO());
         return "redirect:/vehicles/register";
     }
 
     @PostMapping("update/clear")
-    public String clearUpdate(Model model){
+    public String clearUpdate(Model model) {
         model.addAttribute("vehicleDTO", new VehicleDTO());
         return "redirect:/vehicles/update";
     }
 
 }
-

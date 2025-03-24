@@ -22,5 +22,11 @@ public class TripDTO {
         this.driverId = new UserDTO();
         this.vehicleId = new VehicleDTO();
     }
+
+    @Override
+    public String toString() {
+        return "TripDTO [tripId=" + tripId + ", origin=" + origin + ", destination=" + destination + ", date=" + date
+                + ", driverId=" + driverId + ", vehicleId=" + vehicleId + "]";
+    }
     
 }

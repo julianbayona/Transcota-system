@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.transcotech.transcota_system.Service.VehicleService;
 import com.transcotech.transcota_system.dto.VehicleDTO;
@@ -27,7 +29,7 @@ import com.transcotech.transcota_system.model.TypeVehicle;
 import com.transcotech.transcota_system.model.Vehicle;
 import com.transcotech.transcota_system.repositories.VehicleRepositoryInterface;
 
-//@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class VehicleServiceTest {
 
     @Mock
@@ -44,7 +46,6 @@ public class VehicleServiceTest {
 
     @BeforeEach
     void setUp() {
-        // Configurar datos de prueba
         vehicle1 = new Vehicle();
         vehicle1.setVehicleId(1L);
         vehicle1.setPlate("ABC123");
