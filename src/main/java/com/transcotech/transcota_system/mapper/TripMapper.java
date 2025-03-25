@@ -38,4 +38,3 @@ public interface TripMapper {
     List<TripRegister> tripDTOsTotrips(List<TripDTO> tripDTOs);
 
 }
-

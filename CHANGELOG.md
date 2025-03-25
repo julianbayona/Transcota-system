@@ -1,30 +1,30 @@
 # Changelog
 
 
-## [Unreleased]
+## [1.1.1] - 2025-03-24
 
 
 
-### 🐛 Bug Fixes
+### 💼 Other
 
 
-- Fixed unused code (2510e7e)
+- Fixing alerts to register and update a trip (7fb7097)
 
-- Fixed html-view (101a705)
 
-- Fixed styles-view (a8314b7)
+### 🚀 Features
 
-- Fixed html-view (22e7d49)
 
-- Fixed service-controller (5a9e293)
+- Add alert message when conductor or vehicle has trips (809cc0f)
 
-- Fixed model-controller (1429bb7)
+- Refactorize code and modify tests (d4be0fc)
 
-- Fixed mapper-controller (efe32c2)
+- Add TripRegisterService tests (5502954)
 
-- Fixed config-controller (e927f54)
+- Add alerts to register and update a trip (42e0013)
 
-- Fixed errors (ede8553)
+
+## [1.1.0] - 2025-03-24
+
 
 
 ### 🐛 Bug Fixes
@@ -62,29 +62,7 @@
 
 - Deleted unused files (0053da8)
 
-
-### 🚀 Features
-
-
-- Config trip module (118aa2c)
-
-- Added entry to register-trip (97e6371)
-
-- Added register-trip-view (3993cdd)
-
-- Added update trip-view (8a1a04c)
-
-- Added select vehicles-view (ec1141a)
-
-- Added more validations (7976202)
-
-- Add change log" (206c101)
-
-- Trips-view (48870a3)
-
-- Security (3ed828e)
-
-- Deleted unused files (0053da8)
+- New v1.1.0 adding trips module (7936d52)
 
 
 ### 🚀 Features
@@ -101,14 +79,6 @@
 - Added select vehicles-view (ec1141a)
 
 - Added more validations (7976202)
-
-- Add alert message when conductor or vehicle has trips (809cc0f)
-
-- Refactorize code and modify tests (d4be0fc)
-
-- Add TripRegisterService tests (5502954)
-
-- Add alerts to register and update a trip (42e0013)
 
 
 ## [1.0.0] - 2025-03-20
@@ -204,8 +174,6 @@
 
 - Fixed bdd trips atributes names (fa56522)
 
-- Fixed bdd trips atributes names (fa56522)
-
 
 ### 💼 Other
 
@@ -272,8 +240,6 @@
 
 - Fix tests (bbb7f7a)
 
-- Fix tests (bbb7f7a)
-
 - Update-release (9fd3947)
 
 
@@ -337,22 +303,6 @@
 - Added clean buttons (7734112)
 
 - Finished assigned-vehicles menu (1e113be)
-
-- Modify DriverTests (2c37238)
-
-- Add security files (dc3f6e6)
-
-- Modify security file (ce47679)
-
-- Add security to endpoints (85c3c7b)
-
-- Add security to endpoints (d828b46)
-
-- Modify views (35d90d9)
-
-- Modify views for user (85d1a95)
-
-- End Spring Security (a1062a3)
 
 - Modify DriverTests (2c37238)
 
